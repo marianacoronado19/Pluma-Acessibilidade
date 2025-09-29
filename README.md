@@ -3,7 +3,7 @@
 
 ---
 
-## Modificações realizadas desde o início do projeto
+## 🛠️ Modificações realizadas desde o início do projeto
 - Definição do tema: **Extensão de navegador para acessibilidade digital**.
 - Design inicial no Canva e Figma.
 - Escolha da paleta de cores acessível.
