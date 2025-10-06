@@ -1,52 +1,24 @@
 {
-    "name": "Pluma - Assistente de Acessibilidade",
-    "description": "Uma extensão de navegador que adiciona funcionalidades de acessibilidade e personalização a qualquer site visitado pelo usuário. Conte com a Bru, sua guia amigável, que pode te ajudar a tornar a navegação na web mais inclusiva e adaptada às suas necessidades.",
-    "version": "1.0",
-    "manifest_version": 3,
-
-    "permissions": [
-        "activeTab", 
-        "scripting",
-        "storage"
-    ],
-
-    "background": {
-        "service_worker": "background.js"
-    },
-
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "css": ["index/index.css"],
-            "js": ["content.js"]
-        }
-    ],
-
-    "web_accessible_resources": [
-        {
-            "resources": [
-                "images/*",
-                "login/login.html", 
-                "configs/configs.html",
-                "prelogin/prelogin.html",
-                "index/index.css"
-            ],
-            "matches": ["<all_urls>"] 
-        }
-    ],
-
-    "icons": {
+  "manifest_version": 3,
+  "name": "Pluma - Assistente de Acessibilidade!",
+  "version": "1.0",
+  "description": "Uma extensão de navegador que adiciona funcionalidades de acessibilidade e personalização a qualquer site visitado pelo usuário. Conte com a Bru, sua guia amigável, que pode te ajudar a tornar a navegação na web mais inclusiva e adaptada às suas necessidades.",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/assistente/guia_bru.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
         "16": "images/logoPluma/icon-16.png",
         "32": "images/logoPluma/icon-32.png",
         "48": "images/logoPluma/icon-48.png",
         "128": "images/logoPluma/icon-128.png"
-    },
-    
-    "action": {
-        "default_icon": {
-            "16": "images/logoPluma/icon-16.png",
-            "32": "images/logoPluma/icon-32.png"
-        }
-       
     }
 }
