@@ -2,17 +2,17 @@ const container = document.createElement("div");
 container.classList.add("div-guia");
 document.body.appendChild(container);
 
-const botaoConfig = document.createElement("button");
-botaoConfig.innerText = "Configurar";
-botaoConfig.classList.add("botao-config");
-balao.appendChild(botaoConfig);
+// const botaoConfig = document.createElement("button");
+// botaoConfig.innerText = "Configurar";
+// botaoConfig.classList.add("botao-config");
+// balao.appendChild(botaoConfig);
 
 
 
-// const balao = document.createElement("div");
-// // balao.src = chrome.runtime.getURL("images/assistente/balao_fala.png");
-// balao.classList.add("balao-div");
-// container.appendChild(balao);
+const balaoBru = document.createElement("div");
+// balao.src = chrome.runtime.getURL("images/assistente/balao_fala.png");
+balaoBru.classList.add("balaoBru");
+container.appendChild(balaoBru);
 
 // const textoBalao = document.createElement("div");
 // textoBalao.innerText = "Olá! Eu sou a Bru, sua assistente de acessibilidade. Estou aqui para ajudar você a personalizar sua experiência de navegação na web. Vamos começar?";
