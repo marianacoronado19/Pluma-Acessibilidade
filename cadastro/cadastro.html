@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de cadastro</title>
+    <link rel="stylesheet" href="cadastro.css">
+    <link rel="icon" href="../images/logoPluma/logopequena.png" type="image/x-icon">
+</head>
+<body>
+    <div class="box">
+        <div class="tituloseta">
+            <a href="login.html">
+                <img class="seta" src="../images/elementos/seta_baixo.png" alt="Voltar">
+            </a>
+            <p class="titulo">Criar minha conta</p>
+        </div>
+
+        <form id="form-cadastro">
+            <div class="grid-form">
+                <div class="campo">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <div class="campo">
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="Digite seu telefone" required>
+                </div>
+
+                <div class="campo">
+                    <label for="nascimento">Data de Nascimento</label>
+                    <input type="date" id="nascimento" name="nascimento" required>
+                </div>
+
+                <div class="campo">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                </div>
+
+                <div class="campo">
+                    <label for="confirmar-senha">Confirme sua senha</label>
+                    <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Digite sua senha novamente" required>
+                </div>
+
+                <div class="campo">
+                    <label for="genero">Gênero</label>
+                    <select id="genero" name="genero" required>
+                        <option value="">Informe seu gênero*</option>
+                        <option value="feminino">Feminino</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="outro">Outro</option>
+                        <option value="nao-dizer">Prefiro não dizer</option>
+                    </select>
+                </div>
+
+                <div class="campo campo-acess">
+                    <label for="acessibilidade">Acessibilidade</label>
+                    <div class="input-acess">
+                        <input type="text" id="acessibilidade" name="acessibilidade" placeholder="Selecione opções de acessibilidade" readonly>
+                        <img src="../images/elementos/seta_baixo.png" alt="Abrir opções" class="icone-seta">
+                    </div>
+
+                    <div class="gaveta-acess">
+                        <label><input type="checkbox" value="visibilidade"> Baixa Visibilidade</label>
+                        <label><input type="checkbox" value="dislexia"> Dislexia</label>
+                        <label><input type="checkbox" value="idoso"> Idoso</label>
+                        <label><input type="checkbox" value="daltonismo"> Daltonismo</label>
+                        <label><input type="checkbox" value="surdez"> Surdez</label>
+                        <label><input type="checkbox" value="outro"> Outro</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="botao">Cadastrar-se</button>
+        </form>
+
+        <p class="ja">Já possui uma conta? Faça <a href="login.html">login</a></p>
+        <p class="ou">- OU -</p>
+
+        <div class="opcoes">
+            <div class="google">
+                <img src="../images/login/Google.png" alt="Google">
+                <p>Cadastrar-se com Google</p>
+            </div>
+            <div class="facebook">
+                <img src="../images/login/Facebook.png" alt="Facebook">
+                <p>Cadastrar-se com Facebook</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+
+/* Reset básico para o container */
+.prelogin-container {
+  all: unset;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 550px;
+  max-width: 90%;
+  padding: 25px;
+  background-color: #EAF2FD;
+  border-radius: 20px;
+  border: 3px solid #4A90E2;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  text-align: center;
+  color: #333;
+}
+
+/* Título */
+.prelogin-container h1 {
+  all: unset;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  font-size: 22px;
+  color: white;
+  font-weight: bold;
+  background-color: #60a1ea;
+  padding: 10px 25px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* Parágrafo principal */
+.prelogin-container p {
+    all: unset;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    font-size: 16px;
+    color: #505050;
+    line-height: 1.5;
+    max-width: 85%;
+}
+
+/* Container para os links "sim" e "não" */
+.prelogin-container .acao-inicial-container {
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+/* Estilo para links de texto */
+.prelogin-container .link-texto {
+    all: unset;
+    font-size: 16px;
+    color: #4A90E2;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.prelogin-container .link-texto:hover {
+    color: #357ABD;
+}
+
+/* Texto separador "- ou -" */
+.prelogin-container .texto-separador {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Container da seção de login */
+.prelogin-container .login-container {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Botão principal de Login */
+.prelogin-container .botao-login {
+  all: unset; /* Reseta o botão */
+  padding: 15px 50px;
+  font-size: 18px;
+  background-color: #4A90E2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.prelogin-container .botao-login:hover {
+  background-color: #357ABD;
+}
+
+/* Botão de fechar (X) */
+.prelogin-container .botao-fechar {
+    all: unset;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: #FF6B6B;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+.prelogin-container .botao-fechar:hover {
+    color: #E05252;
+}

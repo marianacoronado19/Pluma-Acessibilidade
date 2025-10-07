@@ -3,19 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="login.css">
+    <link rel="icon" href="/images/logoPluma/icone-32" type="image/x-icon">
+    <title>Página de login</title>
 </head>
 <body>
-    <title>Entrar</title>
-    <div class="container">
-        <h1>Entrar</h1>
-        <form action="">
-            <input type="text" placeholder="Usuário" required>
-            <input type="password" placeholder="Senha" required>
-            <button type="submit">Entrar</button>
-        </form>
+   
+    <!-- <img class="bru-guia" src="/images/assistente/guia_bru.png" alt="Assitente Bruna"> -->
 
-        <p>Não tem uma conta? <a href="../cadastro/cadastro.html">Cadastre-se</a></p> -->
+    <div class="login">
+        <img class="logopluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo do site Storm roxa" width="210px">
+ 
+         <div class="bemvindo">
+            Bem-vindo de volta!<br>
+            <span id="logintxt">Faça seu login:</span>
+        </div>
+        
+        <div class="informacoes1">
+            <h2 id="e-mail">E-mail:</h2>
+            <div class="emailcaixa">
+                <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            </div>
+        </div>
+       
+         <div class="informacoes2">
+            <h2 id="senhaindi">Senha:</h2>
+            <div class="senha">
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+            </div>
+        </div>
+ 
+        <div class="lembrar">
+            <div>
+               <input type="checkbox" id="lembrar-me" name="lembrar-me">
+                <label for="lembrar-me">Lembrar-me</label>
+            </div>
+            <div class="esqueci">
+                <p id="esquecisenha">Esqueci minha senha</p>
+            </div>
+        </div>
+ 
+        <div class="botaologin"><h2>Login</h2></div>
+ 
+        <div class="semconta">
+            <h2>Não possui uma conta?
+            <span><a href="/cadastro/cadastro.html">Cadastre-se</a><br></span>
+            - OU -</h2>
+        </div>
+ 
+        <div class="outro">
+            <div class="google">
+                <img src="/images/login/Google.png" alt="Icone Google" width="40px">
+                <h1>Faça login com o Google</h1>
+            </div>
+           
+            <div class="facebook">
+                <img src="/images/login/Facebook.png" alt="Icone Facebook">
+                <h1>Faça login com o Facebook</h1>
+            </div>
+        </div>
+        
+ 
+       
+         
+    </div>
 </body>
 </html>
