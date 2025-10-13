@@ -19,8 +19,8 @@
       "resources": [
         "images/assistente/bru_nova.png",
         "images/elementos/fundo_login.png",
-        "prelogin/prelogin.css",
-        "prelogin/prelogin.js"
+        "images/elementos/fundo_login.png",
+        "prelogin/prelogin.css"
     ],
       "matches": ["<all_urls>"]
     }

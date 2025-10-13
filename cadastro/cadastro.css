@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+
 body {
     background: linear-gradient(180deg, #d4e9ff 27%, #82b4ff 100%);
     backdrop-filter: blur(2px);
@@ -6,14 +8,36 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Atkinson Hyperlegible", sans-serif;
 }
 
 .box {
-    background-color: #2D2D2D;
+    all: unset;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    max-width: 90%;
+    max-height: 80vh;
+    padding: 30px 25px;
+    background-color: #EAF2FD;
     border-radius: 20px;
-    padding: 30px;
-    width: 90%;
-    max-width: 900px;
+    border: 3px solid #4A90E2;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 999999;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+    color: #333;
+    overflow-y: auto;
+}
+
+#form-cadastro {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,49 +52,51 @@ body {
 
 .seta {
     width: 24px;
-    margin-right: 15px;
 }
 
 .titulo {
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    font-size: 22px;
+    font-weight: bold;
     color: white;
-    font-family: Poppins, sans-serif;
-    font-size: 25px;
-    font-weight: 600;
-    margin: 0 auto;
+    background-color: #60a1ea;
+    padding: 10px 25px;
+    border-radius: 10px;
+    margin: 0 auto 10px;
     text-align: center;
 }
 
 .grid-form {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px 30px;
-    margin-top: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 40px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .campo {
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 
 .campo label {
-    color: white;
-    font-family: Poppins, sans-serif;
+    font-family: "Atkinson Hyperlegible", sans-serif;
     font-size: 15px;
-    margin-bottom: 5px;
+    color: #1e1e1e;
 }
 
 .campo input,
 .campo select {
     width: 100%;
-    height: 38px;
+    height: 45px;
     border-radius: 10px;
-    border: 2px solid #9E37D6;
-    background: #F2DAFF;
+    border: 2px solid #4A90E2;
+    background: #F2F9FF;
     padding: 0 12px;
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
     outline: none;
 }
 
@@ -90,8 +116,8 @@ body {
 .gaveta-acess {
     display: none;
     flex-direction: column;
-    background: #F2DAFF;
-    border: 2px solid #9E37D6;
+    background: #F2F9FF;
+    border: 2px solid #4A90E2;
     border-radius: 10px;
     padding: 10px;
     margin-top: 5px;
@@ -99,6 +125,7 @@ body {
 }
 
 .gaveta-acess label {
+    font-family: "Atkinson Hyperlegible", sans-serif;
     font-size: 13px;
     color: #2D2D2D;
     margin-bottom: 5px;
@@ -108,32 +135,35 @@ body {
 }
 
 .botao {
-    background-color: #9E37D6;
-    color: white;
-    width: 220px;
-    height: 45px;
-    border-radius: 5px;
-    margin-top: 25px;
-    border: none;
-    cursor: pointer;
+    all: unset;
+    padding: 15px 50px;
     font-size: 18px;
-    transition: background-color 0.3s;
+    background-color: #4A90E2;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    margin-top: 25px;
 }
 
 .botao:hover {
-    background-color: #812bb0;
+    background-color: #357ABD;
 }
 
 .ja, .ou {
-    color: white;
-    font-family: Poppins, sans-serif;
+    font-family: "Atkinson Hyperlegible", sans-serif;
     font-size: 14px;
+    color: #333;
     margin-top: 15px;
 }
 
 .ja a {
-    color: #CF92F0;
-    text-decoration: none;
+    color: #4A90E2;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .opcoes {
@@ -147,25 +177,35 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    font-size: 14px;
     color: white;
-    font-size: 13px;
-    border: solid #FFF 1px;
+    border: none;
     border-radius: 15px;
-    padding: 10px;
-    width: 180px;
+    padding: 10px 15px;
     cursor: pointer;
 }
 
+.google {
+    background-color: #DB4437;
+}
+
+.facebook {
+    background-color: #4267B2;
+}
+
 .google img, .facebook img {
-    width: 25px;
+    width: 20px;
 }
 
 @media (max-width: 700px) {
     .grid-form {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
 
     .box {
+        width: 90%;
         padding: 20px;
     }
 
