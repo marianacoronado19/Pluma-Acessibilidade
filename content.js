@@ -99,3 +99,16 @@ function guiaInicial() {
 }
 
 guiaInicial();
+
+// TO-DO: 
+// Ajustar o CSS para telas menores (responsividade);
+// Lógica cadastro/login (back-end);
+// Sessao do usuário (manter logado);
+// Fazer logout;
+// Salvar preferências do usuário (local storage ou base de dados);
+// Implementar funcionalidades de acessibilidade (ex: leitor de tela, ajuste de contraste, etc).
+// Testes de usabilidade e acessibilidade;
+
+// "Destruir conta"
+
+// Grupo 4

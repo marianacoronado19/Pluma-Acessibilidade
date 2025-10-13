@@ -20,7 +20,7 @@
 .botao-config {
     position: relative;
     
-    height: auto;
+    min-height: 7%;
     padding: 8px 16px;
     
     background: #60a1ea;

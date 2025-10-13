@@ -6,7 +6,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 550px;
+  width: 560px;
   max-width: 90%;
   padding: 25px;
   background-color: #EAF2FD;
@@ -21,7 +21,6 @@
   align-items: center;
   gap: 15px;
   
-  font-family: "Atkinson Hyperlegible", sans-serif;
   text-align: center;
   color: #333;
 }
@@ -41,7 +40,7 @@
 .prelogin-container p {
   all: unset;
   font-family: "Atkinson Hyperlegible", sans-serif;
-  font-size: 16px;
+  font-size: 21px;
   color: #1e1e1e;
   line-height: 1.5;
   max-width: 85%;
@@ -57,7 +56,7 @@
     
 .prelogin-container .link-texto {
     all: unset;
-    font-size: 16px;
+    font-size: 18px;
     color: #4A90E2;
     text-decoration: underline;
     cursor: pointer;
@@ -69,8 +68,8 @@
 }
 
 .texto-separador {
-    font-size: 14px;
-    color: #666;
+    font-size: 16px;
+    color: #4c4c4c;
 }
 
 .login-container {

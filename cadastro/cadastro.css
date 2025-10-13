@@ -16,6 +16,7 @@ body {
     background: linear-gradient(0deg, #171a66 100%), lightgray 50% / cover no-repeat;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(1px);
+    
     padding: 40px;
     width: 80%;
     max-width: 700px;
@@ -39,8 +40,6 @@ body {
     align-items: center; 
 }
 
-
-
 .seta {
     width: 24px;
  
@@ -48,7 +47,7 @@ body {
 
 .titulo {
     color: white;
-    font-family: Poppins, sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 25px;
     font-weight: 600;
     margin: 0 auto;
@@ -67,12 +66,12 @@ body {
 .campo {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 5px; 
 }
 
 .campo label {
     color: white;
-    font-family: Poppins, sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 15px;
 }
 
@@ -86,9 +85,13 @@ body {
     background: #d4e9ff;
     padding: 0 12px;
     font-size: 14px;
-    color: #333;
+    color: #818181;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     outline: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.3);
 }
 
 .input-acess {
@@ -98,10 +101,14 @@ body {
 }
 
 .icone-seta {
-    width: 18px;
     position: absolute;
-    right: 10px;
-    cursor: pointer;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px; 
+    color: #000000; 
+    pointer-events: none; 
+    transition: transform 0.5s ease;
 }
 
 .gaveta-acess {
@@ -128,24 +135,32 @@ body {
     background-color: #fc9700;
     color: white;
     width: 240px;
-    height: 45px;
+    height: 55px;;
     border-radius: 10px;
     margin-top: 35px;
     border: none;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 22px;
+}
+
+.botao:hover {
+    background-color: #e68500;
 }
 
 .ja, .ou {
     color: white;
-    font-family: Poppins, sans-serif;
-    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
     margin-top: 15px;
 }
 
 .ja a {
     color: #f9a01b;
     text-decoration: none;
+}
+
+.ja a:hover {
+    color: #ffbe5d
 }
 
 .opcoes {
@@ -160,10 +175,10 @@ body {
     justify-content: center;
     gap: 10px;
     color: white;
-    font-size: 13px;
+    font-size: 15px;
     border: solid #FFF 1px;
     border-radius: 15px;
-    padding: 10px;
+    padding: 5px;
     width: 180px;
     cursor: pointer;
 }
@@ -208,19 +223,101 @@ body {
     width: 200px; 
 }
 
-input[type="date"] {
-    color: #333;
+.campo-acess, .campo-genero {
+    position: relative; 
+    user-select: none; 
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.3);
-    color: #333;
+.input-acess {
+    cursor: pointer; 
+    position: relative; 
 }
 
-select option:first-child {
-    color: #333;
+.input-acess input[readonly] {
+    cursor: pointer; 
+    background-color: #d4e9ff; 
 }
 
-select option {
-    color: #333;
+.icone-seta {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    fill: #60a1ea;
+    transition: transform 0.3s ease; 
+    pointer-events: none; 
+}
+
+.campo-acess.aberto .icone-seta {
+    transform: translateY(-50%) rotate(180deg); 
+}
+
+.gaveta-acess {
+    display: none; 
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    right: 0;
+    background-color: #d4e9ff;
+    border: 2px solid #60a1ea;
+    border-radius: 12px;
+    z-index: 10; 
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    animation: fadeSlide 0.2s ease;
+    flex-direction: column;
+    align-items: stretch; 
+}
+
+.campo-acess.aberto .gaveta-acess {
+    display: flex; 
+}
+
+.gaveta-acess label {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    padding: 8px 12px;
+    color: #2D2D2D;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    font-size: 15px; 
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s;
+    margin: 4px 0; 
+}
+
+.gaveta-acess label:hover {
+    background-color: #bcd6f6;
+}
+
+.gaveta-acess input[type="checkbox"] {
+    
+    all: unset; 
+    display: block;
+    width: 25px; 
+    height: 25px;
+    min-width: 25px; 
+    border-radius: 6px;
+    border: 2px solid #60a1ea;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); 
+    cursor: pointer;
+    
+    -webkit-appearance: checkbox;
+    appearance: checkbox;
+}
+
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
