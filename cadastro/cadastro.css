@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+
 body {
     background: linear-gradient(180deg, #d4e9ff 27%, #82b4ff 100%);
     backdrop-filter: blur(2px);
@@ -6,6 +8,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Atkinson Hyperlegible";
 }
 
 .box {
@@ -16,7 +19,7 @@ body {
     padding: 40px;
     width: 80%;
     max-width: 700px;
-    max-height: 80vh;
+    max-height: 75vh;
     overflow-y: auto;
 
     position: absolute;
@@ -203,4 +206,21 @@ body {
     display: block;
     margin: 0 auto 15px auto;
     width: 200px; 
+}
+
+input[type="date"] {
+    color: #333;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.3);
+    color: #333;
+}
+
+select option:first-child {
+    color: #333;
+}
+
+select option {
+    color: #333;
 }

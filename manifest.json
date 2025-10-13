@@ -13,10 +13,10 @@
       "exclude_matches": [
         "*://127.0.0.1/cadastro/*",
         "*://127.0.0.1/login/*",
-        "*://127.0.0.1/prelogin/*"
+        "*://127.0.0.1/configs/*"
       ],
       "js": ["content.js"],
-      "css": ["index/index.css"]
+      "css": ["main/main.css"]
     }
   ],
   "web_accessible_resources": [

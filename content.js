@@ -98,23 +98,4 @@ function guiaInicial() {
     });
 }
 
-// function iniciar(){
-//   const currentURL = window.location.href;
-  
-//   const urlsBloqueadas = [
-//     "https://127.0.0.5000/cadastro/cadastro.html",
-//     "https://127.0.0.5000/login/login.html",
-//     "https://127.0.0.5000/configs/configs.html" 
-//   ];
-  
-//   if (!currentURL.startsWith(urlsBloqueadas)) {
-//     guiaInicial();
-//   } else {
-//     console.log("Guia não exibida na página de cadastro/login.");
-//   }
-// }
-
-
-// iniciar();
-
 guiaInicial();

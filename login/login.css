@@ -8,13 +8,6 @@ body {
     grid-template-rows: repeat(17, 1fr);
     margin: 0;
 }
-
-.bru-guia{
-    width: 450px;
-    grid-column: 13 / 14;
-    grid-row: 9 / 17;
-
-}
  
 .login {
     display: grid;
@@ -23,10 +16,14 @@ body {
     grid-column: 5 / 11;
     grid-row: 2 / 17;
     border-radius: 20px;
+
     background: linear-gradient(0deg, #171a66 100%), lightgray 50% / cover no-repeat;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(1.5px);
     padding: 20px;
+
+    max-height: 100vh;
+    overflow-y: auto;
 }
  
 .logopluma {
@@ -77,11 +74,11 @@ body {
 }
 
 .emailcaixa input {
-    width: 100%; /* Faz o input ocupar toda a largura disponível */
+    width: 100%;
     border: none;
     outline: none;
     background: transparent;
-    padding: 5px 10px; /* Ajuste o padding conforme necessário */
+    padding: 5px 10px;
     font-size: 17px;
     color: #333;
     font-family: "Poppins", Sans-Serif;
@@ -105,11 +102,11 @@ body {
 }
 
 .senha input {
-    width: 100%; /* Faz o input ocupar toda a largura disponível */
+    width: 100%;
     border: none;
     outline: none;
     background: transparent;
-    padding: 5px 10px; /* Ajuste o padding conforme necessário */
+    padding: 5px 10px;
     font-size: 17px;
     color: #333;
     font-family: "Poppins", Sans-Serif;
@@ -137,17 +134,11 @@ body {
  
 .lembrar {
     grid-column: 1 / 4;
-    grid-row: 4 / 6;
+    grid-row: 5 / 6;
     display: flex;
-    align-items: center; /* Alinha todos os itens na vertical */
-    justify-content: space-between; /* Espaço entre os itens */
+    align-items: top;
+    justify-content: space-between;
     margin: -1px 15% 0;
-}
-
-.lembrar div {
-    display: flex;
-    align-items: center; 
-    width: auto;
 }
 
 .lembrar label {
@@ -171,28 +162,39 @@ body {
     font-size: 14px;
     margin-left: 10px; 
     margin: 0px;
+    cursor: pointer;
 }
 
- 
+#esquecisenha:hover {
+    color: #85b3fd;
+}
+
 .botaologin {
     grid-column: 1 / 4;
     grid-row: 5 / 6;
-    border-radius: 10px;
+
     background: #fc9700;
+    border: 0;
+    border-radius: 10px;
+    
     display: flex;
     justify-content: center;
     align-items: center;
+    
     width: 50%;
     height: 60%;
     margin: auto;
     margin-top: 5%;
-}
- 
-.botaologin h2 {
+
     color: #ffffff;
     font-family:"Poppins", sans-serif;
     font-size: 23px;
     font-weight: 400;
+}
+
+.botaologin:hover {
+    background-color: #e68500;
+    cursor: pointer;
 }
  
 .semconta {
@@ -222,6 +224,10 @@ body {
     font-size: 14px;
 }
 
+.semconta a:hover {
+    color: #85b3fd;
+}
+
 .outro {
     grid-column: 1 / 4;
     grid-row: 7 /8;
@@ -240,6 +246,10 @@ body {
     height: 40%;
     align-items: center;
     padding: 5px;
+}
+
+.google:hover{
+    cursor: pointer;
 }
 
 .google img {
@@ -264,6 +274,10 @@ body {
     height: 40%;
     align-items: center;
     padding: 5px;
+}
+
+.facebook:hover{
+    cursor: pointer;
 }
 
 .facebook img {
