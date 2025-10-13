@@ -1,16 +1,12 @@
-/* Removemos o 'display: flex' do body pois não estava afetando estes elementos específicos. */
-
 /* ESTILOS DE BASE (MOBILE FIRST) */
-/* Estes estilos se aplicam a telas pequenas, como as de celulares. */
 .div-guia {
     position: fixed;
     right: 0;
     bottom: 0;
     
-    /* Em telas pequenas, a guia ocupa mais largura para ser visível, mas tem altura menor para não poluir a tela. */
     width: 50%;
     height: 60%;
-    max-width: 280px; /* Impede que a imagem fique muito grande, mesmo em 50% de uma tela larga. */
+    max-width: 300px;
     
     pointer-events: none;
     z-index: 999999;
@@ -18,13 +14,12 @@
     background-image: url("https://raw.githubusercontent.com/marianacoronado19/Pluma-Acessibilidade/main/images/assistente/bru_nova.png");
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: bottom right; /* Ancora a imagem no canto para um redimensionamento mais estável. */
+    background-position: bottom right; 
 }
 
 .botao-config {
     position: relative;
     
-    /* Usar padding é mais flexível que altura fixa. */
     height: auto;
     padding: 8px 16px;
     
@@ -32,13 +27,11 @@
     border: 0;
     border-radius: 20px;
     
-    /* Fonte um pouco menor para telas pequenas. */
     font-size: 14px;
     font-family: "Atkinson Hyperlegible", sans-serif;
     font-weight: bold;
-    white-space: nowrap; /* Impede que o texto "Configurar" quebre em duas linhas. */
+    white-space: nowrap; 
     
-    /* Posição ajustada para as novas dimensões do container em telas pequenas. */
     left: 15%;
     top: 35%;
     
@@ -48,17 +41,14 @@
 
 
 /* TABLETS E DESKTOPS */
-/* A @media query aplica estes estilos SOMENTE se a largura da tela for 768px ou maior. */
 @media (min-width: 768px) {
     .div-guia {
-        /* Voltamos para valores mais próximos do original, adequados para telas maiores. */
         width: 36%;
         height: 95%;
-        max-width: 450px; /* Limite máximo para não ficar gigante em monitores muito grandes. */
+        max-width: 450px;
     }
 
     .botao-config {
-        /* Restauramos o tamanho e posição originais para telas maiores. */
         padding: 10px 20px;
         font-size: 16px;
         left: 20%;

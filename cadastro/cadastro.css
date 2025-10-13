@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
-
 body {
     background: linear-gradient(180deg, #d4e9ff 27%, #82b4ff 100%);
     backdrop-filter: blur(2px);
@@ -8,69 +6,58 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Atkinson Hyperlegible", sans-serif;
 }
 
 .box {
-    all: unset;
-    position: fixed;
+    border-radius: 20px;
+    background: linear-gradient(0deg, #171a66 100%), lightgray 50% / cover no-repeat;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(1px);
+    padding: 40px;
+    width: 80%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 550px;
-    max-width: 90%;
-    max-height: 80vh;
-    padding: 30px 25px;
-    background-color: #EAF2FD;
-    border-radius: 20px;
-    border: 3px solid #4A90E2;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    z-index: 999999;
-
+    
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    text-align: center;
-    color: #333;
-    overflow-y: auto;
 }
 
 #form-cadastro {
-    width: 100%;
+    width: 100%; 
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; 
 }
 
-.tituloseta {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
+
 
 .seta {
     width: 24px;
+ 
 }
 
 .titulo {
-    font-family: "Atkinson Hyperlegible", sans-serif;
-    font-size: 22px;
-    font-weight: bold;
     color: white;
-    background-color: #60a1ea;
-    padding: 10px 25px;
-    border-radius: 10px;
-    margin: 0 auto 10px;
+    font-family: Poppins, sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    margin: 0 auto;
     text-align: center;
+    padding-bottom: 3dvh;
 }
 
 .grid-form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 40px;
-    width: 100%;
+    grid-template-columns: 1fr 1fr; 
+    gap: 10px 40px; 
+    width: 100%; 
     box-sizing: border-box;
 }
 
@@ -81,22 +68,23 @@ body {
 }
 
 .campo label {
-    font-family: "Atkinson Hyperlegible", sans-serif;
+    color: white;
+    font-family: Poppins, sans-serif;
     font-size: 15px;
-    color: #1e1e1e;
 }
 
 .campo input,
 .campo select {
     width: 100%;
+    max-width: 100%;
     height: 45px;
-    border-radius: 10px;
-    border: 2px solid #4A90E2;
-    background: #F2F9FF;
+    border-radius: 16px;
+    border: 2px solid #60a1ea;
+    background: #d4e9ff;
     padding: 0 12px;
     font-size: 14px;
     color: #333;
-    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     outline: none;
 }
 
@@ -116,8 +104,8 @@ body {
 .gaveta-acess {
     display: none;
     flex-direction: column;
-    background: #F2F9FF;
-    border: 2px solid #4A90E2;
+    background: #d4e9ff;
+    border: 2px solid #60a1ea;
     border-radius: 10px;
     padding: 10px;
     margin-top: 5px;
@@ -125,7 +113,6 @@ body {
 }
 
 .gaveta-acess label {
-    font-family: "Atkinson Hyperlegible", sans-serif;
     font-size: 13px;
     color: #2D2D2D;
     margin-bottom: 5px;
@@ -135,35 +122,27 @@ body {
 }
 
 .botao {
-    all: unset;
-    padding: 15px 50px;
-    font-size: 18px;
-    background-color: #4A90E2;
+    background-color: #fc9700;
     color: white;
-    border-radius: 8px;
+    width: 240px;
+    height: 45px;
+    border-radius: 10px;
+    margin-top: 35px;
+    border: none;
     cursor: pointer;
-    font-family: "Atkinson Hyperlegible", sans-serif;
-    font-weight: bold;
-    transition: background-color 0.2s;
-    margin-top: 25px;
-}
-
-.botao:hover {
-    background-color: #357ABD;
+    font-size: 18px;
 }
 
 .ja, .ou {
-    font-family: "Atkinson Hyperlegible", sans-serif;
+    color: white;
+    font-family: Poppins, sans-serif;
     font-size: 14px;
-    color: #333;
     margin-top: 15px;
 }
 
 .ja a {
-    color: #4A90E2;
-    text-decoration: underline;
-    cursor: pointer;
-    font-weight: bold;
+    color: #f9a01b;
+    text-decoration: none;
 }
 
 .opcoes {
@@ -177,39 +156,51 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-family: "Atkinson Hyperlegible", sans-serif;
-    font-size: 14px;
     color: white;
-    border: none;
+    font-size: 13px;
+    border: solid #FFF 1px;
     border-radius: 15px;
-    padding: 10px 15px;
+    padding: 10px;
+    width: 180px;
     cursor: pointer;
 }
 
-.google {
-    background-color: #DB4437;
-}
-
-.facebook {
-    background-color: #4267B2;
-}
-
 .google img, .facebook img {
-    width: 20px;
+    width: 25px;
 }
+
+.box::-webkit-scrollbar {
+    width: 9px; 
+}
+
+.box::-webkit-scrollbar-track {
+    border-radius: 0px;
+}
+
+.box::-webkit-scrollbar-thumb {
+    background-color: #60a1ea; 
+    border-radius: 10px;
+}
+
 
 @media (max-width: 700px) {
     .grid-form {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 20px;
     }
 
     .box {
         width: 90%;
-        padding: 20px;
+        padding: 25px;
     }
 
     .botao {
         width: 100%;
     }
+}
+
+.logo-pluma {
+    display: block;
+    margin: 0 auto 15px auto;
+    width: 200px; 
 }
