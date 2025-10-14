@@ -100,7 +100,7 @@ function guiaInicial() {
 
 guiaInicial();
 
-// TO-DO: 
+// TO-DO:
 // Ajustar o CSS para telas menores (responsividade);
 // Lógica cadastro/login (back-end);
 // Sessao do usuário (manter logado);

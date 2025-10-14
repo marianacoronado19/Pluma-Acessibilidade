@@ -1,167 +1,107 @@
 body {
-    background: linear-gradient(180deg, #d4e9ff 27%,  #82b4ff 100%);
-    background-size: cover;
-    backdrop-filter: blur(2px);
-    height: 120vh;
-    display: grid;
-    grid-template-columns: repeat(14, 1fr);
-    grid-template-rows: repeat(17, 1fr);
+    background: linear-gradient(180deg, #d4e9ff 27%, #82b4ff 100%);
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
 }
- 
+
 .login {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    grid-column: 5 / 11;
-    grid-row: 2 / 17;
-    border-radius: 20px;
-
-    background: linear-gradient(0deg, #171a66 100%), lightgray 50% / cover no-repeat;
+    gap: 15px;
+    
+    width: 100%;
+    max-width: 475px;
+    
+    background: #171a66;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(1.5px);
-    padding: 20px;
-
-    max-height: 100vh;
-    overflow-y: auto;
+    
+    border-radius: 20px;
+    padding: 40px;
+    color: white;
 }
- 
+
 .logopluma {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
+    grid-column: 1 / 4;
+    justify-self: center;
+    width: 210px;
     object-fit: contain;
-    margin: auto;
 }
 
 .bemvindo {
     grid-column: 1 / 4;
-    grid-row: 2 / 3;
-    font-family:"Poppins", Sans-Serif;
-    color: white;
-    font-size: 25px;
     text-align: center;
+    font-size: 25px;
 }
- 
+
 #logintxt {
-    font-family:"Poppins", Sans Serif;
     font-size: 18px;
-    color: white;
+    font-weight: 400;
 }
 
-.informacoes1 {
+.informacoes1, .informacoes2 {
     grid-column: 1 / 4;
-    grid-row: 3 / 4;
-    font-family:"Poppins", Sans-Serif;
     font-size: 14px;
-    color: white;
-    margin: 0 15%;
+    margin: 0 10%; 
 }
 
-#e-mail {
+#e-mail, #senhaindi {
     margin: 0 0 5px 0;
     font-size: 18px;
     font-weight: 500;
 }
 
-.emailcaixa {
+.emailcaixa, .senha {
     border-radius: 16px;
     border: 2px solid #60a1ea;
     background: #d4e9ff;
+
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 6px;
 }
 
-.emailcaixa input {
+.emailcaixa input, .senha input {
     width: 100%;
     border: none;
     outline: none;
     background: transparent;
     padding: 5px 10px;
+
     font-size: 17px;
     color: #333;
-    font-family: "Poppins", Sans-Serif;
+    font-family: "Poppins", sans-serif;
 }
 
-#texto1 {
-    color: rgb(98, 164, 239);
-    font-family: "Poppins", Sans-Serif;
-}
-
-.senha {
-    grid-column: 2 / 11;
-    grid-row: 8 / 10;
-    border-radius: 16px;
-    border: 2px solid #60a1ea;
-    background: #d4e9ff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 6px;
-}
-
-.senha input {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 5px 10px;
-    font-size: 17px;
-    color: #333;
-    font-family: "Poppins", Sans-Serif;
-}
-
-#texto2 {
-    color: rgb(98, 164, 239);
-    font-family: "Poppins", Sans Serif;
-}
-
-.informacoes2 {
-    grid-column: 1 / 4;
-    grid-row: 4 / 5;
-    font-family:"Poppins", sans-serif;
-    font-size: 14px;
-    color: white;
-    margin: 0 15%;
-}
- 
-#senhaindi {
-    margin: 0 0 5px 0;
-    font-size: 15px;
-    font-weight: 500;
-}
- 
 .lembrar {
     grid-column: 1 / 4;
-    grid-row: 5 / 6;
+    margin: 0 10%;
     display: flex;
-    align-items: top;
+    align-items: center;
     justify-content: space-between;
-    margin: -1px 15% 0;
+
+    font-size: 14px;
 }
 
 .lembrar label {
-    color: #ffffff;
-    font-family:"Poppins", Sans-Serif;
-    font-size: 14px;
-    font-weight: 300;
     padding-left: 5px;
-
+    font-weight: 300;
 }
 
 #lembrar-me {
     transform: scale(1.4);
-    accent-color: #60a1ea
+    accent-color: #60a1ea;
 }
 
 #esquecisenha {
     color: #0866ff;
     text-decoration: underline;
-    font-family:"Poppins", Sans-Serif;
-    font-size: 14px;
-    margin-left: 10px; 
-    margin: 0px;
     cursor: pointer;
 }
 
@@ -171,57 +111,46 @@ body {
 
 .botaologin {
     grid-column: 1 / 4;
-    grid-row: 5 / 6;
-
     background: #fc9700;
     border: 0;
     border-radius: 10px;
-    
+
+    height: 50px;
+    width: 60%;
+
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    justify-self: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    width: 50%;
-    height: 60%;
-    margin: auto;
-    margin-top: 5%;
-
-    color: #ffffff;
-    font-family:"Poppins", sans-serif;
-    font-size: 23px;
-    font-weight: 400;
+    margin-top: 10px;
 }
 
 .botaologin:hover {
-    background-color: #e68500;
-    cursor: pointer;
+    background-color: #d27b00;
 }
- 
+
 .semconta {
-    grid-column: 2 / 3;
-    grid-row: 6 /7;
-    color: #ffffff;
-    font-family:"Poppins", Sans Serif;
-    display: flex;
+    grid-column: 1 / 4;
     text-align: center;
-    margin-top: -20px;
+    margin-top: 0;
 }
- 
+
 .semconta h2 {
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 400;
-}
- 
-.semconta span {
-    font-size: 14px;
-    color: #0866ff;
 }
 
 .semconta a {
     color: #0866ff;
     text-decoration: underline;
-    font-family:"Poppins", Sans-Serif;
-    font-size: 14px;
 }
 
 .semconta a:hover {
@@ -230,66 +159,80 @@ body {
 
 .outro {
     grid-column: 1 / 4;
-    grid-row: 7 /8;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-around;
-    margin:auto;
-    margin-top:-20px;
+    gap: 15px;
 }
 
-.google {
+.google, .facebook {
     border-radius: 15px;
     border: 2px solid #FFF;
-    display: flex;
-    width: 35%;
-    height: 40%;
-    align-items: center;
-    padding: 5px;
-}
 
-.google:hover{
+    display: flex;
+    flex-basis: 45%;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px;
     cursor: pointer;
 }
 
-.google img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-}
-
-.google h1 {
-    color: #FFF;
-    font-weight: 400;
-    font-family:"Poppins", Sans-Serif;
-    font-size: 14px;
-    padding-left: 3%;
-}
-
-.facebook {
-    border-radius: 15px;
-    border: 2px solid #FFF;
-    display: flex;
-    width: 35%;
-    height: 40%;
-    align-items: center;
-    padding: 5px;
-}
-
-.facebook:hover{
-    cursor: pointer;
-}
-
-.facebook img {
+.google img, .facebook img {
     width: 35px;
     height: 35px;
     object-fit: contain;
 }
 
-.facebook h1 {
+.google h1, .facebook h1 {
     color: #FFF;
     font-weight: 400;
-    font-family:"Poppins", Sans-Serif;
     font-size: 14px;
-    padding-left: 3%;
+    padding-left: 8px;
+}
+
+/* Telas de até 768px (tablets e celulares grandes) */
+@media (max-width: 768px) {
+    .login {
+        display: flex;
+        flex-direction: column;
+        gap: 20px; 
+        padding: 25px;
+    }
+
+    .botaologin {
+        align-self: center;
+    }
+
+    .informacoes1, .informacoes2, .lembrar {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .outro {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .google, .facebook {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* Para telas de até 480px (celulares) */
+@media (max-width: 480px) {
+    .bemvindo {
+        font-size: 22px;
+    }
+
+    .lembrar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .google h1, .facebook h1 {
+        font-size: 12px;
+    }
 }
