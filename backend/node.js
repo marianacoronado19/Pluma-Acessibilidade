@@ -21,8 +21,6 @@ router.post('/login', async (req, res) => {
         const senhaCorreta = await bcrypt.compare(password, usuario.senha_hash);
  
         if (senhaCorreta) {
-            // Login BEM-SUCEDIDO
-            // Aqui você geraria e retornaria um Token JWT
             return res.status(200).json({
                 message: "Login bem-sucedido!",
                 nome: usuario.nome
@@ -36,5 +34,3 @@ router.post('/login', async (req, res) => {
         return res.status(500).json({ message: "Erro interno do servidor." });
     }
 });
- 
-// module.exports = router;

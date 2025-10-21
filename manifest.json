@@ -7,6 +7,9 @@
     "activeTab",
     "scripting"
   ],
+  "host_permissions": [
+    "http://localhost:3000/"
+  ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -22,10 +25,10 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "images/assistente/bru_nova.png",
-        "images/elementos/fundo_login.png",
-        "images/elementos/fundo_login.png",
-        "stylesheets/prelogin.css"
+        "images/*",
+        "pages/*.html",
+        "stylesheets/*",
+        "js/*"
     ],
       "matches": ["<all_urls>"]
     }

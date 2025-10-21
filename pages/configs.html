@@ -10,7 +10,7 @@
     <link rel="icon" href="/images/logoPluma/icon-32.png" type="image/x-icon">
 
     <title>Extensão Pluma 🪶</title>
-</head>
+</head> 
 <body>
     <script src="/js/cadastro.js"></script>
     <div class="box">
@@ -25,24 +25,81 @@
             <p class="titulo">Configurações de preferências</p>
         </div>
 
-        <!-- <form id="form-cadastro">
+        <form id="form-cadastro">
             <div class="grid-form">
                 <div class="campo">
-                    <label for="nome">Nome Completo</label>
-                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+                   <label>Temas prontos</label>
+                    <div class="tema-selecao-container">
+    
+                        <button type="button" class="tema-botao" data-theme="padrao">
+                            <img src="/images/elementos/contraste1.png" alt="Miniatura do Tema Padrão" title="Tema Padrão" />
+                        </button>
+    
+                        <button type="button" class="tema-botao" data-theme="leitura">
+                            <img src="/images/elementos/contraste2.png" alt="Miniatura do Tema Leitura" title="Tema Leitura" />
+                        </button>
+    
+                        <button type="button" class="tema-botao" data-theme="contraste-claro">
+                            <img src="/images/elementos/contraste3.png" alt="Miniatura do Tema de Contraste Claro" title="Tema Contraste Claro" />
+                        </button>
+
+                        <button type="button" class="tema-botao" data-theme="contraste-escuro">
+                            <img src="/images/elementos/contraste4.png" alt="Miniatura do Tema de Alto Contraste Escuro" title="Tema Alto Contraste Escuro" />
+                        </button>
+                    </div>
+                </div>
+ 
+                <div class="campo">
+                    <div class="campo tema-campo-completo">
+                        <label>Personalização de cor</label>
+    
+                        <div class="cores-selecao-container">
+                            
+                            <div class="cor-item">
+                                <input type="color" id="cor-texto" name="cor-texto" value="#FFFFFF" data-prop="text-color" />
+                                <label for="cor-texto">Texto</label>
+                            </div>
+
+                            <div class="cor-item">
+                                <input type="color" id="cor-hiperlink" name="cor-hiperlink" value="#FFFF00" data-prop="link-color" />
+                                <label for="cor-hiperlink">Hiperlink</label>
+                            </div>
+
+                            <div class="cor-item">
+                                <input type="color" id="cor-desabilitado" name="cor-desabilitado" value="#00FF00" data-prop="disabled-color" />
+                                <label for="cor-desabilitado">Texto desabilitado</label>
+                            </div>
+
+                            <div class="cor-item-vertical-group">
+                                
+                                <div class="cor-item cor-composta" id="cor-selecionado">
+                                    <div class="cor-composta-inputs">
+                                        <input type="color" id="cor-selecionado-fundo" name="cor-selecionado-fundo" value="#000000" data-prop="selected-bg" />
+                                        <input type="color" id="cor-selecionado-texto" name="cor-selecionado-texto" value="#00FFFF" data-prop="selected-text" />
+                                    </div>
+                                    <label>Texto selecionado</label>
+                                </div>
+
+                                <div class="cor-item cor-composta" id="cor-botao">
+                                    <div class="cor-composta-inputs">
+                                        <input type="color" id="cor-botao-texto" name="cor-botao-texto" value="#FFFFFF" data-prop="button-text" />
+                                        <input type="color" id="cor-botao-fundo" name="cor-botao-fundo" value="#000000" data-prop="button-bg" />
+                                    </div>
+                                    <label>Texto do botão</label>
+                                </div>
+                                
+                            </div>
+
+                            <div class="cor-item">
+                                <input type="color" id="cor-fundo" name="cor-fundo" value="#000000" data-prop="background-color" />
+                                <label for="cor-fundo">Tela de fundo</label>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
-                <div class="campo">
-                    <label for="telefone">Telefone</label>
-                    <input type="tel" id="telefone" name="telefone" placeholder="Digite seu telefone" required>
-                </div>
-
-                <div class="campo">
-                    <label for="nascimento">Data de Nascimento</label>
-                    <input type="date" id="nascimento" name="nascimento" required>
-                </div>
-
-                <div class="campo">
+               <!-- <div class="campo">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Digite seu email" required>
                 </div>
@@ -86,10 +143,10 @@
                 </div>
             </div>
 
-            <button type="submit" class="botao">Cadastrar-se</button>
-        </form>
+            <button type="submit" class="botao">Cadastrar-se</button> -->
+        </form> 
 
-        <p class="ja">Já possui uma conta? Faça <a href="../login/login.html">login</a></p>
+        <!-- <p class="ja">Já possui uma conta? Faça <a href="../login/login.html">login</a></p>
         <p class="ou">- OU -</p>
 
         <div class="opcoes">
@@ -100,8 +157,8 @@
             <div class="facebook">
                 <img src="../images/login/Facebook.png" alt="Facebook">
                 <p>Cadastrar-se com Facebook</p>
-            </div>
-        </div>
-    </div> -->
+            </div> 
+        </div> -->
+    </div>
 </body>
 </html>

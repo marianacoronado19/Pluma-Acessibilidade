@@ -79,6 +79,29 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
+.senha {
+    position: relative;
+}
+
+.senha input {
+    width: 100%;
+    box-sizing: border-box; 
+    padding-right: 40px; 
+}
+
+#togglePassword {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #150a7b;
+}
+
+#togglePassword:hover {
+    color: #466cd2;
+}
+
 .lembrar {
     grid-column: 1 / 4;
     margin: 0 10%;
@@ -135,6 +158,23 @@ body {
 
 .botaologin:hover {
     background-color: #d27b00;
+}
+
+#mensagem-status {
+  display: none;
+  font-weight: bold;
+  text-align: center; 
+
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+
+  grid-column: 1 / 4;
+  transition: all 0.2s ease;
+}
+
+#mensagem-status.visivel {
+  display: block;
 }
 
 .semconta {
@@ -220,7 +260,7 @@ body {
     }
 }
 
-/* Para telas de até 480px (celulares) */
+
 @media (max-width: 480px) {
     .bemvindo {
         font-size: 22px;
