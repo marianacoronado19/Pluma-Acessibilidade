@@ -40,6 +40,11 @@
 
 ---
 
+## 🛠️ Implantação do projeto
+   - Para conexão com um banco de dados utilizamos JavaScript e Node.js, além de bcrypt para melhor segurança de senhas
+   - Para inicialização de package.json: `npm init -y`
+   - Para instalação de outras dependências: `npm install express cors mysql2 bcrypt`
+
 ## 👥 Equipe
 - Luana Bitencourt OLiveira
 - Luiza Fregonesi Castelucci

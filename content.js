@@ -5,7 +5,7 @@ function injetarPreLoginCSS() {
   linkElement.id = 'pluma-prelogin-style';
   linkElement.rel = 'stylesheet';
   linkElement.type = 'text/css';
-  linkElement.href = chrome.runtime.getURL('prelogin/prelogin.css');
+  linkElement.href = chrome.runtime.getURL('stylesheets/prelogin.css');
   document.head.appendChild(linkElement);
 }
 
@@ -25,7 +25,7 @@ function criarPopupPreLogin() {
   acaoInicialContainer.classList.add('acao-inicial-container');
 
   const linkCadastro = document.createElement('a');
-  linkCadastro.href = 'http://127.0.0.1:5500/cadastro/cadastro.html';
+  linkCadastro.href = 'http://127.0.0.1:5500/pages/cadastro.html';
   linkCadastro.textContent = 'Sim, cadastrar-me!';
   linkCadastro.classList.add('link-texto');
 
@@ -34,7 +34,7 @@ function criarPopupPreLogin() {
   textoOu.classList.add('texto-separador');
 
   const linkAnonimo = document.createElement('a');
-  linkAnonimo.href = 'http://127.0.0.1:5500/configs/configs.html';
+  linkAnonimo.href = 'http://127.0.0.1:5500/pages/configs.html';
   linkAnonimo.textContent = 'Não, usar anonimamente...';
   linkAnonimo.classList.add('link-texto');
 
@@ -70,7 +70,7 @@ function criarPopupPreLogin() {
   document.body.appendChild(containerPrincipal);
 
   botaoLogin.addEventListener('click', () => {
-    window.location.href = 'http://127.0.0.1:5500/login/login.html'
+    window.location.href = 'http://127.0.0.1:5500/pages/login.html'
   });
 
   botaoFechar.addEventListener('click', () => {
@@ -101,7 +101,7 @@ function guiaInicial() {
 guiaInicial();
 
 // TO-DO:
-// Ajustar o CSS para telas menores (responsividade);
+// Ajustar o CSS para telas menores (responsividade); fizemo(?)
 // Lógica cadastro/login (back-end);
 // Sessao do usuário (manter logado);
 // Fazer logout;
