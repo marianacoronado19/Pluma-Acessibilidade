@@ -50,14 +50,28 @@ body {
  
 }
 
+.tituloseta {
+    display: flex; 
+    justify-content: space-between; /* Mantém Aplicar na direita */
+    align-items: center; 
+    width: 100%; 
+    margin-bottom: 20px; 
+    position: relative; 
+}
+
 .titulo {
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 25px;
     font-weight: 600;
-    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
     text-align: center;
     padding-bottom: 3dvh;
+    width: auto;
+    z-index: 1;
 }
 
 .grid-form {
@@ -452,7 +466,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 0;
     left: 0; 
     height: 100%;
-    width: 250px; 
+    width: 300px; 
     
     z-index: 9999; /* CRÍTICO: Fica acima de TUDO na tela */
     
@@ -795,6 +809,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     -moz-appearance: none;
     appearance: none; 
 }
+
 /* Já tínhamos esta classe, vamos garantir que funcione bem */
 .slider-container {
     display: flex;
@@ -809,4 +824,62 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: bold;
     margin-top: 5px;
     color: var(--link-color); /* Destaca o valor atual */
+}
+
+.toggle-aplicar-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    padding: 5px 10px;
+    border-radius: 8px;
+    margin-right: 0px; /* GARANTE QUE ESTEJA COLADO NA DIREITA */
+    flex-shrink: 0; /* Impede que o container do botão encolha */
+    flex-shrink: 0; 
+    z-index: 2;
+}
+
+.toggle-aplicar-container span {
+    font-weight: 700; /* Deixa bem negrito */
+    font-size: 18px; /* Aumenta o tamanho (era 16px) */
+    color: white; 
+    /* Adicione uma leve sombra para destacar o texto */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); 
+}
+
+.swicth {
+    position: relative;
+    display: block;
+    width: 55px; /* Largura total do switch (Ajuste se necessário) */
+    height: 30px; /* Altura total do switch (Ajuste se necessário) */
+    border-radius: 15px; /* Metade da altura para ser oval */
+    background-color: #474d9e; /* Fundo padrão (desligado) */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.swicth::before { /* A "bolinha" do switch */
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px; /* Tamanho da bolinha */
+    height: 24px; /* Tamanho da bolinha */
+    border-radius: 50%;
+    background-color: #f0f0f0; 
+    transition: transform 0.3s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+input[type="checkbox"]:checked + .swicth {
+    background-color: #fc9700; /* Laranja de destaque (Ligado) */
+}
+
+input[type="checkbox"]:checked + .swicth::before {
+    transform: translateX(25px); /* Move a bolinha para a direita: (Largura do switch - Altura da bolinha - 2*Padding) */
+}
+
+/* Esconde o input real */
+.toggle-aplicar-container input[type="checkbox"] {
+    display: none;
 }

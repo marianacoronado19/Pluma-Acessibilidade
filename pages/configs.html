@@ -56,145 +56,162 @@
             </a>
         </div>
     </div>
+
     <button id="open-btn" aria-label="Abrir menu de acessibilidade">
         <span class="material-symbols-outlined">menu</span>
     </button>
+
     <div id="tela-inicial" class="box" data-screen="true"> 
+    <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
 
-        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
-
-        <div class="tituloseta">
-            <p class="titulo">Alto Contraste</p>
+    <div class="tituloseta">
+        <p class="titulo">Alto Contraste</p>
+        <div class="toggle-aplicar-container">
+            <span>Aplicar</span>
+            <input type="checkbox" id="toggle-alto-contraste" name="toggle alto contraste"></input>
+            <label for="toggle-alto-contraste" class="swicth"></label>
         </div>
+    </div>
 
-        <form id="form-cadastro">
-            <div class="grid-form">
-                <div class="campo">
-                    <label>Temas prontos</label>
-                    <div class="tema-selecao-container">
-                        
-                        <button type="button" class="tema-botao" data-theme="padrao">
-                            <img src="/images/elementos/contraste1.png" alt="Miniatura do Tema Padrão" title="Tema Padrão" />
-                        </button>
+    <form id="form-cadastro">
+        <div class="grid-form">
+            
+            <div class="campo">
+                <label>Temas prontos</label>
+                <div class="tema-selecao-container">
+                    
+                    <button type="button" class="tema-botao" data-theme="padrao">
+                        <img src="/images/elementos/contraste1.png" alt="Miniatura do Tema Padrão" title="Tema Padrão" />
+                    </button>
 
-                        <button type="button" class="tema-botao" data-theme="leitura">
-                            <img src="/images/elementos/contraste2.png" alt="Miniatura do Tema Leitura" title="Tema Leitura" />
-                        </button>
+                    <button type="button" class="tema-botao" data-theme="leitura">
+                        <img src="/images/elementos/contraste2.png" alt="Miniatura do Tema Leitura" title="Tema Leitura" />
+                    </button>
 
-                        <button type="button" class="tema-botao" data-theme="contraste-claro">
-                            <img src="/images/elementos/contraste3.png" alt="Miniatura do Tema de Contraste Claro" title="Tema Contraste Claro" />
-                        </button>
+                    <button type="button" class="tema-botao" data-theme="contraste-claro">
+                        <img src="/images/elementos/contraste3.png" alt="Miniatura do Tema de Contraste Claro" title="Tema Contraste Claro" />
+                    </button>
 
-                        <button type="button" class="tema-botao" data-theme="contraste-escuro">
-                            <img src="/images/elementos/contraste4.png" alt="Miniatura do Tema de Alto Contraste Escuro" title="Tema Alto Contraste Escuro" />
-                        </button>
+                    <button type="button" class="tema-botao" data-theme="contraste-escuro">
+                        <img src="/images/elementos/contraste4.png" alt="Miniatura do Tema de Alto Contraste Escuro" title="Tema Alto Contraste Escuro" />
+                    </button>
 
-                    </div>
-                </div> 
-                <div class="campo"> 
-                    <div class="campo tema-campo-completo">
-                        <label>Personalização de cor</label>
-                        <div class="cores-selecao-container">
-                            <div class="cor-item">
-                                <input type="color" id="cor-texto" name="cor-texto" value="#FFFFFF" data-prop="text-color" />
-                                <label for="cor-texto">Texto</label>
-                            </div>
-
-                            <div class="cor-item">
-                                <input type="color" id="cor-hiperlink" name="cor-hiperlink" value="#FFFF00" data-prop="link-color" />
-                                <label for="cor-hiperlink">Hiperlink</label>
-                            </div>
-
-                            <div class="cor-item">
-                                <input type="color" id="cor-desabilitado" name="cor-desabilitado" value="#00FF00" data-prop="disabled-color" />
-                                <label for="cor-desabilitado">Texto desabilitado</label>
-                            </div>
-
-                            <div class="cor-item-vertical-group">
-
-                                <div class="cor-item cor-composta" id="cor-selecionado">
-                                    <div class="cor-composta-inputs">
-                                        <input type="color" id="cor-selecionado-fundo" name="cor-selecionado-fundo" value="#000000" data-prop="selected-bg" />
-                                        <input type="color" id="cor-selecionado-texto" name="cor-selecionado-texto" value="#00FFFF" data-prop="selected-text" />
-                                    </div>
-                                    <label>Texto selecionado</label>
-                                </div>
-
-                                <div class="cor-item cor-composta" id="cor-botao">
-                                    <div class="cor-composta-inputs">
-                                        <input type="color" id="cor-botao-texto" name="cor-botao-texto" value="#FFFFFF" data-prop="button-text" />
-                                        <input type="color" id="cor-botao-fundo" name="cor-botao-fundo" value="#000000" data-prop="button-bg" />
-                                    </div>
-                                    <label>Texto do botão</label>
-                                </div>
-
-                            </div>
-
-                            <div class="cor-item">
-
-                                <input type="color" id="cor-fundo" name="cor-fundo" value="#000000" data-prop="background-color" />
-                                <label for="cor-fundo">Tela de fundo</label>
-                            </div> 
-                        </div>
-                    </div>
-                </div> 
                 </div>
-            </form> 
+            </div> 
+
+            <hr class="sidebar-divider" style="margin: 20px 0;">
+
+            <div class="campo"> 
+                <div class="campo tema-campo-completo">
+                    <label>Personalização de cor</label>
+                    <div class="cores-selecao-container">
+                        <div class="cor-item">
+                            <input type="color" id="cor-texto" name="cor-texto" value="#FFFFFF" data-prop="text-color" />
+                            <label for="cor-texto">Texto</label>
+                        </div>
+
+                        <div class="cor-item">
+                            <input type="color" id="cor-hiperlink" name="cor-hiperlink" value="#FFFF00" data-prop="link-color" />
+                            <label for="cor-hiperlink">Hiperlink</label>
+                        </div>
+
+                        <div class="cor-item">
+                            <input type="color" id="cor-desabilitado" name="cor-desabilitado" value="#00FF00" data-prop="disabled-color" />
+                            <label for="cor-desabilitado">Texto desabilitado</label>
+                        </div>
+
+                        <div class="cor-item-vertical-group">
+
+                            <div class="cor-item cor-composta" id="cor-selecionado">
+                                <div class="cor-composta-inputs">
+                                    <input type="color" id="cor-selecionado-fundo" name="cor-selecionado-fundo" value="#000000" data-prop="selected-bg" />
+                                    <input type="color" id="cor-selecionado-texto" name="cor-selecionado-texto" value="#00FFFF" data-prop="selected-text" />
+                                </div>
+                                <label>Texto selecionado</label>
+                            </div>
+
+                            <div class="cor-item cor-composta" id="cor-botao">
+                                <div class="cor-composta-inputs">
+                                    <input type="color" id="cor-botao-texto" name="cor-botao-texto" value="#FFFFFF" data-prop="button-text" />
+                                    <input type="color" id="cor-botao-fundo" name="cor-botao-fundo" value="#000000" data-prop="button-bg" />
+                                </div>
+                                <label>Texto do botão</label>
+                            </div>
+
+                        </div>
+
+                        <div class="cor-item">
+
+                            <input type="color" id="cor-fundo" name="cor-fundo" value="#000000" data-prop="background-color" />
+                            <label for="cor-fundo">Tela de fundo</label>
+                        </div> 
+                    </div>
+                </div>
+            </div> 
         </div>
+    </form> 
+</div>
+    
     <div id="tela-fonte" class="box" data-screen="false">
         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
         <div class="tituloseta">
             <p class="titulo">Fontes</p>
+            <div class="toggle-aplicar-container">
+            <span>Aplicar</span>
+            <input type="checkbox" id="toggle-alto-contraste" name="toggle alto contraste"></input>
+            <label for="toggle-alto-contraste" class="swicth"></label>
+        </div>
         </div>
 
        <form id="form-fonte"> 
-        <div class="grid-form">
-            <div class="campo campo-slider">
-                <label>Tamanho da fonte</label>
-                <div class="slider-container">
-                    <span class="tamanho-exemplo-min">A-</span>
-                    <input type="range" id="tamanho-fonte-slider" min="100" max="200" value="100" step="10" />
-                    <span class="tamanho-exemplo-max">A+</span>
+            <div class="grid-form">
+                <div class="campo campo-slider">
+                    <label>Tamanho da fonte</label>
+                    <div class="slider-container">
+                        <span class="tamanho-exemplo-min">A-</span>
+                        <input type="range" id="tamanho-fonte-slider" min="100" max="200" value="100" step="10" />
+                        <span class="tamanho-exemplo-max">A+</span>
+                    </div>
+                    <p class="slider-valor">100%</p>
                 </div>
-                <p class="slider-valor">100%</p>
-            </div>
-    
-            <div class="campo">
-                <label>Estilo da fonte</label>
-                <div class="font-selecao-container">
-                    <button type="button" class="font-botao active" data-font-family="Atkinson Hyperlegible">
-                        <span style="font-family: 'Atkinson Hyperlegible'; font-size: 30px;">Aa</span>
-                        <p>Hiperlegível</p>
-                    </button>
-                    
-                    <button type="button" class="font-botao" data-font-family="serif">
-                        <span style="font-family: serif; font-size: 30px;">Aa</span>
-                        <p>Serif (Clássica)</p>
-                    </button>
-                    
-                    <button type="button" class="font-botao" data-font-family="monospace">
-                        <span style="font-family: monospace; font-size: 30px;">Aa</span>
-                        <p>Monoespaçada</p>
-                    </button>
+        
+                <div class="campo">
+                    <label>Estilo da fonte</label>
+                    <div class="font-selecao-container">
+                        <button type="button" class="font-botao active" data-font-family="Atkinson Hyperlegible">
+                            <span style="font-family: 'Atkinson Hyperlegible'; font-size: 30px;">Aa</span>
+                            <p>Hiperlegível</p>
+                        </button>
+                        
+                        <button type="button" class="font-botao" data-font-family="serif">
+                            <span style="font-family: serif; font-size: 30px;">Aa</span>
+                            <p>Serif (Clássica)</p>
+                        </button>
+                        
+                        <button type="button" class="font-botao" data-font-family="monospace">
+                            <span style="font-family: monospace; font-size: 30px;">Aa</span>
+                            <p>Monoespaçada</p>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="campo campo-exemplo">
+                    <label>Pré-visualização</label>
+                    <p class="exemplo-texto">
+                        O PLUMA é um projeto que visa facilitar a leitura e navegação na web para pessoas com dislexia. Este texto mostra o efeito das suas configurações.
+                    </p>
                 </div>
             </div>
-            
-            <div class="campo campo-exemplo">
-                <label>Pré-visualização</label>
-                <p class="exemplo-texto">
-                    O PLUMA é um projeto que visa facilitar a leitura e navegação na web para pessoas com dislexia. Este texto mostra o efeito das suas configurações.
-                </p>
-            </div>
-        </div>
-    </form>
-</div>
-
-
-
-    <div id="tela-leitura-voz" class="box" data-screen="false">
+        </form>
+    </div> <div id="tela-leitura-voz" class="box" data-screen="false">
         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
         <div class="tituloseta">
             <p class="titulo">Leitura em Voz Alta</p>
+            <div class="toggle-aplicar-container">
+            <span>Aplicar</span>
+            <input type="checkbox" id="toggle-alto-contraste" name="toggle alto contraste"></input>
+            <label for="toggle-alto-contraste" class="swicth"></label>
+        </div>
         </div>
         <form id="form-leitura-voz">
             <div class="grid-form">
@@ -252,7 +269,99 @@
         <div class="campo-exemplo status-leitura">
             <label>Instruções</label>
             <p>Para iniciar a leitura, selecione um bloco de texto na página e clique em **Reproduzir**.</p>
+        </div>
+
+    </div> <div id="tela-legendas" class="box" data-screen="false">
+        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+        
+        <div class="tituloseta">
+            <p class="titulo">Legendas Automáticas</p>
+            <div class="toggle-aplicar-container">
+            <span>Aplicar</span>
+            <input type="checkbox" id="toggle-alto-contraste" name="toggle alto contraste"></input>
+            <label for="toggle-alto-contraste" class="swicth"></label>
+        </div>
+        </div>
+
+        <form id="form-legendas">
+            <div class="grid-form">
+                
+                <div class="campo campo-toggle">
+                    <label for="legendas-toggle">Ativar Legendas Automáticas</label>
+                    <div class="toggle-container">
+                        <input type="checkbox" id="legendas-toggle" class="toggle-switch">
+                        <label for="legendas-toggle" class="toggle-label"></label>
+                    </div>
+                </div>
+
+                <hr class="sidebar-divider" style="margin: 20px 0;">
+
+                <div class="campo">
+                    <label for="legenda-fonte-select">Tipo de Fonte da Legenda</label>
+                    <select id="legenda-fonte-select" name="legenda-fonte-select">
+                        <option value="Atkinson Hyperlegible" selected>Hiperlegível (Atkinson)</option>
+                        <option value="sans-serif">Sans-serif (Padrão)</option>
+                        <option value="monospace">Monoespaçada</option>
+                        <option value="cursive">Cursiva (Evitar!)</option>
+                    </select>
+                </div>
+                
+                <div class="campo">
+                    <label for="legenda-fundo-cor">Cor de Fundo da Legenda</label>
+                    <div class="cores-selecao-container">
+                        <input type="color" id="legenda-fundo-cor" name="legenda-fundo-cor" value="#000000" data-prop="legenda-bg">
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="legenda-texto-cor">Cor do Texto da Legenda</label>
+                    <div class="cores-selecao-container">
+                        <input type="color" id="legenda-texto-cor" name="legenda-texto-cor" value="#FFFF00" data-prop="legenda-text">
+                    </div>
+                </div>
+
+                <div class="campo campo-slider">
+                    <label>Tamanho da Fonte da Legenda</label>
+                    <div class="slider-container">
+                        <span class="tamanho-exemplo-min">Pequena</span>
+                        <input type="range" id="legenda-tamanho-slider" min="10" max="36" value="18" step="1" />
+                        <span class="tamanho-exemplo-max">Grande</span>
+                    </div>
+                    <p class="slider-valor" id="legenda-tamanho-valor">18px</p>
+                </div>
+
             </div>
+        </form>
+    </div> <div id="tela-teclado" class="box" data-screen="false">
+         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+        <div class="tituloseta">
+            <p class="titulo">Navegação por Teclado</p>
+        </div>
+        <div class="campo-exemplo status-leitura">
+            <p>Configurações de navegação por teclado virão aqui.</p>
+        </div>
+    </div>
+    
+    <div id="tela-distracoes" class="box" data-screen="false">
+         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+        <div class="tituloseta">
+            <p class="titulo">Modo Sem Distrações</p>
+        </div>
+         <div class="campo-exemplo status-leitura">
+            <p>Configurações do modo sem distrações virão aqui.</p>
+        </div>
+    </div>
+    
+    <div id="tela-selecao" class="box" data-screen="false">
+         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+        <div class="tituloseta">
+            <p class="titulo">Leitura por Seleção</p>
+        </div>
+         <div class="campo-exemplo status-leitura">
+            <p>Configurações de leitura por seleção virão aqui.</p>
+        </div>
+    </div>
+    
     <script src="/js/options.js"></script>
     <script src="/js/sidebar.js"></script>
 </body>

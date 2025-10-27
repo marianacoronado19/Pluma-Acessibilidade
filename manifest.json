@@ -31,7 +31,10 @@
         "*://127.0.0.1/stylesheets/*"
       ],
       "js": ["content.js"],
-      "css": ["stylesheets/main.css"]
+      "css": [
+        "stylesheets/main.css",
+        "stylesheets/accessibility.css"
+      ]
     }
   ],
   "web_accessible_resources": [

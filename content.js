@@ -140,40 +140,40 @@ function guiaInicial() {
 }
 
 
-// /**
-//  * Aplica as variáveis CSS (cores, fontes) e o estado dos toggles na página web.
-//  * @param {object} prefs - Objeto de preferências de acessibilidade.
-//  */
-// function applyAccessibilitySettings(prefs) {
-//   const root = document.documentElement;
+/**
+ * Aplica as variáveis CSS (cores, fontes) e o estado dos toggles na página web.
+ * @param {object} prefs - Objeto de preferências de acessibilidade.
+ */
+function applyAccessibilitySettings(prefs) {
+  const root = document.documentElement;
 
-//   for (const [property, value] of Object.entries(prefs)) {
-//       if (typeof value === 'boolean') continue;
+  for (const [property, value] of Object.entries(prefs)) {
+      if (typeof value === 'boolean') continue;
 
-//     root.style.setProperty(`--${property}`, value);
-//   }
+    root.style.setProperty(`--${property}`, value);
+  }
 
-//   if (prefs.highContrastToggle) {
-//     root.classList.add('pluma-high-contrast-active');
-//   } else {
-//     root.classList.remove('pluma-high-contrast-active');
-//   }
-// }
+  if (prefs.highContrastToggle) {
+    root.classList.add('pluma-high-contrast-active');
+  } else {
+    root.classList.remove('pluma-high-contrast-active');
+  }
+}
 
-// chrome.runtime.onMessage.addListener(
-//     function(request, sender, sendResponse) {
-//       if (request.action === "APPLY_NEW_PREFERENCES") {
-//         applyAccessibilitySettings(request.preferences);
-//         sendResponse({status: "Setting applied to content"});
-//       }
-//     }
-// );
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      if (request.action === "APPLY_NEW_PREFERENCES") {
+        applyAccessibilitySettings(request.preferences);
+        sendResponse({status: "Setting applied to content"});
+      }
+    }
+);
 
-// chrome.storage.sync.get('pluma_preferences', (data) => {
-//     if (data.pluma_preferences) {
-//         applyAccessibilitySettings(data.pluma_preferences);
-//     }
-// });
+chrome.storage.sync.get('pluma_preferences', (data) => {
+    if (data.pluma_preferences) {
+        applyAccessibilitySettings(data.pluma_preferences);
+    }
+});
 
 
 
