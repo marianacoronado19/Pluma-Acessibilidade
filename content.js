@@ -79,30 +79,112 @@ function criarPopupPreLogin() {
   });
 }
 
+// function guiaInicial() {
+//     const container = document.createElement("div");
+//     container.classList.add("div-guia");
+//     document.body.appendChild(container);
+    
+//     const botaoConfig = document.createElement("button");
+//     botaoConfig.innerText = "Configurar";
+//     botaoConfig.classList.add("botao-config");
+//     container.appendChild(botaoConfig);
+    
+//     botaoConfig.addEventListener("click", () => {    
+//         container.style.display = "none";
+    
+//         injetarPreLoginCSS();
+    
+//         criarPopupPreLogin();
+//     });
+// }
+
 function guiaInicial() {
-    const container = document.createElement("div");
-    container.classList.add("div-guia");
-    document.body.appendChild(container);
-    
-    const botaoConfig = document.createElement("button");
-    botaoConfig.innerText = "Configurar";
-    botaoConfig.classList.add("botao-config");
-    container.appendChild(botaoConfig);
-    
-    botaoConfig.addEventListener("click", () => {    
-        container.style.display = "none";
-    
-        injetarPreLoginCSS();
-    
-        criarPopupPreLogin();
-    });
+  const container = document.createElement("div");
+  container.classList.add("div-guia");
+  document.body.appendChild(container);
+  
+  const balaoContainer = document.createElement("div");
+  balaoContainer.classList.add("div-balao");
+  balaoContainer.style.backgroundImage = `url(${chrome.runtime.getURL("images/assistente/balao_fala_vazio.png")})`;
+  container.appendChild(balaoContainer);
+
+  // const balaoFala = document.createElement("img");
+  // balaoFala.src = chrome.runtime.getURL("/images/assistente/balao_fala_vazio.png");
+  // balaoFala.alt = "Balão de fala da assistente Bru.";
+  // balaoFala.classList.add("balao-fala");
+  // balaoContainer.appendChild(balaoFala);
+
+  const textoBalao = document.createElement("p");
+  textoBalao.classList.add("texto-balao");
+  textoBalao.innerHTML = 'Olá, eu sou a Bru, sua assistente de acessibilidade! <br>Aqui, vou te ajudar a deixar os sites com a sua cara! <br>Vamos começar?';
+  balaoContainer.appendChild(textoBalao);
+  
+  const botaoConfig = document.createElement("button");
+  botaoConfig.innerText = "Configurar";
+  botaoConfig.classList.add("botao-config");
+  balaoContainer.appendChild(botaoConfig); 
+  
+  const imagemBru = document.createElement("img");
+  imagemBru.src = chrome.runtime.getURL('images/assistente/guia_bru.png'); 
+  imagemBru.alt = "Bru, sua assistente de acessibilidade.";
+  imagemBru.classList.add("imagem-bru");
+  container.appendChild(imagemBru);
+  
+  botaoConfig.addEventListener("click", () => {    
+      container.style.display = "none";
+  
+      injetarPreLoginCSS();
+  
+      criarPopupPreLogin();
+  });
 }
+
+
+// /**
+//  * Aplica as variáveis CSS (cores, fontes) e o estado dos toggles na página web.
+//  * @param {object} prefs - Objeto de preferências de acessibilidade.
+//  */
+// function applyAccessibilitySettings(prefs) {
+//   const root = document.documentElement;
+
+//   for (const [property, value] of Object.entries(prefs)) {
+//       if (typeof value === 'boolean') continue;
+
+//     root.style.setProperty(`--${property}`, value);
+//   }
+
+//   if (prefs.highContrastToggle) {
+//     root.classList.add('pluma-high-contrast-active');
+//   } else {
+//     root.classList.remove('pluma-high-contrast-active');
+//   }
+// }
+
+// chrome.runtime.onMessage.addListener(
+//     function(request, sender, sendResponse) {
+//       if (request.action === "APPLY_NEW_PREFERENCES") {
+//         applyAccessibilitySettings(request.preferences);
+//         sendResponse({status: "Setting applied to content"});
+//       }
+//     }
+// );
+
+// chrome.storage.sync.get('pluma_preferences', (data) => {
+//     if (data.pluma_preferences) {
+//         applyAccessibilitySettings(data.pluma_preferences);
+//     }
+// });
+
+
 
 guiaInicial();
 
+
+
+
 // TO-DO:
 // Ajustar o CSS para telas menores (responsividade); fizemo(?)
-// Lógica cadastro/login (back-end);
+
 // Sessao do usuário (manter logado);
 // Fazer logout;
 // Salvar preferências do usuário (local storage ou base de dados);

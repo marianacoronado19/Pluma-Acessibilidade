@@ -1,25 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+
 /* ESTILOS DE BASE (MOBILE FIRST) */
 .div-guia {
     position: fixed;
     right: 0;
     bottom: 0;
     
-    width: 50%;
+    width: 65%;
     height: 60%;
-    max-width: 300px;
+    max-width: 350px;
     
     pointer-events: none;
     z-index: 999999;
     
-    background-image: url("https://raw.githubusercontent.com/marianacoronado19/Pluma-Acessibilidade/main/images/assistente/bru_nova.png");
-    background-size: contain;
+    background-image: none;
+    background-color: tomato;
+    /* opacity: 0.8; */
+}
+
+/*
+.div-guia:hover {
+     opacity: 1;
+}*/
+
+.imagem-bru {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    width: 60%;
+    height: auto;
+    max-height: 75%;
+
+    object-fit: contain;
+    pointer-events: auto;
+}
+
+.div-balao {
+    position: absolute; 
+    
+    top: 10%;
+    left: 10%;
+    width: 80%; 
+    height: 55%;
+    
+    margin-bottom: 20%;
+    
+    background-size: contain; 
     background-repeat: no-repeat;
-    background-position: bottom right; 
+    background-color: transparent;
+    
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    /* Mantenha este padding para que o conteúdo caiba DENTRO da imagem do balão */
+    padding: 10% 15% 10% 10%; 
+    box-sizing: border-box; 
+    
+    pointer-events: auto; 
+    z-index: 1000000;
+}
+
+.texto-balao {
+    color: #000000; 
+    font-size: 1.1em;
+    font-weight: bold;
+    font-family: "Atkinson Hyperlegible", sans-serif; 
+    line-height: 1.4;
+    width: 100%; 
+    text-align: center; 
 }
 
 .botao-config {
-    position: relative;
-    
+    position: static; 
+    left: auto;
+    top: auto;
+
     min-height: 7%;
     padding: 8px 16px;
     
@@ -32,13 +91,13 @@
     font-weight: bold;
     white-space: nowrap; 
     
-    left: 15%;
-    top: 35%;
-    
     pointer-events: auto;
     cursor: pointer;
 }
 
+.botao-config:hover {
+    background-color: #4a86d9;
+}
 
 /* TABLETS E DESKTOPS */
 @media (min-width: 768px) {
@@ -46,16 +105,8 @@
         width: 36%;
         height: 95%;
         max-width: 450px;
+        /* Remover o display:flex e seus filhos em media queries se não precisar */
+        /* display: block; */ 
     }
-
-    .botao-config {
-        padding: 10px 20px;
-        font-size: 16px;
-        left: 20%;
-        top: 32.5%;
-    }
-}
-
-.botao-config:hover {
-    background-color: #4a86d9;
+    /* O restante das media queries parece OK para o balão e texto */
 }

@@ -3,13 +3,25 @@
   "name": "Pluma - Assistente de Acessibilidade!",
   "version": "1.0",
   "description": "Uma extensão de navegador que adiciona funcionalidades de acessibilidade e personalização a qualquer site visitado pelo usuário (!! Com excessão de alguns sites da Google !!). Conte com a Bru, sua guia amigável, que pode te ajudar a tornar a navegação na web mais inclusiva e adaptada às suas necessidades.",
+
+  "options_page": "pages/configs.html",
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "storage",
+    "tts",
+    "tabs"
   ],
   "host_permissions": [
+    "<all_urls>",
     "http://localhost:3000/"
   ],
+  
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

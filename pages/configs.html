@@ -12,33 +12,75 @@
     <title>Extensão Pluma 🪶</title>
 </head> 
 <body>
-    <script src="/js/cadastro.js"></script>
-    <div class="box">
+    
+    <div id="sidebar" class="sidebar-fechada">
+        <button id="close-btn" aria-label="Fechar menu de acessibilidade">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        
+        <div class="sidebar-conteudo">
+            <div class="sidebar-item perfil">
+                <span class="material-symbols-outlined icon-perfil">account_circle</span>
+                <span>Meu perfil</span>
+            </div>
+            
+            <hr class="sidebar-divider">
 
-        <!-- <a href="../login/login.html" class="back-button" aria-label="Voltar para o Login">
-            <span class="material-symbols-outlined">arrow_back</span>
-        </a> -->
+            <a href="#" class="sidebar-item" data-target="tela-fonte">
+                <span class="material-symbols-outlined icon-arrow">chevron_right</span>
+                <span>Tamanho da fonte</span>
+            </a>
+            <a href="#" class="sidebar-item" data-target="tela-leitura-voz">
+                <span class="material-symbols-outlined icon-arrow">chevron_right</span>
+                <span>Leitura em voz alta</span>
+            </a>
+            <a href="#" class="sidebar-item" data-target="tela-legendas">
+                <span class="material-symbols-outlined icon-arrow">chevron_right</span>
+                <span>Legendas automáticas</span>
+            </a>
+            <a href="#" class="sidebar-item" data-target="tela-teclado">
+                <span class="material-symbols-outlined icon-arrow">chevron_right</span>
+                <span>Navegação por teclado</span>
+            </a>
+            <a href="#" class="sidebar-item" data-target="tela-distracoes">
+                <span class="material-symbols-outlined icon-arrow">chevron_right</span>
+                <span>Modo sem distrações</span>
+            </a>
+            <a href="#" class="sidebar-item" data-target="tela-selecao">
+                <span class="material-symbols-outlined icon-arrow">chevron_right</span>
+                <span>Leitura por seleção</span>
+            </a>
+            <a href="#" class="sidebar-item" data-target="tela-inicial">
+                <span class="material-symbols-outlined icon-arrow">chevron_right</span>
+                <span>Alto Contraste</span>
+            </a>
+        </div>
+    </div>
+    <button id="open-btn" aria-label="Abrir menu de acessibilidade">
+        <span class="material-symbols-outlined">menu</span>
+    </button>
+    <div id="tela-inicial" class="box" data-screen="true"> 
 
         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
 
         <div class="tituloseta">
-            <p class="titulo">Configurações de preferências</p>
+            <p class="titulo">Alto Contraste</p>
         </div>
 
         <form id="form-cadastro">
             <div class="grid-form">
                 <div class="campo">
-                   <label>Temas prontos</label>
+                    <label>Temas prontos</label>
                     <div class="tema-selecao-container">
-    
+                        
                         <button type="button" class="tema-botao" data-theme="padrao">
                             <img src="/images/elementos/contraste1.png" alt="Miniatura do Tema Padrão" title="Tema Padrão" />
                         </button>
-    
+
                         <button type="button" class="tema-botao" data-theme="leitura">
                             <img src="/images/elementos/contraste2.png" alt="Miniatura do Tema Leitura" title="Tema Leitura" />
                         </button>
-    
+
                         <button type="button" class="tema-botao" data-theme="contraste-claro">
                             <img src="/images/elementos/contraste3.png" alt="Miniatura do Tema de Contraste Claro" title="Tema Contraste Claro" />
                         </button>
@@ -46,15 +88,13 @@
                         <button type="button" class="tema-botao" data-theme="contraste-escuro">
                             <img src="/images/elementos/contraste4.png" alt="Miniatura do Tema de Alto Contraste Escuro" title="Tema Alto Contraste Escuro" />
                         </button>
+
                     </div>
-                </div>
- 
-                <div class="campo">
+                </div> 
+                <div class="campo"> 
                     <div class="campo tema-campo-completo">
                         <label>Personalização de cor</label>
-    
                         <div class="cores-selecao-container">
-                            
                             <div class="cor-item">
                                 <input type="color" id="cor-texto" name="cor-texto" value="#FFFFFF" data-prop="text-color" />
                                 <label for="cor-texto">Texto</label>
@@ -71,7 +111,7 @@
                             </div>
 
                             <div class="cor-item-vertical-group">
-                                
+
                                 <div class="cor-item cor-composta" id="cor-selecionado">
                                     <div class="cor-composta-inputs">
                                         <input type="color" id="cor-selecionado-fundo" name="cor-selecionado-fundo" value="#000000" data-prop="selected-bg" />
@@ -87,78 +127,133 @@
                                     </div>
                                     <label>Texto do botão</label>
                                 </div>
-                                
+
                             </div>
 
                             <div class="cor-item">
+
                                 <input type="color" id="cor-fundo" name="cor-fundo" value="#000000" data-prop="background-color" />
                                 <label for="cor-fundo">Tela de fundo</label>
-                            </div>
-
+                            </div> 
                         </div>
                     </div>
+                </div> 
                 </div>
+            </form> 
+        </div>
+    <div id="tela-fonte" class="box" data-screen="false">
+        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+        <div class="tituloseta">
+            <p class="titulo">Fontes</p>
+        </div>
 
-               <!-- <div class="campo">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+       <form id="form-fonte"> 
+        <div class="grid-form">
+            <div class="campo campo-slider">
+                <label>Tamanho da fonte</label>
+                <div class="slider-container">
+                    <span class="tamanho-exemplo-min">A-</span>
+                    <input type="range" id="tamanho-fonte-slider" min="100" max="200" value="100" step="10" />
+                    <span class="tamanho-exemplo-max">A+</span>
                 </div>
-
-                <div class="campo">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                <p class="slider-valor">100%</p>
+            </div>
+    
+            <div class="campo">
+                <label>Estilo da fonte</label>
+                <div class="font-selecao-container">
+                    <button type="button" class="font-botao active" data-font-family="Atkinson Hyperlegible">
+                        <span style="font-family: 'Atkinson Hyperlegible'; font-size: 30px;">Aa</span>
+                        <p>Hiperlegível</p>
+                    </button>
+                    
+                    <button type="button" class="font-botao" data-font-family="serif">
+                        <span style="font-family: serif; font-size: 30px;">Aa</span>
+                        <p>Serif (Clássica)</p>
+                    </button>
+                    
+                    <button type="button" class="font-botao" data-font-family="monospace">
+                        <span style="font-family: monospace; font-size: 30px;">Aa</span>
+                        <p>Monoespaçada</p>
+                    </button>
                 </div>
+            </div>
+            
+            <div class="campo campo-exemplo">
+                <label>Pré-visualização</label>
+                <p class="exemplo-texto">
+                    O PLUMA é um projeto que visa facilitar a leitura e navegação na web para pessoas com dislexia. Este texto mostra o efeito das suas configurações.
+                </p>
+            </div>
+        </div>
+    </form>
+</div>
 
-                <div class="campo">
-                    <label for="confirmar-senha">Confirme sua senha</label>
-                    <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Digite sua senha novamente" required>
-                </div>
 
-                <div class="campo">
-                    <label for="genero">Gênero</label>
-                    <select id="genero" name="genero" required>
-                        <option value="">Informe seu gênero*</option>
-                        <option value="feminino">Feminino</option>
-                        <option value="masculino">Masculino</option>
-                        <option value="outro">Outro</option>
-                        <option value="nao-dizer">Prefiro não dizer</option>
-                    </select>
-                </div>
 
-                <div class="campo campo-acess">
-                    <label for="acessibilidade">Acessibilidade</label>
-                    <div class="input-acess">
-                    <input type="text" id="acessibilidade" name="acessibilidade" placeholder="Selecione opções de acessibilidade" readonly>
-                    <span class="material-symbols-outlined icone-seta">keyboard_arrow_down</span>
-                </div>
-
-                    <div class="gaveta-acess">
-                        <label><input type="checkbox" value="visibilidade"> Baixa Visibilidade</label>
-                        <label><input type="checkbox" value="dislexia"> Dislexia</label>
-                        <label><input type="checkbox" value="idoso"> Idoso</label>
-                        <label><input type="checkbox" value="daltonismo"> Daltonismo</label>
-                        <label><input type="checkbox" value="surdez"> Surdez</label>
-                        <label><input type="checkbox" value="outro"> Outro</label>
+    <div id="tela-leitura-voz" class="box" data-screen="false">
+        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+        <div class="tituloseta">
+            <p class="titulo">Leitura em Voz Alta</p>
+        </div>
+        <form id="form-leitura-voz">
+            <div class="grid-form">
+                
+                <div class="campo campo-reproducao">
+                    <label>Controles</label>
+                    <div class="controles-audio-container">
+                        <button type="button" id="leitura-play-btn" class="controle-btn">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                            <span>Reproduzir</span>
+                        </button>
+                        <button type="button" id="leitura-pause-btn" class="controle-btn" disabled>
+                            <span class="material-symbols-outlined">pause</span>
+                            <span>Pausar</span>
+                        </button>
+                        <button type="button" id="leitura-stop-btn" class="controle-btn" disabled>
+                            <span class="material-symbols-outlined">stop</span>
+                            <span>Parar</span>
+                        </button>
                     </div>
+                </div> 
+
+                <div class="campo">
+                    <label for="leitura-voz-select">Voz e Idioma</label>
+                    <select id="leitura-voz-select" name="leitura-voz-select">
+                        <option value="default" selected>Voz Padrão do Sistema</option>
+                        <option value="pt-br-f">Português (Brasil) - Feminina</option>
+                        <option value="pt-br-m">Português (Brasil) - Masculina</option>
+                        </select>
                 </div>
+                
+                <div class="campo campo-slider">
+                    <label>Velocidade da Leitura (Ritmo)</label>
+                    <div class="slider-container">
+                        <span class="tamanho-exemplo-min">Lenta</span>
+                        <input type="range" id="leitura-velocidade-slider" min="0.5" max="2.0" value="1.0" step="0.1" />
+                        <span class="tamanho-exemplo-max">Rápida</span>
+                    </div>
+                    <p class="slider-valor" id="leitura-velocidade-valor">1.0x (Normal)</p>
+                </div>
+
+                <div class="campo campo-slider">
+                    <label>Volume</label>
+                    <div class="slider-container">
+                        <span class="material-symbols-outlined">volume_mute</span>
+                        <input type="range" id="leitura-volume-slider" min="0" max="1.0" value="1.0" step="0.1" />
+                        <span class="material-symbols-outlined">volume_up</span>
+                    </div>
+                    <p class="slider-valor" id="leitura-volume-valor">100%</p>
+                </div>
+
             </div>
-
-            <button type="submit" class="botao">Cadastrar-se</button> -->
-        </form> 
-
-        <!-- <p class="ja">Já possui uma conta? Faça <a href="../login/login.html">login</a></p>
-        <p class="ou">- OU -</p>
-
-        <div class="opcoes">
-            <div class="google">
-                <img src="../images/login/Google.png" alt="Google">
-                <p>Cadastrar-se com Google</p>
+        </form>
+        
+        <div class="campo-exemplo status-leitura">
+            <label>Instruções</label>
+            <p>Para iniciar a leitura, selecione um bloco de texto na página e clique em **Reproduzir**.</p>
             </div>
-            <div class="facebook">
-                <img src="../images/login/Facebook.png" alt="Facebook">
-                <p>Cadastrar-se com Facebook</p>
-            </div> 
-        </div> -->
-    </div>
+    <script src="/js/options.js"></script>
+    <script src="/js/sidebar.js"></script>
 </body>
 </html>

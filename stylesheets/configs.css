@@ -5,9 +5,10 @@ body {
     backdrop-filter: blur(2px);
     min-height: 100vh;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* display: flex; */
+    padding: 20px 0;
+    /* justify-content: center;
+    align-items: center; */
     font-family: "Atkinson Hyperlegible";
 }
 
@@ -22,6 +23,10 @@ body {
     max-width: 999px;
     max-height: 75vh;
     overflow-y: auto;
+
+    position: relative; 
+    z-index: 1; /* Garante que a sidebar (9999) fique por cima */
+    margin: 30px auto; /* Centraliza o box */
 
     /* position: absolute;
     top: 30%;
@@ -442,3 +447,366 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: left;
 }
 
+#sidebar {
+    position: fixed; /* CRÍTICO: Não move outros elementos */
+    top: 0;
+    left: 0; 
+    height: 100%;
+    width: 250px; 
+    
+    z-index: 9999; /* CRÍTICO: Fica acima de TUDO na tela */
+    
+    background-color: #171a66; 
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out; 
+    
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+/* Classe de estado fechado (Escondida para a esquerda) */
+.sidebar-fechada {
+    transform: translateX(-250px); 
+}
+
+/* Botão de Abrir (Menu) */
+#open-btn {
+    position: fixed; 
+    top: 20px;
+    left: 20px;
+    
+    z-index: 1000; /* Alto, mas abaixo da sidebar */
+    
+    background-color: #fc9700; 
+    color: #171a66; 
+    border: 2px solid #171a66;
+    
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease;
+}
+
+#open-btn .material-symbols-outlined {
+    font-size: 24px;
+}
+
+/* Botão de Fechar (o 'X') */
+#close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fc9700; 
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+#close-btn .material-symbols-outlined {
+    font-size: 30px;
+}
+
+/* Estilos dos itens da Sidebar */
+.sidebar-conteudo {
+    padding-top: 40px; 
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sidebar-divider {
+    border: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 10px 15px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+
+.sidebar-item:hover {
+    background-color: #313584; 
+}
+
+.sidebar-item .material-symbols-outlined {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.sidebar-item.perfil {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d4e9ff; 
+    cursor: default;
+}
+
+/* Remova as regras antigas de .content-screen e .hidden-screen, se existirem */
+
+/* Estas são as regras que controlam a visibilidade com a nova lógica: */
+.box[data-screen="false"] {
+    display: none !important; 
+}
+
+.box[data-screen="true"] {
+    display: flex !important;
+    /* Mantenha o layout do seu .box */
+    flex-direction: column; 
+    align-items: center; 
+}
+
+/* --- Estilos Comuns de Navegação (Voltar) --- */
+
+.voltar-btn {
+    position: absolute;
+    top: 50px; 
+    left: 40px; 
+    
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fc9700; /* Laranja de destaque */
+    padding: 5px;
+    transition: color 0.2s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+.voltar-btn:hover {
+    color: #ffbe5d;
+}
+.voltar-btn .material-symbols-outlined {
+    font-size: 30px;
+}
+
+/* --- Estilos para a Seção de Tamanho da Fonte (Slider) --- */
+
+.campo-slider {
+    width: 100%;
+    max-width: 700px; /* Ajusta a largura para o slider */
+    margin: 30px auto; 
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.tamanho-exemplo-min, .tamanho-exemplo-max {
+    color: white;
+    font-weight: bold;
+    /* Ajuste o tamanho inicial para contraste */
+    font-size: 20px; 
+}
+.tamanho-exemplo-max {
+    font-size: 35px;
+}
+
+/* Estilo do Input Range (Slider) - Combinando com a estética do tema */
+#tamanho-fonte-slider {
+    flex-grow: 1; 
+    -webkit-appearance: none;
+    appearance: none;
+    height: 12px;
+    background: #474d9e; /* Azul médio/claro para a barra */
+    border-radius: 6px;
+    outline: none;
+    margin: 0;
+    border: 1px solid #60a1ea;
+    padding: 0;
+}
+
+/* Estilo do 'Polegar' (Thumb) do Slider */
+#tamanho-fonte-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px; 
+    height: 30px;
+    border-radius: 50%;
+    background: #fc9700; /* Laranja de destaque */
+    cursor: grab;
+    border: 4px solid #171a66; /* Borda escura para alto contraste */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: background 0.2s;
+}
+
+.slider-valor {
+    color: #fc9700;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* --- Estilos para a Seção de Estilo da Fonte (Botões) --- */
+
+.font-selecao-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+    margin-top: 15px;
+    justify-content: center;
+    width: 100%;
+}
+
+.font-botao {
+    flex: 1 1 200px; /* Permite que cresçam e tenham um tamanho mínimo */
+    max-width: 250px;
+    
+    height: 120px; 
+    border-radius: 5px; 
+    border: 3px solid transparent; 
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: all 0.2s ease;
+    padding: 10px; 
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #474d9e; /* Azul médio */
+    color: white; 
+    text-align: center;
+}
+
+.font-botao span {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
+}
+.font-botao p {
+    margin: 0;
+    font-size: 14px;
+    color: #d4e9ff; /* Azul claro para o subtítulo */
+}
+
+/* Estilo Ativo e Hover, combinando com os Temas Prontos */
+.font-botao.active {
+    border: 3px solid #fc9700; /* Borda laranja para seleção */
+    background-color: #313584; /* Um pouco mais escuro quando ativo */
+    transform: scale(1.02);
+}
+
+.font-botao:hover:not(.active) {
+    border: 3px solid #60a1ea; /* Borda azul clara no hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Estilos para o Campo de Pré-visualização --- */
+
+.campo-exemplo {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.exemplo-texto {
+    background-color: #0d0f41; /* Um azul bem escuro, quase preto, para contraste */
+    color: white;
+    font-size: 18px;
+    padding: 25px;
+    border: 2px solid #60a1ea;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    line-height: 1.6;
+    margin-top: 10px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Ajuste de responsividade (se necessário) */
+@media (max-width: 700px) {
+    .voltar-btn {
+        top: 35px;
+        left: 25px;
+    }
+}
+
+/* Estilos para o grupo de botões de Play/Pause/Stop */
+.controles-audio-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: space-between; /* Distribui os botões */
+}
+
+/* Corrigir o alinhamento dos textos dos botões */
+.controle-btn {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 5px;
+    /* ... outras propriedades de cor/borda ... */
+    text-align: center; /* Garante que o texto está centralizado */
+}
+
+.controle-btn span {
+    display: block; /* Garante que o ícone fique em uma linha própria */
+}
+
+.controle-btn:hover:not([disabled]) {
+    background-color: var(--link-color); /* Inverte as cores no hover */
+    color: var(--background-color);
+}
+
+.controle-btn:disabled {
+    opacity: 0.5; /* Escurece se estiver desabilitado */
+    cursor: not-allowed;
+    border-color: var(--disable-color); /* Borda de cor diferente para desabilitado */
+    color: var(--disable-color);
+}
+
+/* Ajuste para o campo de seleção (dropdown) */
+#leitura-voz-select {
+    width: 100%;
+    padding: 8px;
+    height: 40px; 
+    margin-top: 5px;
+    padding-right: 30px; 
+    border: 2px solid var(--link-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    /* Remove a aparência padrão em alguns navegadores para manter a consistência */
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none; 
+}
+/* Já tínhamos esta classe, vamos garantir que funcione bem */
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Aumenta o espaço entre a legenda e o slider */
+    margin-top: 5px;
+}
+
+/* Estilo para o valor percentual (1.0x (Normal)) */
+.slider-valor {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+    color: var(--link-color); /* Destaca o valor atual */
+}
