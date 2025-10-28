@@ -1,15 +1,15 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Elementos da Sidebar
+ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     const openBtn = document.getElementById('open-btn');
     const closeBtn = document.getElementById('close-btn');
 
-    // 2. Elementos de Conteúdo
     const navLinks = document.querySelectorAll('.sidebar-item[data-target]'); 
-    // MUDANÇA: Agora selecionamos todas as divs .box que têm um ID, já que data-screen fará o trabalho.
     const contentScreens = document.querySelectorAll('.box[id]'); 
+    
+    const sidebarConteudo = document.querySelector('.sidebar-conteudo');
+    const perfilItem = document.querySelector('.sidebar-item.perfil');
+    const perfilNomeSpan = perfilItem.querySelector('span:last-child');
 
-    // --- Funções de Abrir/Fechar Sidebar ---
     function openSidebar() {
         sidebar.classList.remove('sidebar-fechada');
         openBtn.style.opacity = '0';
@@ -22,20 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
         openBtn.style.pointerEvents = 'auto';
     }
     
-    // --- Função de Navegação Principal (NOVA LÓGICA) ---
     function navigateTo(targetId) {
-        // 1. Esconde todas as telas e remove o active-link
         contentScreens.forEach(screen => {
-            screen.setAttribute('data-screen', 'false'); // Esconde via CSS
+            screen.setAttribute('data-screen', 'false');
         });
         navLinks.forEach(link => {
             link.classList.remove('active-link');
         });
 
-        // 2. Mostra a tela de destino e ativa o link
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
-            targetElement.setAttribute('data-screen', 'true'); // Mostra via CSS
+            targetElement.setAttribute('data-screen', 'true');
         }
         
         const activeLink = document.querySelector(`.sidebar-item[data-target="${targetId}"]`);
@@ -43,14 +40,61 @@ document.addEventListener('DOMContentLoaded', () => {
             activeLink.classList.add('active-link');
         }
 
-        closeSidebar(); // Fecha a sidebar
+        closeSidebar();
     }
 
-    // --- Ligar Eventos ---
+    function handleLogout(event) {
+        event.preventDefault();
+        
+        chrome.storage.sync.remove(['pluma_auth_token', 'pluma_username', 'is_logged_in'], () => {
+            alert('Sessão encerrada. Você voltou ao modo anônimo.');
+            
+            window.location.reload(); 
+        });
+    }
+
+    function initializeSessionState() {
+        chrome.storage.sync.get(['is_logged_in', 'pluma_username'], (data) => {
+            const isLoggedIn = data.is_logged_in;
+            const username = data.pluma_username;
+
+            if (isLoggedIn && username) {
+                perfilNomeSpan.textContent = username;
+            
+                perfilItem.classList.add('perfil-logado-clicavel'); 
+            
+                perfilItem.addEventListener('click', () => {
+                window.location.href = '/pages/perfil.html'; 
+            });
+
+            const logoutHTML = `
+                <a href="#" class="sidebar-item logout-link" id="logout-btn">
+                    <span class="material-symbols-outlined icon-arrow">logout</span>
+                    <span>Sair</span>
+                </a>
+            `;
+            sidebarConteudo.insertAdjacentHTML('beforeend', logoutHTML);
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+
+            } else {
+                perfilNomeSpan.textContent = 'Login / Cadastro';
+                perfilItem.classList.add('perfil-nao-logado');
+                
+                perfilItem.addEventListener('click', () => {
+                     window.location.href = '/pages/login.html';
+                });
+            }
+        });
+    }
+
+
     openBtn.addEventListener('click', openSidebar);
     closeBtn.addEventListener('click', closeSidebar);
 
-    // Evento de clique para os links de navegação
     navLinks.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault(); 
@@ -61,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Fechar ao clicar fora (mantido)
     document.addEventListener('click', (event) => {
         const isClickInsideSidebar = sidebar.contains(event.target);
         const isClickOnOpenBtn = openBtn.contains(event.target);
@@ -71,16 +114,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Inicialização: Garante que a tela inicial marcada no HTML tenha o link ativo
     const initialScreen = document.querySelector('.box[data-screen="true"]');
     if (initialScreen) {
-        const initialTarget = initialScreen.id;
-       // const initialLink = document.querySelector(`.sidebar-item[data-target="${initialTarget}"]`);
-       // if (initialLink) {
-            // initialLink.classList.add('active-link');
-       // }
-       navigateTo(initialTarget);
-    } else {
-        navigateTo(contentSreens[0].id)
+       navigateTo(initialScreen.id);
+    } else if (contentScreens.length > 0) {
+        navigateTo(contentScreens[0].id);
     }
+
+    initializeSessionState();
 });

@@ -80,13 +80,28 @@ async function fazerLogin() {
         const data = await response.json();
  
         if (response.ok) {
-            exibirMensagem('Login realizado! Redirecionando...', 'limegreen');
-            localStorage.setItem('nomeUsuario', data.nome || email); 
-            sucesso = true; 
-            setTimeout(() => {
-                window.location.href = '/pages/configs.html';
-            }, 1500);
- 
+            if (data.token) {
+                // 1. Salva a sessão no Chrome Storage (sync)
+                chrome.storage.sync.set({
+                    'pluma_auth_token': data.token,
+                    'pluma_username': data.username,
+                    'is_logged_in': true 
+                }, () => {
+                    
+                    // 2. NOVO: Marca que a configuração inicial foi concluída (local)
+                    // Esta flag é o que o content.js usa para alternar Bru -> Ícone Pluma.
+                    chrome.storage.local.set({ 'pluma_initial_setup_complete': true }, () => {
+                        exibirMensagem('Login realizado! Preferências serão salvas.', 'limegreen');
+                        sucesso = true; 
+                        
+                        setTimeout(() => {
+                            window.location.href = '/pages/configs.html';
+                        }, 1500);
+                    });
+                });
+            } else {
+                 exibirMensagem('Erro ao estabelecer uma sessão de usuário.');
+            }
         } else {
             exibirMensagem(data.message || 'E-mail ou senha incorretos. Tente novamente.');
         }

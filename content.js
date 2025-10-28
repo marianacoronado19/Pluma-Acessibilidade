@@ -79,25 +79,6 @@ function criarPopupPreLogin() {
   });
 }
 
-// function guiaInicial() {
-//     const container = document.createElement("div");
-//     container.classList.add("div-guia");
-//     document.body.appendChild(container);
-    
-//     const botaoConfig = document.createElement("button");
-//     botaoConfig.innerText = "Configurar";
-//     botaoConfig.classList.add("botao-config");
-//     container.appendChild(botaoConfig);
-    
-//     botaoConfig.addEventListener("click", () => {    
-//         container.style.display = "none";
-    
-//         injetarPreLoginCSS();
-    
-//         criarPopupPreLogin();
-//     });
-// }
-
 function guiaInicial() {
   const container = document.createElement("div");
   container.classList.add("div-guia");
@@ -107,12 +88,6 @@ function guiaInicial() {
   balaoContainer.classList.add("div-balao");
   balaoContainer.style.backgroundImage = `url(${chrome.runtime.getURL("images/assistente/balao_fala_vazio.png")})`;
   container.appendChild(balaoContainer);
-
-  // const balaoFala = document.createElement("img");
-  // balaoFala.src = chrome.runtime.getURL("/images/assistente/balao_fala_vazio.png");
-  // balaoFala.alt = "Balão de fala da assistente Bru.";
-  // balaoFala.classList.add("balao-fala");
-  // balaoContainer.appendChild(balaoFala);
 
   const textoBalao = document.createElement("p");
   textoBalao.classList.add("texto-balao");
@@ -139,6 +114,22 @@ function guiaInicial() {
   });
 }
 
+function popupPluma() {
+  const container = document.createElement("div");
+  container.classList.add("div-guia-popup");
+  document.body.appendChild(container);
+
+  const logoPluma = document.createElement("img");
+  logoPluma.src = chrome.runtime.getURL("images/logoPluma/icon-qualidade.png")
+  logoPluma.classList.add("logo-pluma")
+  container.appendChild(logoPluma)
+
+//   logoPluma.addEventListener('click', () => {
+//     const configPageURL = chrome.runtime.getURL("pages/configs.html");
+
+//     window.open(configPageURL, '_blank'); 
+// });
+}
 
 /**
  * Aplica as variáveis CSS (cores, fontes) e o estado dos toggles na página web.
@@ -157,6 +148,12 @@ function applyAccessibilitySettings(prefs) {
     root.classList.add('pluma-high-contrast-active');
   } else {
     root.classList.remove('pluma-high-contrast-active');
+  }
+
+  if (prefs.fontResizeToggle) {
+    root.classList.add('pluma-font-resize');
+  } else {
+    root.classList.remove('pluma-font-resize');
   }
 }
 
@@ -177,6 +174,8 @@ chrome.storage.sync.get('pluma_preferences', (data) => {
 
 
 
+// popupPluma();
+
 guiaInicial();
 
 
@@ -185,10 +184,9 @@ guiaInicial();
 // TO-DO:
 // Ajustar o CSS para telas menores (responsividade); fizemo(?)
 
-// Sessao do usuário (manter logado);
-// Fazer logout;
 // Salvar preferências do usuário (local storage ou base de dados);
 // Implementar funcionalidades de acessibilidade (ex: leitor de tela, ajuste de contraste, etc).
+// - Trabalhando em: cores + tamanho da fonte
 // Testes de usabilidade e acessibilidade;
 
 // "Destruir conta"

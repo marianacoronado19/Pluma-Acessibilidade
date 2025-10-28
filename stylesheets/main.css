@@ -17,6 +17,7 @@
     z-index: 999999;
     
     background-image: none;
+    background-color: tomato;
 }
 
 .imagem-bru {
@@ -40,7 +41,7 @@
     
     bottom: 0;
     top: 0;
-    margin-top: 3%;
+    margin-top: 0%;
         
     background-size: contain; 
     background-repeat: no-repeat;
@@ -69,12 +70,8 @@
     text-align: center; 
 }
 
-
 .botao-config {
     position: static; 
-    left: auto;
-    top: auto;
-
 
     padding: 10px 24px;
     
@@ -116,4 +113,33 @@
     .texto-balao {
         font-size: 1em;
     }
+}
+
+.div-guia-popup{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    
+    width: 65%;
+    height: 60%;
+    
+    min-width: 280px;
+    min-height: 350px;
+    
+    max-width: 350px;
+    
+    pointer-events: none;
+    z-index: 999999;
+    
+    background-image: none;
+}
+
+.logo-pluma{
+    margin: 7%;
+    width: 21%;
+    height: auto;
 }

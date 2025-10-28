@@ -2,7 +2,15 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('./db');
- 
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+    console.error("ERRO: JWT_SECRET não está definida nas variáveis de ambiente!");
+    process.exit(1);
+}
+
 const dominiosPermitidos = [
     'gmail.com', 'yahoo.com.br', 'yahoo.com', 'hotmail.com', 
     'outlook.com', 'live.com', 'icloud.com', 'bol.com.br', 'uol.com.br'
@@ -27,7 +35,7 @@ router.post('/login', async (req, res) => {
 
     try {
             const [rows] = await db.execute(
-            'SELECT username, senha_hash FROM usuarios WHERE email = ?',
+            'SELECT idusuarios, username, senha_hash FROM usuarios WHERE email = ?',
             [email]
         );
  
@@ -40,9 +48,16 @@ router.post('/login', async (req, res) => {
         const senhaCorreta = await bcrypt.compare(password, usuario.senha_hash);
  
         if (senhaCorreta) {
+            const token = jwt.sign(
+                { id: usuario.idusuarios, username: usuario.username },
+                JWT_SECRET,
+                { expiresIn: '1d' }
+            );
+
             return res.status(200).json({
                 message: "Login bem-sucedido!",
-                nome: usuario.nome
+                username: usuario.username,
+                token: token
             });
         } else {
             return res.status(401).json({ message: "E-mail ou senha incorretos." });

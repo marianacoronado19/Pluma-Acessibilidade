@@ -480,7 +480,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Classe de estado fechado (Escondida para a esquerda) */
 .sidebar-fechada {
-    transform: translateX(-250px); 
+    transform: translateX(-100%); 
 }
 
 /* Botão de Abrir (Menu) */
@@ -528,7 +528,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 30px;
 }
 
-/* Estilos dos itens da Sidebar */
 .sidebar-conteudo {
     padding-top: 40px; 
     display: flex;
@@ -568,18 +567,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: bold;
     color: #d4e9ff; 
     cursor: default;
+    cursor: pointer;
 }
 
-/* Remova as regras antigas de .content-screen e .hidden-screen, se existirem */
-
-/* Estas são as regras que controlam a visibilidade com a nova lógica: */
 .box[data-screen="false"] {
     display: none !important; 
 }
 
 .box[data-screen="true"] {
     display: flex !important;
-    /* Mantenha o layout do seu .box */
     flex-direction: column; 
     align-items: center; 
 }
@@ -594,7 +590,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: none;
     border: none;
     cursor: pointer;
-    color: #fc9700; /* Laranja de destaque */
+    color: #fc9700;
     padding: 5px;
     transition: color 0.2s;
     text-decoration: none;
@@ -613,7 +609,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .campo-slider {
     width: 100%;
-    max-width: 700px; /* Ajusta a largura para o slider */
+    max-width: 700px;
     margin: 30px auto; 
 }
 
@@ -627,7 +623,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .tamanho-exemplo-min, .tamanho-exemplo-max {
     color: white;
     font-weight: bold;
-    /* Ajuste o tamanho inicial para contraste */
     font-size: 20px; 
 }
 .tamanho-exemplo-max {
@@ -640,7 +635,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     -webkit-appearance: none;
     appearance: none;
     height: 12px;
-    background: #474d9e; /* Azul médio/claro para a barra */
+    background: #474d9e;
     border-radius: 6px;
     outline: none;
     margin: 0;
@@ -655,9 +650,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 30px; 
     height: 30px;
     border-radius: 50%;
-    background: #fc9700; /* Laranja de destaque */
+    background: #fc9700;
     cursor: grab;
-    border: 4px solid #171a66; /* Borda escura para alto contraste */
+    border: 4px solid #171a66;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     transition: background 0.2s;
 }
@@ -682,7 +677,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .font-botao {
-    flex: 1 1 200px; /* Permite que cresçam e tenham um tamanho mínimo */
+    flex: 1 1 200px;
     max-width: 250px;
     
     height: 120px; 
@@ -697,7 +692,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #474d9e; /* Azul médio */
+    background-color: #474d9e;
     color: white; 
     text-align: center;
 }
@@ -711,18 +706,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .font-botao p {
     margin: 0;
     font-size: 14px;
-    color: #d4e9ff; /* Azul claro para o subtítulo */
+    color: #d4e9ff;
 }
 
 /* Estilo Ativo e Hover, combinando com os Temas Prontos */
 .font-botao.active {
-    border: 3px solid #fc9700; /* Borda laranja para seleção */
-    background-color: #313584; /* Um pouco mais escuro quando ativo */
+    border: 3px solid #fc9700;
+    background-color: #313584;
     transform: scale(1.02);
 }
 
 .font-botao:hover:not(.active) {
-    border: 3px solid #60a1ea; /* Borda azul clara no hover */
+    border: 3px solid #60a1ea;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -736,7 +731,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .exemplo-texto {
-    background-color: #0d0f41; /* Um azul bem escuro, quase preto, para contraste */
+    background-color: #0d0f41;
     color: white;
     font-size: 18px;
     padding: 25px;
@@ -773,27 +768,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     align-items: center;
     padding: 8px 5px;
-    /* ... outras propriedades de cor/borda ... */
-    text-align: center; /* Garante que o texto está centralizado */
+    text-align: center;
 }
 
 .controle-btn span {
-    display: block; /* Garante que o ícone fique em uma linha própria */
+    display: block;
 }
 
 .controle-btn:hover:not([disabled]) {
-    background-color: var(--link-color); /* Inverte as cores no hover */
+    background-color: var(--link-color);
     color: var(--background-color);
 }
 
 .controle-btn:disabled {
-    opacity: 0.5; /* Escurece se estiver desabilitado */
+    opacity: 0.5;
     cursor: not-allowed;
-    border-color: var(--disable-color); /* Borda de cor diferente para desabilitado */
+    border-color: var(--disable-color);
     color: var(--disable-color);
 }
 
-/* Ajuste para o campo de seleção (dropdown) */
 #leitura-voz-select {
     width: 100%;
     padding: 8px;
@@ -804,26 +797,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: var(--background-color);
     color: var(--text-color);
     border-radius: 4px;
-    /* Remove a aparência padrão em alguns navegadores para manter a consistência */
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none; 
 }
 
-/* Já tínhamos esta classe, vamos garantir que funcione bem */
 .slider-container {
     display: flex;
     align-items: center;
-    gap: 15px; /* Aumenta o espaço entre a legenda e o slider */
+    gap: 15px;
     margin-top: 5px;
 }
 
-/* Estilo para o valor percentual (1.0x (Normal)) */
 .slider-valor {
     text-align: center;
     font-weight: bold;
     margin-top: 5px;
-    color: var(--link-color); /* Destaca o valor atual */
+    color: var(--link-color); * Destaca o valor atual */
 }
 
 .toggle-aplicar-container {
