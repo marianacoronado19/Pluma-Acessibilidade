@@ -1,4 +1,3 @@
-
 html.pluma-high-contrast-active {
     background-color: var(--background-color) !important;
     transition: background-color 0.5s ease;
@@ -110,4 +109,44 @@ html {
 
 button, input[type="submit"], input[type="button"] {
     white-space: nowrap !important;
+}
+
+html.pluma-distraction-free-active {
+
+    /* Opcional: define um fundo neutro para a leitura */
+
+    background-color: #ffffff !important;
+
+}
+
+
+
+/* Ocultar elementos comuns de distração */
+
+html.pluma-distraction-free-active .sidebar,
+html.pluma-distraction-free-active #left-column,
+html.pluma-distraction-free-active #right-column,
+html.pluma-distraction-free-active [role="complementary"], /* Adblocks, barras laterais (padrão HTML5) */
+html.pluma-distraction-free-active footer,
+html.pluma-distraction-free-active [class*="footer"],
+html.pluma-distraction-free-active [id*="ad-"], /* Tenta pegar divs de anúncios por ID */
+html.pluma-distraction-free-active .ad,
+html.pluma-distraction-free-active .advertisement,
+html.pluma-distraction-free-active .related-posts
+html.pluma-distraction-free-active .related-content,
+html.pluma-distraction-free-active [aria-label*="Anúncio"], /* Tenta pegar anúncios por acessibilidade */
+html.pluma-distraction-free-active [class*="ad-"],
+html.pluma-distraction-free-active [class*="sponsor"] {
+    display: none !important;
+}
+
+html.pluma-distraction-free-active #content,
+html.pluma-distraction-free-active #main-content,
+html.pluma-distraction-free-active .main-area,
+html.pluma-distraction-free-active [role="main"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important; /* Remove margens que empurram o conteúdo */
+     padding: 20px !important;
+    box-sizing: border-box !important;
 }

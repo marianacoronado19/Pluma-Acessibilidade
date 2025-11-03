@@ -37,11 +37,11 @@ function criarPopupPreLogin() {
   linkAnonimo.href = chrome.runtime.getURL('pages/configs.html');
   linkAnonimo.textContent = 'Não, usar anonimamente...';
   linkAnonimo.classList.add('link-texto');
+  linkAnonimo.target = '_blank';  
 
   acaoInicialContainer.appendChild(linkCadastro);
   acaoInicialContainer.appendChild(textoOu);
   acaoInicialContainer.appendChild(linkAnonimo);
-
 
   const loginContainer = document.createElement('div');
   loginContainer.classList.add('login-container');
@@ -59,7 +59,7 @@ function criarPopupPreLogin() {
   const botaoFechar = document.createElement('span');
   botaoFechar.textContent = 'X';
   botaoFechar.classList.add('botao-fechar');
-  botaoFechar.onclick = () => containerPrincipal.remove();
+  // botaoFechar.onclick = () => containerPrincipal.remove();
 
   containerPrincipal.appendChild(botaoFechar);
   containerPrincipal.appendChild(titulo);
@@ -69,8 +69,20 @@ function criarPopupPreLogin() {
 
   document.body.appendChild(containerPrincipal);
 
+  function handleLinkClick(event) {
+      containerPrincipal.remove();
+      chrome.runtime.sendMessage({ action: "RELOAD_CURRENT_TAB" });
+  }
+
+  linkCadastro.addEventListener('click', handleLinkClick);
+
+  linkAnonimo.addEventListener('click', handleLinkClick);
+
   botaoLogin.addEventListener('click', () => {
-    window.open(chrome.runtime.getURL('pages/login.html'));
+    window.open(chrome.runtime.getURL('pages/login.html'), '_blank');
+    
+    containerPrincipal.remove();
+    chrome.runtime.sendMessage({ action: "RELOAD_CURRENT_TAB" });
   });
 
   botaoFechar.addEventListener('click', () => {
@@ -124,11 +136,11 @@ function popupPluma() {
   logoPluma.classList.add("logo-pluma")
   container.appendChild(logoPluma)
 
-//   logoPluma.addEventListener('click', () => {
-//     const configPageURL = chrome.runtime.getURL("pages/configs.html");
+  logoPluma.addEventListener('click', () => {
+    const configPageURL = chrome.runtime.getURL("pages/configs.html");
 
-//     window.open(configPageURL, '_blank'); 
-// });
+    window.open(configPageURL, '_blank'); 
+});
 }
 
 /**
@@ -138,44 +150,37 @@ function popupPluma() {
 function applyAccessibilitySettings(prefs) {
     const root = document.documentElement;
 
-    // 1. Lógica de Alto Contraste (Cores)
-    // Aplica a classe (que lida com o CSS das cores) SÓ se o toggle estiver ligado
-    if (prefs.highContrastToggle) {
+    if (prefs.highContrastToggle && prefs.highContrast.enabled) {
         root.classList.add('pluma-high-contrast-active');
     } else {
         root.classList.remove('pluma-high-contrast-active');
     }
 
-    // 2. Aplicação das variáveis CSS (Cores)
-    // Aplica as variáveis de cor (independente do toggle, para que o pluma-high-contrast-active as use)
     for (const [property, value] of Object.entries(prefs)) {
-        // Ignora valores booleanos (que são os toggles)
         if (typeof value === 'boolean') continue;
-
-        // Note: Se a cor é uma variável, ela sempre é injetada
         root.style.setProperty(`--${property}`, value);
     }
     
-    // --- NOVO: Lógica das Configurações de Fonte ---
-    
-    // 3. Aplicação do Tamanho e Estilo da Fonte (CONDICIONAL)
     if (prefs.fontSettingsToggle) {
-        // Aplica o Fator de Tamanho da Fonte (ex: 1.5)
         if (prefs.fontSizeFactor) {
             root.style.setProperty(`--font-size-factor`, prefs.fontSizeFactor);
         }
         
-        // Aplica o Estilo da Família da Fonte (ex: Atkinson Hyperlegible)
         if (prefs.fontFamily) {
             root.style.setProperty(`--pluma-font-family`, prefs.fontFamily);
         }
         
     } else {
-        // Se o toggle de Fontes estiver DESLIGADO, remove ou reseta as variáveis
         root.style.removeProperty('--font-size-factor');
         root.style.removeProperty('--pluma-font-family');
-    }
+    }   
     
+    if (prefs.distractionFreeToggle) {
+        // Adiciona a classe que o seu acessibility.css usará para esconder elementos
+        root.classList.add('pluma-distraction-free-active');
+    } else {
+        root.classList.remove('pluma-distraction-free-active');
+    }
 }
 
 chrome.runtime.onMessage.addListener(
@@ -206,12 +211,22 @@ function injectGoogleFont() {
     document.head.appendChild(link);
 }
 
-
-// popupPluma();
+function checkAndDisplayInitialUI() {
+    chrome.storage.local.get('showWelcomeGuide', (data) => {
+        if (data.showWelcomeGuide) {
+            guiaInicial();
+            
+            chrome.storage.local.set({ showWelcomeGuide: false });
+            console.log("Guia de boas-vindas exibida. Flag resetada.");
+        } else {
+            popupPluma();
+            console.log("Guia já exibida. Exibindo ícone flutuante.");
+        }
+    });
+}
 
 injectGoogleFont();
-
-guiaInicial();
+checkAndDisplayInitialUI();
 
 
 
@@ -221,7 +236,7 @@ guiaInicial();
 
 // Salvar preferências do usuário (local storage ou base de dados);
 // Implementar funcionalidades de acessibilidade (ex: leitor de tela, ajuste de contraste, etc).
-// - Trabalhando em: cores + tamanho da fonte
+// - Trabalhando em: cores +
 // Testes de usabilidade e acessibilidade;
 
 // "Destruir conta"

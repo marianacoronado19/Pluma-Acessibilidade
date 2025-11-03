@@ -874,3 +874,41 @@ input[type="checkbox"]:checked + .swicth::before {
     display: none;
 }
 
+
+.header-config {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color, #444);
+    margin-bottom: 20px;
+}
+
+/* 2. Estilo para o Título da Seção */
+.header-config h2 {
+    color: var(--text-color, #FFFFFF);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+/* 3. Estilo para a Descrição (o texto explicando a função) */
+.descricao-config {
+    color: var(--text-color, #E0E0E0);
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-size: 25px;
+    margin-top: 0;
+}
+
+.pre-visualizacao {
+    /* Borda e cor de fundo para destacar o bloco, como nas suas imagens */
+    border: 1px solid var(--border-border-color, #00BFFF); 
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--background-color-secondary, #1a1a3a); 
+    color: var(--text-color, #FFFFFF);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 25px;
+}
+
+

@@ -17,7 +17,6 @@
     z-index: 999999;
     
     background-image: none;
-    /* background-color: tomato; */
 }
 
 .imagem-bru {
@@ -98,23 +97,6 @@
 }
 
 /* TABLETS E DESKTOPS */
-@media (min-width: 768px) {
-    .div-guia {
-        width: 36%;
-        height: 95%;
-        max-width: 450px;
-    }
-}
-
-@media (max-width: 400px) {
-    .div-balao {
-        padding: 5% 10% 10% 5%; 
-    }
-    .texto-balao {
-        font-size: 1em;
-    }
-}
-
 .div-guia-popup{
     position: fixed;
     right: 0;
@@ -142,4 +124,26 @@
     margin: 7%;
     width: 21%;
     height: auto;
+    pointer-events: auto;
+}
+
+.logo-pluma:hover {
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .div-guia {
+        width: 36%;
+        height: 95%;
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 400px) {
+    .div-balao {
+        padding: 5% 10% 10% 5%; 
+    }
+    .texto-balao {
+        font-size: 1em;
+    }
 }

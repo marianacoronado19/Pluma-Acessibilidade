@@ -26,7 +26,8 @@ const DEFAULT_FONT_SIZE_FACTOR = 1.0;
 async function loadPreferences() {
     const defaultPreferences = { 
         highContrastToggle: false, 
-        fontSettingsToggle: false, // Novo padrão: Fontes desligadas
+        fontSettingsToggle: false, 
+        distractionFreeToggle: false,
         fontSizeFactor: DEFAULT_FONT_SIZE_FACTOR,
         fontFamily: 'Atkinson Hyperlegible', // Novo padrão: Estilo de fonte
         ...THEMES['padrao'] 
@@ -91,13 +92,13 @@ function collectAllPreferences() {
     
     prefs.highContrastToggle = document.getElementById('toggle-alto-contraste')?.checked || false;
 
-    // NOVO: Coleta o estado do toggle "Aplicar" da tela de Fontes
     prefs.fontSettingsToggle = document.getElementById('toggle-font-settings')?.checked || false;
+
+    prefs.distractionFreeToggle = document.getElementById('toggle-modo-distracao')?.checked || false;
     
     const fontSizeSlider = document.getElementById('tamanho-fonte-slider');
     prefs.fontSizeFactor = (fontSizeSlider?.value / 100) || DEFAULT_FONT_SIZE_FACTOR; 
 
-    // NOVO: Coleta o estilo de fonte ativo
     const activeFontButton = document.querySelector('.font-selecao-container .font-botao.active');
     prefs.fontFamily = activeFontButton?.getAttribute('data-font-family') || 'Atkinson Hyperlegible';
 
@@ -132,6 +133,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initialPrefs = await loadPreferences();
     
     const highContrastToggle = document.getElementById('toggle-alto-contraste');
+
+    const distractionToggle = document.getElementById('toggle-modo-distracao');
+    if (distractionToggle) {
+        distractionToggle.checked = initialPrefs.distractionFreeToggle || false;
+        distractionToggle.addEventListener('change', saveAndApply);
+    }
     
     const fontSizeSlider = document.getElementById('tamanho-fonte-slider');
     const fontSizeValue = document.querySelector('#tela-fonte .slider-valor');
@@ -140,7 +147,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fontSettingsToggle = document.getElementById('toggle-font-settings');
     if (fontSettingsToggle) {
         fontSettingsToggle.checked = initialPrefs.fontSettingsToggle || false;
-        // Salva e aplica TUDO quando o toggle é ativado/desativado
         fontSettingsToggle.addEventListener('change', saveAndApply); 
     }
 
