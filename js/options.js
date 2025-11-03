@@ -29,7 +29,7 @@ async function loadPreferences() {
         fontSettingsToggle: false, 
         distractionFreeToggle: false,
         fontSizeFactor: DEFAULT_FONT_SIZE_FACTOR,
-        fontFamily: 'Atkinson Hyperlegible', // Novo padrão: Estilo de fonte
+        fontFamily: 'Atkinson Hyperlegible',
         ...THEMES['padrao'] 
     };
     const result = await chrome.storage.sync.get('pluma_preferences');
@@ -39,7 +39,6 @@ async function loadPreferences() {
 async function savePreferences(prefs) {
     await chrome.storage.sync.set({ 'pluma_preferences': prefs });
     
-    // Envia a mensagem para todas as abas abertas
     chrome.tabs.query({}, (tabs) => {
         tabs.forEach(tab => {
              if (tab.id) {
@@ -61,12 +60,10 @@ function applyTheme(prefs) {
         }
     }
     
-    // Aplicação do Tamanho da Fonte (Sempre visível na pré-visualização)
     if (prefs.fontSizeFactor) {
          root.style.setProperty(`--font-size-factor`, prefs.fontSizeFactor);
     }
     
-    // Aplicação do Estilo da Fonte (Sempre visível na pré-visualização)
     if (prefs.fontFamily) {
          root.style.setProperty(`--pluma-font-family`, prefs.fontFamily);
     }
@@ -143,14 +140,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fontSizeSlider = document.getElementById('tamanho-fonte-slider');
     const fontSizeValue = document.querySelector('#tela-fonte .slider-valor');
 
-    // Inicialização do Toggle de Fontes
     const fontSettingsToggle = document.getElementById('toggle-font-settings');
     if (fontSettingsToggle) {
         fontSettingsToggle.checked = initialPrefs.fontSettingsToggle || false;
         fontSettingsToggle.addEventListener('change', saveAndApply); 
     }
 
-    // Inicialização do Estilo de Fonte Ativo
     if (initialPrefs.fontFamily) {
         document.querySelectorAll('.font-botao').forEach(btn => {
             btn.classList.remove('active');
@@ -160,7 +155,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
     
-    // Inicialização do Slider
     if (fontSizeSlider) {
         fontSizeSlider.value = initialPrefs.fontSizeFactor * 100;
         if (fontSizeValue) {
@@ -168,15 +162,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     
-    // Aplica as configurações iniciais (para pré-visualização)
     applyColorsToForm(initialPrefs); 
     applyTheme(initialPrefs); 
     applyHighContrastClass(initialPrefs.highContrastToggle); 
     
-    
-    // -- EVENT LISTENERS --
-
-    // Cores e Alto Contraste
     document.querySelectorAll('.cores-selecao-container input[type="color"]').forEach(input => {
         input.addEventListener('input', () => { 
             applyTheme(collectAllPreferences()); 
@@ -209,33 +198,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
     
-    // Tamanho da Fonte (Slider)
     if (fontSizeSlider) {
         fontSizeSlider.addEventListener('input', () => {
             updateFontSizeLabel(fontSizeSlider, fontSizeValue);
             applyTheme(collectAllPreferences()); 
             
-            // NOVO: Só salva se o toggle "Aplicar" estiver ligado
             if (fontSettingsToggle?.checked) { 
                  saveAndApply(); 
             }
         });
-        // Removido: fontSizeSlider.addEventListener('change', saveAndApply); 
     }
     
-    // Estilo da Fonte (Botões)
     document.querySelectorAll('.font-botao').forEach(button => {
         button.addEventListener('click', (event) => {
             event.preventDefault(); 
             
-            // 1. Marca o botão como ativo visualmente
             document.querySelectorAll('.font-botao').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             
-            // 2. Aplica na pré-visualização da extensão
             applyTheme(collectAllPreferences());
             
-            // 3. Se o toggle "Aplicar" estiver ligado, salva automaticamente
             if (fontSettingsToggle?.checked) {
                  saveAndApply(); 
             }

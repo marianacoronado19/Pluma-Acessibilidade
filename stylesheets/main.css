@@ -96,7 +96,6 @@
     background-color: #4a86d9;
 }
 
-/* TABLETS E DESKTOPS */
 .div-guia-popup{
     position: fixed;
     right: 0;
@@ -131,6 +130,7 @@
     cursor: pointer;
 }
 
+/* TABLETS E DESKTOPS */
 @media (min-width: 768px) {
     .div-guia {
         width: 36%;

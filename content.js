@@ -150,7 +150,7 @@ function popupPluma() {
 function applyAccessibilitySettings(prefs) {
     const root = document.documentElement;
 
-    if (prefs.highContrastToggle && prefs.highContrast.enabled) {
+    if (prefs.highContrastToggle) {
         root.classList.add('pluma-high-contrast-active');
     } else {
         root.classList.remove('pluma-high-contrast-active');
