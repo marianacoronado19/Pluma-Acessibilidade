@@ -1,11 +1,11 @@
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
     <link rel="stylesheet" href="/stylesheets/configs.css">
     <link rel="icon" href="/images/logoPluma/icon-32.png" type="image/x-icon">
 
@@ -158,8 +158,8 @@
             <p class="titulo">Fontes</p>
             <div class="toggle-aplicar-container">
             <span>Aplicar</span>
-            <input type="checkbox" id="toggle-alto-contraste" name="toggle alto contraste"></input>
-            <label for="toggle-alto-contraste" class="swicth"></label>
+            <input type="checkbox" id="toggle-font-settings" name="toggle configuracoes de fonte"></input>
+            <label for="toggle-font-settings" class="swicth"></label> 
         </div>
         </div>
 
@@ -203,14 +203,16 @@
                 </div>
             </div>
         </form>
-    </div> <div id="tela-leitura-voz" class="box" data-screen="false">
+    </div>
+    
+    <div id="tela-leitura-voz" class="box" data-screen="false">
         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
         <div class="tituloseta">
             <p class="titulo">Leitura em Voz Alta</p>
             <div class="toggle-aplicar-container">
             <span>Aplicar</span>
-            <input type="checkbox" id="toggle-alto-contraste" name="toggle alto contraste"></input>
-            <label for="toggle-alto-contraste" class="swicth"></label>
+            <input type="checkbox" id="toggle-leitura-voz" name="toggle leitura em voz alta"></input>
+            <label for="toggle-leitura-voz" class="swicth"></label>
         </div>
         </div>
         <form id="form-leitura-voz">
@@ -259,6 +261,7 @@
                         <span class="material-symbols-outlined">volume_mute</span>
                         <input type="range" id="leitura-volume-slider" min="0" max="1.0" value="1.0" step="0.1" />
                         <span class="material-symbols-outlined">volume_up</span>
+                        
                     </div>
                     <p class="slider-valor" id="leitura-volume-valor">100%</p>
                 </div>
@@ -271,15 +274,17 @@
             <p>Para iniciar a leitura, selecione um bloco de texto na página e clique em **Reproduzir**.</p>
         </div>
 
-    </div> <div id="tela-legendas" class="box" data-screen="false">
+    </div>
+    
+    <div id="tela-legendas" class="box" data-screen="false">
         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
         
         <div class="tituloseta">
             <p class="titulo">Legendas Automáticas</p>
             <div class="toggle-aplicar-container">
             <span>Aplicar</span>
-            <input type="checkbox" id="toggle-alto-contraste" name="toggle alto contraste"></input>
-            <label for="toggle-alto-contraste" class="swicth"></label>
+            <input type="checkbox" id="toggle-legendas" name="toggle legendas"></input>
+            <label for="toggle-legendas" class="swicth"></label>
         </div>
         </div>
 
@@ -332,8 +337,10 @@
 
             </div>
         </form>
-    </div> <div id="tela-teclado" class="box" data-screen="false">
-         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+    </div>
+    
+    <div id="tela-teclado" class="box" data-screen="false">
+        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
         <div class="tituloseta">
             <p class="titulo">Navegação por Teclado</p>
         </div>
@@ -343,21 +350,21 @@
     </div>
     
     <div id="tela-distracoes" class="box" data-screen="false">
-         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
         <div class="tituloseta">
             <p class="titulo">Modo Sem Distrações</p>
         </div>
-         <div class="campo-exemplo status-leitura">
+        <div class="campo-exemplo status-leitura">
             <p>Configurações do modo sem distrações virão aqui.</p>
         </div>
     </div>
     
     <div id="tela-selecao" class="box" data-screen="false">
-         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
         <div class="tituloseta">
             <p class="titulo">Leitura por Seleção</p>
         </div>
-         <div class="campo-exemplo status-leitura">
+        <div class="campo-exemplo status-leitura">
             <p>Configurações de leitura por seleção virão aqui.</p>
         </div>
     </div>

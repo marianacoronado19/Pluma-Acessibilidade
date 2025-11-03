@@ -136,25 +136,46 @@ function popupPluma() {
  * @param {object} prefs - Objeto de preferências de acessibilidade.
  */
 function applyAccessibilitySettings(prefs) {
-  const root = document.documentElement;
+    const root = document.documentElement;
 
-  for (const [property, value] of Object.entries(prefs)) {
-      if (typeof value === 'boolean') continue;
+    // 1. Lógica de Alto Contraste (Cores)
+    // Aplica a classe (que lida com o CSS das cores) SÓ se o toggle estiver ligado
+    if (prefs.highContrastToggle) {
+        root.classList.add('pluma-high-contrast-active');
+    } else {
+        root.classList.remove('pluma-high-contrast-active');
+    }
 
-    root.style.setProperty(`--${property}`, value);
-  }
+    // 2. Aplicação das variáveis CSS (Cores)
+    // Aplica as variáveis de cor (independente do toggle, para que o pluma-high-contrast-active as use)
+    for (const [property, value] of Object.entries(prefs)) {
+        // Ignora valores booleanos (que são os toggles)
+        if (typeof value === 'boolean') continue;
 
-  if (prefs.highContrastToggle) {
-    root.classList.add('pluma-high-contrast-active');
-  } else {
-    root.classList.remove('pluma-high-contrast-active');
-  }
-
-  if (prefs.fontResizeToggle) {
-    root.classList.add('pluma-font-resize');
-  } else {
-    root.classList.remove('pluma-font-resize');
-  }
+        // Note: Se a cor é uma variável, ela sempre é injetada
+        root.style.setProperty(`--${property}`, value);
+    }
+    
+    // --- NOVO: Lógica das Configurações de Fonte ---
+    
+    // 3. Aplicação do Tamanho e Estilo da Fonte (CONDICIONAL)
+    if (prefs.fontSettingsToggle) {
+        // Aplica o Fator de Tamanho da Fonte (ex: 1.5)
+        if (prefs.fontSizeFactor) {
+            root.style.setProperty(`--font-size-factor`, prefs.fontSizeFactor);
+        }
+        
+        // Aplica o Estilo da Família da Fonte (ex: Atkinson Hyperlegible)
+        if (prefs.fontFamily) {
+            root.style.setProperty(`--pluma-font-family`, prefs.fontFamily);
+        }
+        
+    } else {
+        // Se o toggle de Fontes estiver DESLIGADO, remove ou reseta as variáveis
+        root.style.removeProperty('--font-size-factor');
+        root.style.removeProperty('--pluma-font-family');
+    }
+    
 }
 
 chrome.runtime.onMessage.addListener(
@@ -172,9 +193,23 @@ chrome.storage.sync.get('pluma_preferences', (data) => {
     }
 });
 
+function injectGoogleFont() {
+    const fontId = 'pluma-atkinson-font';
+    if (document.getElementById(fontId)) return;
+
+    const link = document.createElement('link');
+    link.id = fontId;
+    link.rel = 'stylesheet';
+    
+    link.href = 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap'; 
+    
+    document.head.appendChild(link);
+}
 
 
 // popupPluma();
+
+injectGoogleFont();
 
 guiaInicial();
 
