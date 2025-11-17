@@ -183,20 +183,27 @@ function applyAccessibilitySettings(prefs) {
     }
 }
 
+// MODIFICAÇÃO ---------------------------------------------------------
+// Ouve o Service Worker (background.js) para mensagens de atualização em tempo real
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-      if (request.action === "APPLY_NEW_PREFERENCES") {
-        applyAccessibilitySettings(request.preferences);
-        sendResponse({status: "Setting applied to content"});
-      }
+        if (request.action === "APPLY_SETTINGS") {
+            // Esta é a chamada de ATUALIZAÇÃO que o background.js usa no login/logout/save.
+            applyAccessibilitySettings(request.preferences || {}); // Garante um objeto para limpeza
+            sendResponse({status: "Setting applied to content"});
+        }
     }
 );
 
+// Tenta aplicar as configurações no CARREGAMENTO INICIAL da página
 chrome.storage.sync.get('pluma_preferences', (data) => {
+    // Se houverem preferências no cache sincronizado, aplique-as
     if (data.pluma_preferences) {
         applyAccessibilitySettings(data.pluma_preferences);
-    }
+    } 
+    // Se data.pluma_preferences for null ou undefined, a função fará a limpeza (se estiver bem escrita).
 });
+// MODIFICAÇÃO ---------------------------------------------------------
 
 function injectGoogleFont() {
     const fontId = 'pluma-atkinson-font';
@@ -224,6 +231,35 @@ function checkAndDisplayInitialUI() {
         }
     });
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    switch (request.action) {
+        // ... (INICIAR, PAUSAR, PARAR existentes) ...
+        
+        // --- NOVO: RECEBER PREFERÊNCIAS GERAIS DO options.js ---
+        case 'APPLY_NEW_PREFERENCES':
+            const prefs = request.preferences;
+            
+            // ATUALIZA AS CONFIGURAÇÕES TTS
+            configTTS.rate = prefs.ttsRate || 1.0;
+            configTTS.volume = prefs.ttsVolume || 1.0;
+            
+            console.log("Configurações TTS atualizadas via options.js:", configTTS);
+            
+            // Se a leitura estiver em andamento, as novas configurações
+            // só serão aplicadas na próxima leitura, pois a Utterance atual é imutável.
+            break;
+            
+        // ... (restante dos comandos) ...
+    }
+    return true; 
+});
+
+let configTTS = {
+    rate: 1.0, 
+    volume: 1.0, 
+    voice: null 
+};
 
 injectGoogleFont();
 checkAndDisplayInitialUI();

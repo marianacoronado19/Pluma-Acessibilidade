@@ -34,9 +34,9 @@
                 <span class="material-symbols-outlined icon-arrow">chevron_right</span>
                 <span>Leitura em voz alta</span>
             </a>
-            <a href="#" class="sidebar-item" data-target="tela-legendas">
+            <a href="#" class="sidebar-item" data-target="tela-selecao">
                 <span class="material-symbols-outlined icon-arrow">chevron_right</span>
-                <span>Legendas automáticas</span>
+                <span>Leitura por seleção</span>
             </a>
             <a href="#" class="sidebar-item" data-target="tela-teclado">
                 <span class="material-symbols-outlined icon-arrow">chevron_right</span>
@@ -45,10 +45,6 @@
             <a href="#" class="sidebar-item" data-target="tela-distracoes">
                 <span class="material-symbols-outlined icon-arrow">chevron_right</span>
                 <span>Modo sem distrações</span>
-            </a>
-            <a href="#" class="sidebar-item" data-target="tela-selecao">
-                <span class="material-symbols-outlined icon-arrow">chevron_right</span>
-                <span>Leitura por seleção</span>
             </a>
             <a href="#" class="sidebar-item" data-target="tela-inicial">
                 <span class="material-symbols-outlined icon-arrow">chevron_right</span>
@@ -215,26 +211,31 @@
                 <label for="toggle-leitura-voz" class="swicth"></label>
             </div>
         </div>
+
         <form id="form-leitura-voz">
             <div class="grid-form">
-                
-                <div class="campo campo-reproducao">
+
+                <div class="campo">
                     <label>Controles</label>
-                    <div class="controles-audio-container">
-                        <button type="button" id="leitura-play-btn" class="controle-btn">
+                    <div class="tema-selecao-container">
+                        
+                        <button type="button" id="play-btn" class="controle-btn">
                             <span class="material-symbols-outlined">play_arrow</span>
-                            <span>Reproduzir</span>
+                            <span class="texto-leitura">Iniciar</span>
                         </button>
-                        <button type="button" id="leitura-pause-btn" class="controle-btn" disabled>
+
+                        <button type="button" id="pausa-btn" class="controle-btn">
                             <span class="material-symbols-outlined">pause</span>
-                            <span>Pausar</span>
+                            <span class="texto-leitura">Pausar</span>
                         </button>
-                        <button type="button" id="leitura-stop-btn" class="controle-btn" disabled>
+
+                        <button type="button" id="stop-btn" class="controle-btn">
                             <span class="material-symbols-outlined">stop</span>
-                            <span>Parar</span>
+                            <span class="texto-leitura">Parar</span>
                         </button>
+
                     </div>
-                </div> 
+                </div>
 
                 <div class="campo">
                     <label for="leitura-voz-select">Voz e Idioma</label>
@@ -249,7 +250,7 @@
                     <label>Velocidade da Leitura (Ritmo)</label>
                     <div class="slider-container">
                         <span class="tamanho-exemplo-min">Lenta</span>
-                        <input type="range" id="leitura-velocidade-slider" min="0.5" max="2.0" value="1.0" step="0.1" />
+                        <input type="range" id="leitura-velocidade-slider" min="0.5" value="1.0" step="0.1" />
                         <span class="tamanho-exemplo-max">Rápida</span>
                     </div>
                     <p class="slider-valor" id="leitura-velocidade-valor">1.0x (Normal)</p>
@@ -266,78 +267,15 @@
                     <p class="slider-valor" id="leitura-volume-valor">100%</p>
                 </div>
 
+                <div class="campo-exemplo status-leitura">
+                    <label>Instruções</label>
+                    <p>Para iniciar a leitura, selecione um bloco de texto na página e clique em **Reproduzir**.</p>
+                </div>
+
             </div>
         </form>
-        
-        <div class="campo-exemplo status-leitura">
-            <label>Instruções</label>
-            <p>Para iniciar a leitura, selecione um bloco de texto na página e clique em **Reproduzir**.</p>
-        </div>
-
     </div>
     
-    <div id="tela-legendas" class="box" data-screen="false">
-        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
-        
-        <div class="tituloseta">
-            <p class="titulo">Legendas Automáticas</p>
-            <div class="toggle-aplicar-container">
-            <span>Aplicar</span>
-            <input type="checkbox" id="toggle-legendas" name="toggle legendas"></input>
-            <label for="toggle-legendas" class="swicth"></label>
-        </div>
-        </div>
-
-        <form id="form-legendas">
-            <div class="grid-form">
-                
-                <div class="campo campo-toggle">
-                    <label for="legendas-toggle">Ativar Legendas Automáticas</label>
-                    <div class="toggle-container">
-                        <input type="checkbox" id="legendas-toggle" class="toggle-switch">
-                        <label for="legendas-toggle" class="toggle-label"></label>
-                    </div>
-                </div>
-
-                <hr class="sidebar-divider" style="margin: 20px 0;">
-
-                <div class="campo">
-                    <label for="legenda-fonte-select">Tipo de Fonte da Legenda</label>
-                    <select id="legenda-fonte-select" name="legenda-fonte-select">
-                        <option value="Atkinson Hyperlegible" selected>Hiperlegível (Atkinson)</option>
-                        <option value="sans-serif">Sans-serif (Padrão)</option>
-                        <option value="monospace">Monoespaçada</option>
-                        <option value="cursive">Cursiva (Evitar!)</option>
-                    </select>
-                </div>
-                
-                <div class="campo">
-                    <label for="legenda-fundo-cor">Cor de Fundo da Legenda</label>
-                    <div class="cores-selecao-container">
-                        <input type="color" id="legenda-fundo-cor" name="legenda-fundo-cor" value="#000000" data-prop="legenda-bg">
-                    </div>
-                </div>
-
-                <div class="campo">
-                    <label for="legenda-texto-cor">Cor do Texto da Legenda</label>
-                    <div class="cores-selecao-container">
-                        <input type="color" id="legenda-texto-cor" name="legenda-texto-cor" value="#FFFF00" data-prop="legenda-text">
-                    </div>
-                </div>
-
-                <div class="campo campo-slider">
-                    <label>Tamanho da Fonte da Legenda</label>
-                    <div class="slider-container">
-                        <span class="tamanho-exemplo-min">Pequena</span>
-                        <input type="range" id="legenda-tamanho-slider" min="10" max="36" value="18" step="1" />
-                        <span class="tamanho-exemplo-max">Grande</span>
-                    </div>
-                    <p class="slider-valor" id="legenda-tamanho-valor">18px</p>
-                </div>
-
-            </div>
-        </form>
-    </div>
     
     <div id="tela-teclado" class="box" data-screen="false">
         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">

@@ -97,6 +97,7 @@
 }
 
 .div-guia-popup{
+    /* display: none !important; */
     position: fixed;
     right: 0;
     bottom: 0;

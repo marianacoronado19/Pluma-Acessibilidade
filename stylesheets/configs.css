@@ -787,34 +787,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: var(--disable-color);
 }
 
-#leitura-voz-select {
-    width: 100%;
-    padding: 8px;
-    height: 40px; 
-    margin-top: 5px;
-    padding-right: 30px; 
-    border: 2px solid var(--link-color);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    border-radius: 4px;
-    -webkit-appearance: none; 
-    -moz-appearance: none;
-    appearance: none; 
-}
-
-.slider-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-top: 5px;
-}
-
-.slider-valor {
-    text-align: center;
-    font-weight: bold;
-    margin-top: 5px;
-    color: var(--link-color); 
-}
 
 .toggle-aplicar-container {
     display: flex;
@@ -912,3 +884,142 @@ input[type="checkbox"]:checked + .swicth::before {
 }
 
 
+
+
+
+/* .campo-slider label {
+    align-self: flex-start;
+    margin-bottom: 5px; 
+} */
+
+/*
+#tela-leitura-voz .slider-container {
+    width: 100%;
+    max-width: none; 
+    margin-top: 5px; 
+    justify-content: space-between; 
+}*/
+
+/* Estilo para as labels Lenta/Rápida na Tela de Leitura em Voz Alta 
+#tela-leitura-voz .tamanho-exemplo-min, 
+#tela-leitura-voz .tamanho-exemplo-max {
+    font-size: 20px;
+    font-weight: bold;
+    color: white; 
+    margin: 0;
+    line-height: 1; 
+}
+
+#tela-leitura-voz .campo-slider:nth-child(3) .tamanho-exemplo-max {
+    font-size: 35px; 
+}
+
+#leitura-volume-slider + .material-symbols-outlined {
+    font-size: 30px; 
+    color: white;
+}
+.slider-container .material-symbols-outlined:first-child {
+    font-size: 30px; 
+    color: white;
+}
+*/
+/* Garante que o valor do slider (1.0x (Normal) e 100%) fique centralizado logo abaixo do slider 
+#tela-leitura-voz .slider-valor {
+    width: 100%;
+    max-width: none;
+    text-align: center;
+    margin-top: 10px; 
+    font-size: 20px; 
+}
+
+#form-leitura-voz .campo-slider {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    width: 100%;
+    max-width: 700px;
+    margin: 30px auto; 
+} */
+
+/* .controles-audio-container {
+    display: flex; 
+    gap: 10px; 
+    margin-top: 10px;
+    justify-content: space-between; 
+} */
+
+.controle-btn {
+    flex-grow: 1; /* Faz com que todos os botões ocupem o mesmo espaço */
+    display: flex;
+    flex-direction: column; /* Empilha ícone e texto */
+    align-items: center;
+    padding: 8px 5px;
+    text-align: center;
+}
+
+.controle-btn span {
+    display: block; /* Garante que o texto fique em sua própria linha abaixo do ícone */
+}
+
+/* Estilo de Interação */
+.controle-btn:hover:not([disabled]) {
+    /* As variáveis abaixo (var(--...)) determinam as cores */
+    background-color: var(--link-color); 
+    color: var(--background-color);
+}
+
+
+#leitura-btn.controle-btn{
+    flex: 1 1 calc(25% - 11.25px);
+    max-width: 190px; /* Garante que ele não cresça demais em telas muito largas */
+    
+    height: 120px; 
+    min-width: 44px; /* Garante o mínimo de acessibilidade */
+    
+    border-radius: 5px; 
+    border: 3px solid transparent; 
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: all 0.2s ease;
+    padding: 0; 
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; 
+}
+
+#leitura-btn.controle-btn.active {
+    border: 3px solid #fc9700; /* Borda laranja para o tema selecionado */
+    transform: scale(1.02); /* Levemente maior quando ativo */
+}
+
+#leitura-btn.controle-btn:hover {
+    border: 3px solid #60a1ea; /* Borda azul clara no hover (mesma cor que você usou para box-shadow) */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra um pouco mais pronunciada */
+    transform: scale(1.03); /* Levemente maior no hover */
+}
+
+.material-symbols-outlined{
+    color: white;
+    font-size: 40px;
+}
+
+.texto-leitura{
+    color: white;
+    font-size: 20px;
+}
+
+/* 1. Estilo Básico para TODOS os Sliders (Ritmo e Volume) */
+.campo-slider input[type="range"] {
+    flex-grow: 1; 
+    -webkit-appearance: none; /* Remove o estilo padrão do navegador */
+    appearance: none;
+    height: 12px;
+    background: transparent; /* A trilha será estilizada abaixo */
+    border-radius: 6px;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}

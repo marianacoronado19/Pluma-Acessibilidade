@@ -30,11 +30,14 @@ async function loadPreferences() {
         distractionFreeToggle: false,
         fontSizeFactor: DEFAULT_FONT_SIZE_FACTOR,
         fontFamily: 'Atkinson Hyperlegible',
+        ttsRate: 1.0,   // Valor inicial do Ritmo
+        ttsVolume: 1.0, // Valor inicial do Volume
         ...THEMES['padrao'] 
     };
     const result = await chrome.storage.sync.get('pluma_preferences');
     return result.pluma_preferences || defaultPreferences;
 }
+
 
 async function savePreferences(prefs) {
     await chrome.storage.sync.set({ 'pluma_preferences': prefs });
@@ -108,6 +111,50 @@ function collectAllPreferences() {
     
     return prefs;
 }
+
+// MODIFICAÇÃO ---------------------------------------------------------
+function collectAllPreferences() {
+    // Esta função deve coletar todos os estados dos seus toggles, sliders, etc.
+    // const preferences = {
+    //     // Exemplo:
+    //     highContrast: document.getElementById('toggle-contraste').checked,
+    //     fontSizeFactor: parseFloat(document.getElementById('font-size-slider').value),
+    //     fontFamily: document.querySelector('.font-botao.active').dataset.fontKey,
+
+    //     const rateSlider = document.getElementById('leitura-velocidade-slider'),
+    //     if (rateSlider) {
+    //         prefs.ttsRate = parseFloat(rateSlider.value);
+    //     }
+    
+    //     const volumeSlider = document.getElementById('leitura-volume-slider'),
+    //     if (volumeSlider) {
+    //         prefs.ttsVolume = parseFloat(volumeSlider.value);
+    //     }
+    // };
+    // return preferences;
+}
+
+function saveAndApply() {
+    const prefs = collectAllPreferences();
+    
+    // Comunica-se com o Background Script para salvar no storage e no servidor
+    chrome.runtime.sendMessage({
+        action: 'USER_LOGIN',
+        email: email,
+        password: password
+    }, (response) => {
+        if (response.success) {
+            // Redireciona para a página de configurações após o login
+            window.location.href = chrome.runtime.getURL('pages/configs.html'); 
+            
+            // OU se você estiver na página de opções:
+            // window.location.reload(); 
+        } else {
+            alert("Erro no login: " + response.message);
+        }
+    });
+}
+
 
 function applyHighContrastClass(isEnabled) {
     const root = document.documentElement;
@@ -224,4 +271,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    if (rateSlider) {
+        // Carrega o valor salvo
+        rateSlider.value = initialPrefs.ttsRate;
+        // Dispara o JS que atualiza o texto de valor (se você o injetou)
+        rateSlider.dispatchEvent(new Event('input')); 
+        // Salva ao mudar
+        rateSlider.addEventListener('input', saveAndApply);
+    }
+
+    if (volumeSlider) {
+        // Carrega o valor salvo
+        volumeSlider.value = initialPrefs.ttsVolume;
+        // Dispara o JS que atualiza o texto de valor (se você o injetou)
+        volumeSlider.dispatchEvent(new Event('input')); 
+        // Salva ao mudar
+        volumeSlider.addEventListener('input', saveAndApply);
+    }
+
+    // Função utilitária para enviar a mensagem ao Content Script da aba ativa
+    function enviarComandoTTS(action) {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (tabs.length > 0) {
+                chrome.tabs.sendMessage(tabs[0].id, { action: action });
+            }
+        });
+    }
+
+    // --- Conexão dos Botões ---
+    document.getElementById('play-btn')?.addEventListener('click', () => {
+        enviarComandoTTS('INICIAR');
+        // Você pode adicionar lógica visual aqui para o estado ATIVO/INATIVO
+    });
+
+    document.getElementById('pause-btn')?.addEventListener('click', () => {
+        enviarComandoTTS('PAUSAR');
+    });
+
+    document.getElementById('stop-btn')?.addEventListener('click', () => {
+        enviarComandoTTS('PARAR');
+    });
+    
+    // ... (restante do seu DOMContentLoaded) ...
 });

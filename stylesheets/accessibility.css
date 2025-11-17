@@ -1,3 +1,5 @@
+/* Alto-Contraste */
+
 html.pluma-high-contrast-active {
     background-color: var(--background-color) !important;
     transition: background-color 0.5s ease;
@@ -94,6 +96,8 @@ html.pluma-high-contrast-active .div-guia * {
     background-color: initial !important;
 }
 
+
+/* Estilo de fonte */
 :root {
     --font-size-factor: 1.0; 
     --pluma-font-family: Arial, sans-serif;
@@ -111,9 +115,9 @@ button, input[type="submit"], input[type="button"] {
     white-space: nowrap !important;
 }
 
+/* Modo sem distrações */
 
-
-.distraction-free-mode body {
+html.pluma-distraction-free-active body {
     overflow-y: scroll !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -121,22 +125,30 @@ button, input[type="submit"], input[type="button"] {
     min-height: 100vh !important;
 }
 
-/* 2. REGRA AGRESSIVA: Esconde TUDO. */
-/* O seletor *:not(...) exclui a própria interface do PLUMA para que não desapareça */
-.distraction-free-mode body > *:not(#pluma-sidebar):not(#pluma-open-btn) {
+
+html.pluma-distraction-free-active :is(
+    .ad, .ad-container, .adsbygoogle, 
+    [class*="promo"], [id*="promo"],
+
+    .btn-assinar,
+    .assinar,
+    .conteudo-promo,
+    .footer-ads
+
+    #comments, .comments-section, .social-share-bar,
+    .floating-widget, .popup,
+
+    footer, #footer
+
+)   {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     height: 0 !important;
-    width: 0 !important;
-    position: absolute !important;
-    clip: rect(0, 0, 0, 0) !important;
 }
 
-/* 3. REAPARECIMENTO E FORMATAÇÃO DO CONTEÚDO PRINCIPAL */
 
-/* Seletores do Conteúdo Principal (Adicionado mais seletores comuns em portais) */
-.distraction-free-mode :where(
+html.pluma-distraction-free-active :where(
     main, 
     article, 
     #article-body, 
@@ -144,33 +156,33 @@ button, input[type="submit"], input[type="button"] {
     .conteudo-principal,
     #content-main,
     .post-content,
-    .artigo
+    .artigo,
+    .corpo-materia,
+    #content,
+    #primary,
+    div[role="main"],
+    #main-content
 ) {
-    /* Faz o container principal reaparecer e ocupar o centro da tela */
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    
-    /* Aplica o estilo de leitura */
     max-width: 850px !important;
-    width: 95% !important; /* Responsivo */
-    margin: 50px auto !important; /* Centraliza com margem superior/inferior */
+    width: 95% !important;
+    margin: 50px auto !important;
     padding: 30px !important;
-    
-    /* Estilo de Tipografia */
+    background-color: #f7f7f7 !important;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1) !important;
+
     font-family: 'Atkinson Hyperlegible', sans-serif !important;
     font-size: 1.15rem !important;
     line-height: 1.7 !important;
     color: #333 !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
     border: none !important;
-    position: relative !important; /* Garante que ele apareça sobre outros elementos ocultos */
+    position: relative !important;
+
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-/* 4. GARANTE A VISIBILIDADE DOS ELEMENTOS DE TEXTO DENTRO DO CONTEÚDO PRINCIPAL */
-/* Aplica display:block e remove estilos de distração para TODOS os elementos internos comuns */
-.distraction-free-mode :where(
+html.pluma-distraction-free-active :where(
     p, 
     h1, h2, h3, h4, h5, h6, 
     ul, ol, li, 
@@ -198,22 +210,22 @@ button, input[type="submit"], input[type="button"] {
 }
 
 /* Estilos Específicos de Tipografia */
-.distraction-free-mode h1, 
-.distraction-free-mode h2 {
+html.pluma-distraction-free-active h1, 
+html.pluma-distraction-free-active h2 {
     margin-top: 2rem !important;
     margin-bottom: 1rem !important;
     color: #1a1a44 !important; /* Títulos em cor de destaque */
 }
-.distraction-free-mode p {
+html.pluma-distraction-free-active p {
     margin-bottom: 1.5rem !important;
 }
-.distraction-free-mode a {
+html.pluma-distraction-free-active a {
     color: #0066cc !important; 
     text-decoration: underline !important;
 }
 
 /* Garante que imagens (se forem conteúdo) reapareçam e sejam responsivas */
-.distraction-free-mode img {
+html.pluma-distraction-free-active img {
     height: auto !important;
     max-width: 100% !important;
     display: block !important;
@@ -222,7 +234,9 @@ button, input[type="submit"], input[type="button"] {
 
 /* 5. INTERFACE PLUMA (SEMPRE VISÍVEL) */
 #pluma-sidebar, 
-#pluma-open-btn {
+#pluma-open-btn,
+.div-guia-popup,
+.div-guia {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
