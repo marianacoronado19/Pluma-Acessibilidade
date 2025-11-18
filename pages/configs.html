@@ -237,6 +237,44 @@
                     </div>
                 </div>
 
+                <div class="campo">
+                    <label for="leitura-voz-select">Voz e Idioma</label>
+                    <select id="leitura-voz-select" name="leitura-voz-select">
+                        <option value="default" selected>Voz Padrão do Sistema</option>
+                        <option value="pt-br-f">Português (Brasil) - Feminina</option>
+                        <option value="pt-br-m">Português (Brasil) - Masculina</option>
+                    </select>
+                </div>
+                
+                <div class="campo campo-slider">
+                    <label>Velocidade da Leitura (Ritmo)</label>
+                    <div class="slider-container">
+                        <span class="tamanho-exemplo-min">Lenta</span>
+                        <input type="range" id="leitura-velocidade-slider" min="0.5" value="1.0" step="0.1" />
+                        <span class="tamanho-exemplo-max">Rápida</span>
+                    </div>
+                    <p class="slider-valor" id="leitura-velocidade-valor">1.0x (Normal)</p>
+                </div>
+
+                <div class="campo campo-slider">
+                    <label>Volume</label>
+                    <div class="slider-container">
+                        <span class="material-symbols-outlined">volume_mute</span>
+                        <input type="range" id="leitura-volume-slider" min="0" max="1.0" value="1.0" step="0.1" />
+                        <span class="material-symbols-outlined">volume_up</span>
+                        
+                    </div>
+                    <p class="slider-valor" id="leitura-volume-valor">100%</p>
+                </div>
+
+                <div class="campo-exemplo status-leitura">
+                    <label>Instruções</label>
+                    <p>Para iniciar a leitura, selecione um bloco de texto na página e clique em **Reproduzir**.</p>
+                </div>
+
+            </div>
+        </form>
+    </div>
     
     
     <div id="tela-teclado" class="box" data-screen="false">
@@ -377,38 +415,47 @@
     <form id="form-tts">
         <div class="grid-form">
             
-            <div class="campo-exemplo status-leitura" style="grid-column: 1 / -1; margin-bottom: 30px;">
+            <div class="campo-exemplo status-leitura" style="grid-column: 1 / -1; margin-bottom: 20px;">
                 <label>Configurações de Voz</label>
                 <p>Ajuste o idioma, velocidade e volume da voz de leitura.</p>
             </div>
 
             <div class="campo">
-                <label for="tts-language">Voz</label>
-                <select id="tts-language" class="campo-input">
+                <label for="leitura-voz-select">Idioma/Voz</label>
+                <select id="leitura-voz-select" class="campo-input">
                     <option value="default">Voz padrão do sistema</option>
-                    <option value="pt-BR">Português (Brasil) - Feminina</option>
-                    <option value="en-US">Inglês (EUA) - Masculina</option>
+                    <option value="pt-BR">Português (Brasil)</option>
                 </select>
             </div>
 
             <div class="campo">
-                <label for="tts-rate">Velocidade da Leitura</label>
+                <label for="tts-rate">Velocidade da Leitura (Rate)</label>
                 <div class="range-container">
                     <input type="range" id="tts-rate" min="0.5" max="2.0" step="0.1" value="1.0" class="range-slider">
-                    <span class="range-value" id="tts-rate-value">1.0</span> 
+                    <span class="range-value" id="tts-rate-value">1.0</span>
                 </div>
             </div>
 
-            <div class="campo" style="grid-column: 1 / -1;">
+            <div class="campo">
                 <label for="tts-volume">Volume</label>
                 <div class="range-container">
                     <input type="range" id="tts-volume" min="0.0" max="1.0" step="0.05" value="1.0" class="range-slider">
-                    </div>
+                    <span class="range-value" id="tts-volume-value">1.0</span>
+                </div>
             </div>
-        
+            
+            <div class="campo">
+                <label for="tts-pitch">Tom da Voz (Pitch)</label>
+                <div class="range-container">
+                    <input type="range" id="tts-pitch" min="0.0" max="2.0" step="0.1" value="1.0" class="range-slider">
+                    <span class="range-value" id="tts-pitch-value">1.0</span>
+                </div>
+            </div>
 
         </div>
-        </form>
+        
+        <button type="button" id="test-tts-button" class="botao-aplicar">Testar Leitura</button>
+    </form>
 </div>
     
     <script src="/js/options.js"></script>
