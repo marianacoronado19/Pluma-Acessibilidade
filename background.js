@@ -136,6 +136,43 @@ async function savePreferencesToServer(token, preferences) {
     }
 }
 
+// // Listener principal para comandos de teclado. (Definidos no manifest.json)
+// chrome.commands.onCommand.addListener(function(command) {
+//     console.log("Comando de teclado recebido:", command);
+        
+//     switch (command) {
+//         case "open-pluma-configs":
+//             // Abre a página de configurações em uma nova aba
+//             chrome.tabs.create({ url: chrome.runtime.getURL('pages/configs.html') }); 
+//             break;
+            
+//         case "toggle-high-contrast":
+//             // Alterna o Alto Contraste globalmente
+//             togglePreferenceAndSave("highContrastEnabled");
+//             break;
+            
+//         case "toggle-tts":
+//             // Envia para o content.js da aba ativa para iniciar/pausar a leitura (depende de seleção)
+//             executeActionInActiveTab("TOGGLE_TTS");
+//             break;
+
+//         case "stop-tts":
+//             // Envia para o content.js da aba ativa para parar a leitura
+//             executeActionInActiveTab("STOP_TTS");
+//             break;
+
+//         case "stop-tts":
+//             // Envia para o content.js da aba ativa para começar a leitura
+//             executeActionInActiveTab("START_TTS");
+//             break;
+
+//         // Adicione outros comandos de navegação ou toggle aqui
+            
+//         default:
+//             console.warn(`Comando não tratado: ${command}`);
+//     }
+// });
+
 
 // ----------------------------------------------------------------------
 // LISTENER PRINCIPAL DE MENSAGENS (COMUNICAÇÃO COM options.js, popup, etc.)

@@ -21,6 +21,33 @@
     "<all_urls>",
     "http://localhost:3000/"
   ],
+
+  "commands":{
+    "toggle-high-contrast":{
+      "suggested_key":{
+        "default":"Alt+C"
+      },
+      "description":"Ativar/Desativar Modo de Alto Contraste"
+    },
+    "oppen-pluma-configs":{
+      "suggested_key":{
+        "default":"Alt+P"
+      },
+      "description":"Abrir Configurações da Pluma"
+    },
+    "stop-tts":{
+      "suggested_key":{
+        "default":"Ctrl+Shift+X"
+      },
+      "description":"Parar Leitura em Voz Alta"
+    },
+    "start-tts":{
+      "suggested_key":{
+        "default":"Ctrl+Shift+L"
+      },
+      "description":"Iniciar/Pausar Leitura em Voz Alta"
+    }
+  },
   
   "content_scripts": [
     {
@@ -54,4 +81,6 @@
         "48": "images/logoPluma/icon-48.png",
         "128": "images/logoPluma/icon-128.png"
     }
+    
 }
+

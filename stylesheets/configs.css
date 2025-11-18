@@ -1036,6 +1036,8 @@ input[type="checkbox"]:checked + .swicth::before {
 #form-teclado .campo-exemplo {
     grid-column: 1 / -1; 
     width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 0;
     margin-bottom: 20px;
     padding: 15px 20px;

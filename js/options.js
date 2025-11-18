@@ -127,7 +127,7 @@ function collectAllPreferences() {
     
     return prefs;
 }
-
+// ----------------------------------------------------------------------
 
 
 function applyHighContrastClass(isEnabled) {
@@ -144,34 +144,30 @@ function updateFontSizeLabel(slider, valueElement) {
 }
 
  
-
+// options.js - SUBSTITUA a sua função enviarComandoTTS por esta
+ 
 function enviarComandoTTS(comando) {
     // 1. Procura por qualquer aba na janela atual que não seja uma aba de extensão.
     // Usamos 'url' para filtrar apenas páginas da web reais (http/https).
     chrome.tabs.query({ currentWindow: true, url: ["http://*/*", "https://*/*"] }, (tabs) => {
-        
         if (tabs.length === 0) {
             console.error("[Options Page] Nenhuma aba da web encontrada. Abra uma página (ex: Google) para usar a leitura.");
             return;
         }
-
+ 
         // Se houver várias abas da web, tentamos pegar a mais relevante. 
         // Aqui, escolhemos a primeira URL válida que encontramos na janela.
         const targetTab = tabs[0]; 
         const targetTabId = targetTab.id;
-        
         console.log(`[Options Page] Tentando enviar o comando para a aba de conteúdo ID: ${targetTabId}`);
-
+ 
         // 2. Tenta enviar o comando TTS
         chrome.tabs.sendMessage(targetTabId, { action: comando }, (response) => {
-            
             // Verifica se houve erro de conexão (o content.js não está carregado)
             if (chrome.runtime.lastError) {
                 const errorMessage = chrome.runtime.lastError.message;
-                
                 if (errorMessage.includes("Receiving end does not exist")) {
                     console.warn("Content script não encontrado. Tentando injetar o content.js e reenviar o comando...");
-                    
                     // Tentativa de injeção manual (requer a permissão 'scripting' no manifest!)
                     chrome.scripting.executeScript({
                         target: { tabId: targetTabId },
@@ -182,7 +178,7 @@ function enviarComandoTTS(comando) {
                             target: { tabId: targetTabId },
                             files: ["/stylesheets/accessibility.css"]
                         }).catch(err => console.error("Erro injetando CSS de acessibilidade:", err));
-
+ 
                         // 3. Após a injeção, tenta enviar o comando novamente com um pequeno atraso
                         setTimeout(() => {
                             chrome.tabs.sendMessage(targetTabId, { action: comando });
@@ -198,6 +194,7 @@ function enviarComandoTTS(comando) {
         });
     });
 }
+
 
 function updateTtsRangeLabel(sliderId, value) {
     // Ex: Se o ID do slider é 'tts-rate', o ID do rótulo é 'tts-rate-value'

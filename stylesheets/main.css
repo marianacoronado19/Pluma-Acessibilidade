@@ -96,28 +96,26 @@
     background-color: #4a86d9;
 }
 
-.div-guia-popup{
-    /* display: none !important; */
+.div-guia-popup {
+    display: none !important;
     position: fixed;
-    right: 0;
-    bottom: 0;
+    
+    right: 15px; 
+    bottom: 15px;
 
     display: flex;
-    justify-content: end;
-    align-items: end;
+    justify-content: flex-end;
+    align-items: flex-end;
     
-    width: 65%;
-    height: 60%;
+    width: 25%;
+    height: auto;
     
-    min-width: 280px;
-    min-height: 350px;
+    max-width: 300px; 
+    max-height: 80vh;
     
-    max-width: 350px;
+    box-sizing: border-box; 
     
-    pointer-events: none;
-    z-index: 999999;
-    
-    background-image: none;
+    overflow: visible; 
 }
 
 .logo-pluma{
