@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
 const db = require('./db_connection');
  
 router.post('/login', async (req, res) => {

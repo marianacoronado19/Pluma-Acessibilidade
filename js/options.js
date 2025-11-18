@@ -30,8 +30,9 @@ async function loadPreferences() {
         distractionFreeToggle: false,
         fontSizeFactor: DEFAULT_FONT_SIZE_FACTOR,
         fontFamily: 'Atkinson Hyperlegible',
-        ttsRate: 1.0,   // Valor inicial do Ritmo
-        ttsVolume: 1.0, // Valor inicial do Volume
+        // Adicionado: Padrões para TTS
+        ttsRate: 1.0, 
+        ttsVolume: 1.0,
         ...THEMES['padrao'] 
     };
     const result = await chrome.storage.sync.get('pluma_preferences');
@@ -87,13 +88,15 @@ function applyColorsToForm(themeColors) {
     }
 }
 
+// ----------------------------------------------------------------------
+// FUNÇÃO CORRIGIDA E ATUALIZADA
+// ----------------------------------------------------------------------
 function collectAllPreferences() {
     const prefs = {};
     
+    // Toggles e Fontes
     prefs.highContrastToggle = document.getElementById('toggle-alto-contraste')?.checked || false;
-
     prefs.fontSettingsToggle = document.getElementById('toggle-font-settings')?.checked || false;
-
     prefs.distractionFreeToggle = document.getElementById('toggle-modo-distracao')?.checked || false;
     
     const fontSizeSlider = document.getElementById('tamanho-fonte-slider');
@@ -101,7 +104,20 @@ function collectAllPreferences() {
 
     const activeFontButton = document.querySelector('.font-selecao-container .font-botao.active');
     prefs.fontFamily = activeFontButton?.getAttribute('data-font-family') || 'Atkinson Hyperlegible';
+ 
+    const rateSlider = document.getElementById('tts-rate'); // ID da tela-selecao
+    prefs.ttsRate = parseFloat(rateSlider?.value) || 1.0;
+ 
+    const volumeSlider = document.getElementById('tts-volume'); // ID da tela-selecao
+    prefs.ttsVolume = parseFloat(volumeSlider?.value) || 1.0;
 
+    const pitchSlider = document.getElementById('tts-pitch'); // ID da tela-selecao
+    prefs.ttsPitch = parseFloat(pitchSlider?.value) || 1.0; 
+
+    const voiceSelect = document.getElementById('leitura-voz-select'); // ID da tela-leitura-voz
+    prefs.ttsVoice = voiceSelect?.value || '';
+
+    // Cores
     document.querySelectorAll('.cores-selecao-container input[type="color"]').forEach(input => {
         const prop = input.getAttribute('data-prop');
         if (prop) {
@@ -111,49 +127,7 @@ function collectAllPreferences() {
     
     return prefs;
 }
-
-// MODIFICAÇÃO ---------------------------------------------------------
-function collectAllPreferences() {
-    // Esta função deve coletar todos os estados dos seus toggles, sliders, etc.
-    // const preferences = {
-    //     // Exemplo:
-    //     highContrast: document.getElementById('toggle-contraste').checked,
-    //     fontSizeFactor: parseFloat(document.getElementById('font-size-slider').value),
-    //     fontFamily: document.querySelector('.font-botao.active').dataset.fontKey,
-
-    //     const rateSlider = document.getElementById('leitura-velocidade-slider'),
-    //     if (rateSlider) {
-    //         prefs.ttsRate = parseFloat(rateSlider.value);
-    //     }
-    
-    //     const volumeSlider = document.getElementById('leitura-volume-slider'),
-    //     if (volumeSlider) {
-    //         prefs.ttsVolume = parseFloat(volumeSlider.value);
-    //     }
-    // };
-    // return preferences;
-}
-
-function saveAndApply() {
-    const prefs = collectAllPreferences();
-    
-    // Comunica-se com o Background Script para salvar no storage e no servidor
-    chrome.runtime.sendMessage({
-        action: 'USER_LOGIN',
-        email: email,
-        password: password
-    }, (response) => {
-        if (response.success) {
-            // Redireciona para a página de configurações após o login
-            window.location.href = chrome.runtime.getURL('pages/configs.html'); 
-            
-            // OU se você estiver na página de opções:
-            // window.location.reload(); 
-        } else {
-            alert("Erro no login: " + response.message);
-        }
-    });
-}
+// ----------------------------------------------------------------------
 
 
 function applyHighContrastClass(isEnabled) {
@@ -169,6 +143,57 @@ function updateFontSizeLabel(slider, valueElement) {
     valueElement.textContent = `${slider.value}%`;
 }
 
+ 
+// options.js - SUBSTITUA a sua função enviarComandoTTS por esta
+ 
+function enviarComandoTTS(comando) {
+    // 1. Procura por qualquer aba na janela atual que não seja uma aba de extensão.
+    // Usamos 'url' para filtrar apenas páginas da web reais (http/https).
+    chrome.tabs.query({ currentWindow: true, url: ["http://*/*", "https://*/*"] }, (tabs) => {
+        if (tabs.length === 0) {
+            console.error("[Options Page] Nenhuma aba da web encontrada. Abra uma página (ex: Google) para usar a leitura.");
+            return;
+        }
+ 
+        // Se houver várias abas da web, tentamos pegar a mais relevante. 
+        // Aqui, escolhemos a primeira URL válida que encontramos na janela.
+        const targetTab = tabs[0]; 
+        const targetTabId = targetTab.id;
+        console.log(`[Options Page] Tentando enviar o comando para a aba de conteúdo ID: ${targetTabId}`);
+ 
+        // 2. Tenta enviar o comando TTS
+        chrome.tabs.sendMessage(targetTabId, { action: comando }, (response) => {
+            // Verifica se houve erro de conexão (o content.js não está carregado)
+            if (chrome.runtime.lastError) {
+                const errorMessage = chrome.runtime.lastError.message;
+                if (errorMessage.includes("Receiving end does not exist")) {
+                    console.warn("Content script não encontrado. Tentando injetar o content.js e reenviar o comando...");
+                    // Tentativa de injeção manual (requer a permissão 'scripting' no manifest!)
+                    chrome.scripting.executeScript({
+                        target: { tabId: targetTabId },
+                        files: ["content.js"] 
+                    }, () => {
+                        // Tenta injetar o CSS também, para garantir o estilo do content.js
+                        chrome.scripting.insertCSS({
+                            target: { tabId: targetTabId },
+                            files: ["/stylesheets/accessibility.css"]
+                        }).catch(err => console.error("Erro injetando CSS de acessibilidade:", err));
+ 
+                        // 3. Após a injeção, tenta enviar o comando novamente com um pequeno atraso
+                        setTimeout(() => {
+                            chrome.tabs.sendMessage(targetTabId, { action: comando });
+                            console.log(`[Options Page] Comando TTS reenviado após injeção.`);
+                        }, 50); 
+                    });
+                } else {
+                    console.error("[Options Page] Erro inesperado ao enviar comando:", errorMessage);
+                }
+            } else {
+                console.log(`[Options Page] Comando TTS enviado com sucesso: ${comando}`);
+            }
+        });
+    });
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
     
@@ -271,46 +296,63 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    
+    const rateSlider = document.getElementById('tts-rate'); 
+    const volumeSlider = document.getElementById('tts-volume'); 
+    const pitchSlider = document.getElementById('tts-pitch'); 
     if (rateSlider) {
-        // Carrega o valor salvo
-        rateSlider.value = initialPrefs.ttsRate;
-        // Dispara o JS que atualiza o texto de valor (se você o injetou)
-        rateSlider.dispatchEvent(new Event('input')); 
-        // Salva ao mudar
+        // ... (lógica de inicialização de slider aqui) ...
         rateSlider.addEventListener('input', saveAndApply);
     }
-
     if (volumeSlider) {
-        // Carrega o valor salvo
-        volumeSlider.value = initialPrefs.ttsVolume;
-        // Dispara o JS que atualiza o texto de valor (se você o injetou)
-        volumeSlider.dispatchEvent(new Event('input')); 
-        // Salva ao mudar
+        // ... (lógica de inicialização de slider aqui) ...
         volumeSlider.addEventListener('input', saveAndApply);
     }
-
-    // Função utilitária para enviar a mensagem ao Content Script da aba ativa
-    function enviarComandoTTS(action) {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            if (tabs.length > 0) {
-                chrome.tabs.sendMessage(tabs[0].id, { action: action });
-            }
-        });
+    if (pitchSlider) {
+        // ... (lógica de inicialização de slider aqui) ...
+        pitchSlider.addEventListener('input', saveAndApply);
     }
-
-    // --- Conexão dos Botões ---
+ 
+    // Listener para o botão 'Testar Leitura'
+    document.getElementById('test-tts-button')?.addEventListener('click', () => {
+        enviarComandoTTS('INICIAR');
+    });
+    // --- Lógica para o seletor de Voz da tela-leitura-voz ---
+    const voiceSelect = document.getElementById('leitura-voz-select');
+    if (voiceSelect) {
+        function populateVoiceList() {
+            const voices = window.speechSynthesis.getVoices();
+            voiceSelect.innerHTML = ''; 
+            voices.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                if (initialPrefs.ttsVoice === voice.name) {
+                    option.selected = true;
+                }
+                voiceSelect.appendChild(option);
+            });
+            saveAndApply(); 
+        }
+        populateVoiceList();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoiceList;
+        }
+ 
+        voiceSelect.addEventListener('change', saveAndApply);
+    }
+ 
+    // --- Botões de Controle TTS (play-btn, pausa-btn, stop-btn) ---
     document.getElementById('play-btn')?.addEventListener('click', () => {
         enviarComandoTTS('INICIAR');
-        // Você pode adicionar lógica visual aqui para o estado ATIVO/INATIVO
     });
-
-    document.getElementById('pause-btn')?.addEventListener('click', () => {
+ 
+    // CORRIGIR ID SE NECESSÁRIO. Assumindo que você usou 'pausa-btn' no HTML.
+    document.getElementById('pausa-btn')?.addEventListener('click', () => { 
         enviarComandoTTS('PAUSAR');
     });
-
+ 
     document.getElementById('stop-btn')?.addEventListener('click', () => {
         enviarComandoTTS('PARAR');
     });
-    
-    // ... (restante do seu DOMContentLoaded) ...
 });

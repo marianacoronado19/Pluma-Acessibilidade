@@ -1023,3 +1023,124 @@ input[type="checkbox"]:checked + .swicth::before {
     padding: 0;
     cursor: pointer;
 }
+
+/* Seção Navegação por Teclado (#tela-teclado) */
+
+#form-teclado .grid-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 30px 40px; 
+    width: 100%;
+}
+
+#form-teclado .campo-exemplo {
+    grid-column: 1 / -1; 
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background-color: #313584; 
+    border: 1px solid #60a1ea;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+#form-teclado .campo-exemplo label {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #fc9700;
+}
+
+#form-teclado .campo-exemplo p {
+    font-size: 1em;
+    margin: 5px 0 0 0;
+    color: #d4ffd7;
+    line-height: 1.4;
+}
+
+.setting-item-keyboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2); 
+    margin-top: 10px;
+}
+
+.command-key {
+    background-color: #0d0f41;
+    color: #fc9700;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border: 1px solid #60a1ea;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    white-space: nowrap; 
+    margin-left: 15px; 
+}
+
+.setting-item-keyboard p {
+    margin: 0;
+    color: #d4e9ff;
+    font-size: 0.95em;
+    flex-grow: 1; 
+    line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+    #form-teclado .grid-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+#form-tts .grid-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+   
+    gap: 40px 50px; 
+    width: 100%;
+}
+
+#form-tts .campo-exemplo {
+    grid-column: 1 / -1; 
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 30px !important; 
+    padding: 15px 20px;
+    background-color: #b3caeb; 
+    border: 1px solid #2d13be;
+    border-radius: 8px;
+    box-shadow: none;
+    color: #1b2e43;
+}
+
+.range-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    margin-top: 10px;
+}
+
+#form-tts select {
+    padding: 12px; 
+    border-radius: 5px;
+    border: 1px solid #60a1ea;
+    background-color: #1a1e50;
+    color: #fff;
+    font-size: 1em;
+    width: 100%;
+    margin-top: 10px;
+}
+#tela-selecao .campo[style*="grid-column: 1 / -1;"] {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+}
+
+#tela-selecao .campo[style*="grid-column: 1 / -1;"] .range-container {
+    width: 60%;
+    max-width: 400px; 
+}

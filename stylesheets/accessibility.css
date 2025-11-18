@@ -117,12 +117,16 @@ button, input[type="submit"], input[type="button"] {
 
 /* Modo sem distrações */
 
-html.pluma-distraction-free-active body {
+/* html.pluma-distraction-free-active body {
     overflow-y: scroll !important;
     margin: 0 !important;
     padding: 0 !important;
-    background-color: #f7f7f7 !important; /* Fundo limpo e claro */
+    background-color: #f7f7f7 !important; 
     min-height: 100vh !important;
+
+    display: bloch !important;
+    float: none !important;
+    position: static !important;
 }
 
 
@@ -134,6 +138,13 @@ html.pluma-distraction-free-active :is(
     .assinar,
     .conteudo-promo,
     .footer-ads
+
+    aside,
+    .sidebar, #sidebar, #mw-panel, 
+    #right-column, #left-column,
+    #site-navigation, 
+    .related-articles,
+    .share-buttons,
 
     #comments, .comments-section, .social-share-bar,
     .floating-widget, .popup,
@@ -175,9 +186,13 @@ html.pluma-distraction-free-active :where(
     line-height: 1.7 !important;
     color: #333 !important;
     border: none !important;
-    position: relative !important;
 
+    position: relative !important;
     display: block !important;
+
+    float: none !important;
+    clear: both;
+
     visibility: visible !important;
     opacity: 1 !important;
 }
@@ -195,26 +210,24 @@ html.pluma-distraction-free-active :where(
 ) {
     display: block !important;
     visibility: visible !important;
-    opacity: 1 !important;
+    opacity: 1 !important; 
     
-    /* Limpeza de estilo e melhorias de leitura */
-    font-size: inherit !important; /* Herda do container pai (850px de largura) */
+    font-size: inherit !important; 
     line-height: inherit !important;
     color: #333 !important;
     
-    /* Remove decorações de anúncios que podem ter vazado */
+
     background-color: transparent !important; 
     border: none !important;
-    margin: revert !important; /* Tenta manter o espaçamento original do texto */
+    margin: revert !important; 
     padding: revert !important; 
 }
 
-/* Estilos Específicos de Tipografia */
 html.pluma-distraction-free-active h1, 
 html.pluma-distraction-free-active h2 {
     margin-top: 2rem !important;
     margin-bottom: 1rem !important;
-    color: #1a1a44 !important; /* Títulos em cor de destaque */
+    color: #1a1a44 !important; 
 }
 html.pluma-distraction-free-active p {
     margin-bottom: 1.5rem !important;
@@ -224,7 +237,6 @@ html.pluma-distraction-free-active a {
     text-decoration: underline !important;
 }
 
-/* Garante que imagens (se forem conteúdo) reapareçam e sejam responsivas */
 html.pluma-distraction-free-active img {
     height: auto !important;
     max-width: 100% !important;

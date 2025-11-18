@@ -174,36 +174,52 @@ function applyAccessibilitySettings(prefs) {
         root.style.removeProperty('--font-size-factor');
         root.style.removeProperty('--pluma-font-family');
     }   
-    
-    if (prefs.distractionFreeToggle) {
-        // Adiciona a classe que o seu acessibility.css usará para esconder elementos
-        root.classList.add('pluma-distraction-free-active');
-    } else {
-        root.classList.remove('pluma-distraction-free-active');
-    }
 }
+    
+//     if (prefs.distractionFreeToggle) {
+//         // Adiciona a classe que o seu acessibility.css usará para esconder elementos
+//         root.classList.add('pluma-distraction-free-active');
+//     } else {
+//         root.classList.remove('pluma-distraction-free-active');
+//     }
+// }
 
 // MODIFICAÇÃO ---------------------------------------------------------
 // Ouve o Service Worker (background.js) para mensagens de atualização em tempo real
+// chrome.runtime.onMessage.addListener(
+//     function(request, sender, sendResponse) {
+//         if (request.action === "APPLY_SETTINGS") {
+//             // Esta é a chamada de ATUALIZAÇÃO que o background.js usa no login/logout/save.
+//             applyAccessibilitySettings(request.preferences || {}); // Garante um objeto para limpeza
+//             sendResponse({status: "Setting applied to content"});
+//         }
+//     }
+// );
+
+// // Tenta aplicar as configurações no CARREGAMENTO INICIAL da página
+// chrome.storage.sync.get('pluma_preferences', (data) => {
+//     // Se houverem preferências no cache sincronizado, aplique-as
+//     if (data.pluma_preferences) {
+//         applyAccessibilitySettings(data.pluma_preferences);
+//     } 
+//     // Se data.pluma_preferences for null ou undefined, a função fará a limpeza (se estiver bem escrita).
+// });
+// MODIFICAÇÃO ---------------------------------------------------------
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.action === "APPLY_SETTINGS") {
-            // Esta é a chamada de ATUALIZAÇÃO que o background.js usa no login/logout/save.
-            applyAccessibilitySettings(request.preferences || {}); // Garante um objeto para limpeza
-            sendResponse({status: "Setting applied to content"});
-        }
+      if (request.action === "APPLY_NEW_PREFERENCES") {
+        applyAccessibilitySettings(request.preferences);
+        sendResponse({status: "Setting applied to content"});
+      }
     }
 );
 
-// Tenta aplicar as configurações no CARREGAMENTO INICIAL da página
 chrome.storage.sync.get('pluma_preferences', (data) => {
-    // Se houverem preferências no cache sincronizado, aplique-as
     if (data.pluma_preferences) {
         applyAccessibilitySettings(data.pluma_preferences);
-    } 
-    // Se data.pluma_preferences for null ou undefined, a função fará a limpeza (se estiver bem escrita).
+    }
 });
-// MODIFICAÇÃO ---------------------------------------------------------
 
 function injectGoogleFont() {
     const fontId = 'pluma-atkinson-font';
@@ -232,34 +248,112 @@ function checkAndDisplayInitialUI() {
     });
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    switch (request.action) {
-        // ... (INICIAR, PAUSAR, PARAR existentes) ...
-        
-        // --- NOVO: RECEBER PREFERÊNCIAS GERAIS DO options.js ---
-        case 'APPLY_NEW_PREFERENCES':
-            const prefs = request.preferences;
-            
-            // ATUALIZA AS CONFIGURAÇÕES TTS
-            configTTS.rate = prefs.ttsRate || 1.0;
-            configTTS.volume = prefs.ttsVolume || 1.0;
-            
-            console.log("Configurações TTS atualizadas via options.js:", configTTS);
-            
-            // Se a leitura estiver em andamento, as novas configurações
-            // só serão aplicadas na próxima leitura, pois a Utterance atual é imutável.
-            break;
-            
-        // ... (restante dos comandos) ...
-    }
-    return true; 
-});
 
-let configTTS = {
+ 
+let currentSpeech = null;
+let ttsSettings = {
     rate: 1.0, 
     volume: 1.0, 
+    pitch: 1.0, // Garantir pitch
     voice: null 
 };
+ 
+function iniciarLeitura() {
+    // 1. Coleta o texto selecionado
+    const selection = window.getSelection();
+    let text = selection.toString().trim();
+ 
+    if (!text) {
+        console.log("Nenhum texto selecionado para leitura.");
+        // Opcional: Notificação para o usuário (ex: um pequeno popup)
+        return;
+    }
+    if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+    }
+    // 2. Cria a Utterance com o texto
+    currentSpeech = new SpeechSynthesisUtterance(text);
+    // 3. Aplica as configurações
+    currentSpeech.rate = ttsSettings.rate;
+    currentSpeech.volume = ttsSettings.volume;
+    currentSpeech.pitch = ttsSettings.pitch; 
+    if (ttsSettings.voice) {
+        currentSpeech.voice = ttsSettings.voice;
+    }
+ 
+    // 4. Inicia a leitura
+    speechSynthesis.speak(currentSpeech);
+    console.log("Leitura iniciada:", currentSpeech);
+}
+ 
+function pausarLeitura() {
+    if (speechSynthesis.speaking && !speechSynthesis.paused) {
+        speechSynthesis.pause();
+        console.log("Leitura pausada.");
+    }
+}
+ 
+function pararLeitura() {
+    if (speechSynthesis.speaking || speechSynthesis.paused) {
+        speechSynthesis.cancel();
+        currentSpeech = null;
+        console.log("Leitura parada.");
+    }
+}
+ 
+// ----------------------------------------------------------------------
+// Função para atualizar as configurações de TTS vindas do options.js
+// ----------------------------------------------------------------------
+function updateTtsSettings(prefs) {
+    ttsSettings.rate = prefs.ttsRate || 1.0;
+    ttsSettings.volume = prefs.ttsVolume || 1.0;
+    ttsSettings.pitch = prefs.ttsPitch || 1.0;
+    // Lógica para encontrar a voz pelo nome
+    const selectedVoiceName = prefs.ttsVoice;
+    if (selectedVoiceName) {
+        const voices = window.speechSynthesis.getVoices();
+        // A lista de vozes pode estar vazia no início. Tenta encontrar a voz.
+        ttsSettings.voice = voices.find(v => v.name === selectedVoiceName) || null;
+    }
+ 
+    console.log("Configurações TTS atualizadas:", ttsSettings);
+}
+
+
+
+// content.js - SUBSTITUA O LISTENER EXISTENTE POR ESTE
+ 
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      if (request.action === "APPLY_NEW_PREFERENCES") {
+        applyAccessibilitySettings(request.preferences);
+        updateTtsSettings(request.preferences); // Chamada para atualizar as configurações TTS
+        sendResponse({status: "Settings applied to content"});
+        return true;
+      }
+      // Recebe comandos do options.js (INICIAR, PAUSAR, PARAR)
+      if (request.action === 'INICIAR') {
+          iniciarLeitura();
+      } else if (request.action === 'PAUSAR') {
+          pausarLeitura();
+      } else if (request.action === 'PARAR') {
+          pararLeitura();
+      }
+ 
+      // O comando de TTS é mais simples, não precisa de sendResponse detalhado.
+      // O 'return true' garante que a resposta assíncrona funciona se for necessário
+      return true;
+    }
+);
+
+ 
+// Tenta carregar as configurações iniciais de TTS na inicialização
+chrome.storage.sync.get('pluma_preferences', (data) => {
+    if (data.pluma_preferences) {
+        // ... (resto do seu código existente)
+        updateTtsSettings(data.pluma_preferences); 
+    }
+});
 
 injectGoogleFont();
 checkAndDisplayInitialUI();

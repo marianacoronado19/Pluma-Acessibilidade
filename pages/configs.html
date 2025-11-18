@@ -237,55 +237,104 @@
                     </div>
                 </div>
 
-                <div class="campo">
-                    <label for="leitura-voz-select">Voz e Idioma</label>
-                    <select id="leitura-voz-select" name="leitura-voz-select">
-                        <option value="default" selected>Voz Padrão do Sistema</option>
-                        <option value="pt-br-f">Português (Brasil) - Feminina</option>
-                        <option value="pt-br-m">Português (Brasil) - Masculina</option>
-                        </select>
-                </div>
-                
-                <div class="campo campo-slider">
-                    <label>Velocidade da Leitura (Ritmo)</label>
-                    <div class="slider-container">
-                        <span class="tamanho-exemplo-min">Lenta</span>
-                        <input type="range" id="leitura-velocidade-slider" min="0.5" value="1.0" step="0.1" />
-                        <span class="tamanho-exemplo-max">Rápida</span>
-                    </div>
-                    <p class="slider-valor" id="leitura-velocidade-valor">1.0x (Normal)</p>
-                </div>
-
-                <div class="campo campo-slider">
-                    <label>Volume</label>
-                    <div class="slider-container">
-                        <span class="material-symbols-outlined">volume_mute</span>
-                        <input type="range" id="leitura-volume-slider" min="0" max="1.0" value="1.0" step="0.1" />
-                        <span class="material-symbols-outlined">volume_up</span>
-                        
-                    </div>
-                    <p class="slider-valor" id="leitura-volume-valor">100%</p>
-                </div>
-
-                <div class="campo-exemplo status-leitura">
-                    <label>Instruções</label>
-                    <p>Para iniciar a leitura, selecione um bloco de texto na página e clique em **Reproduzir**.</p>
-                </div>
-
-            </div>
-        </form>
-    </div>
     
     
     <div id="tela-teclado" class="box" data-screen="false">
-        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
-        <div class="tituloseta">
-            <p class="titulo">Navegação por Teclado</p>
-        </div>
-        <div class="campo-exemplo status-leitura">
-            <p>Configurações de navegação por teclado virão aqui.</p>
+    <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+    
+    <div class="tituloseta">
+        <p class="titulo">Navegação por Teclado</p>
+        <div class="toggle-aplicar-container">
+            <span>Aplicar</span>
+            <input type="checkbox" id="keyboardNavToggle" name="toggle navegacao por teclado"></input> 
+            <label for="keyboardNavToggle" class="swicth"></label>
         </div>
     </div>
+
+    <form id="form-teclado">
+        <div class="grid-form">
+            
+            <div class="campo-exemplo status-leitura" style="grid-column: 1 / -1; margin-bottom: 20px;">
+                <label>Comandos Globais do Pluma</label>
+                <p>Atalhos que funcionam em qualquer página do navegador quando a função está ativada.</p>
+            </div>
+
+            <div class="campo">
+                <label>Abrir Configurações do Pluma</label>
+                <div class="setting-item-keyboard">
+                    <p>Abre a tela de configurações em uma nova aba.</p>
+                    <span class="command-key">Alt + P</span>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Iniciar/Pausar Leitura de Texto (TTS)</label>
+                <div class="setting-item-keyboard">
+                    <p>Usa a voz para ler o texto selecionado.</p>
+                    <span class="command-key">Ctrl + Shift + L</span>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Parar Leitura de Texto (TTS)</label>
+                <div class="setting-item-keyboard">
+                    <p>Interrompe a leitura imediatamente.</p>
+                    <span class="command-key">Ctrl + Shift + X</span>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Alternar Alto Contraste</label>
+                <div class="setting-item-keyboard">
+                    <p>Ativa ou desativa o tema de alto contraste.</p>
+                    <span class="command-key">Alt + C</span>
+                </div>
+            </div>
+
+
+
+            <hr class="sidebar-divider" style="grid-column: 1 / -1; margin: 30px 0 20px 0;">
+
+            <div class="campo-exemplo status-leitura" style="grid-column: 1 / -1; margin-bottom: 20px;">
+                <label>Comandos Padrão do Navegador</label>
+                <p>Estes atalhos são universais para interagir e navegar em qualquer site.</p>
+            </div>
+
+            <div class="campo">
+                <label>Mover Foco</label>
+                <div class="setting-item-keyboard">
+                    <p>Próximo / Anterior elemento interativo.</p>
+                    <span class="command-key">Tab / Shift + Tab</span>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Ativar/Clicar</label>
+                <div class="setting-item-keyboard">
+                    <p>Ativa o elemento com o foco do teclado (links, botões, caixas de seleção).</p>
+                    <span class="command-key">Enter / Espaço</span>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Rolar a Página</label>
+                <div class="setting-item-keyboard">
+                    <p>Rola a página verticalmente.</p>
+                    <span class="command-key">Setas ↑ ↓</span>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Rolar Grande</label>
+                <div class="setting-item-keyboard">
+                    <p>Rola a página em grandes blocos.</p>
+                    <span class="command-key">Page Up / Down</span>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</div>
     
     <div id="tela-distracoes" class="box" data-screen="false">
         <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
@@ -313,14 +362,54 @@
     </div>
     
     <div id="tela-selecao" class="box" data-screen="false">
-        <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
-        <div class="tituloseta">
-            <p class="titulo">Leitura por Seleção</p>
-        </div>
-        <div class="campo-exemplo status-leitura">
-            <p>Configurações de leitura por seleção virão aqui.</p>
+    <img class="logo-pluma" src="/images/logoPluma/Pluma_logoEscrita.png" alt="Logo PLUMA">
+    
+    <div class="tituloseta">
+        <p class="titulo">Leitura por Seleção</p>
+        
+        <div class="toggle-aplicar-container">
+            <span>Aplicar</span>
+            <input type="checkbox" id="ttsToggle" name="toggle leitura por voz"></input> 
+            <label for="ttsToggle" class="swicth"></label>
         </div>
     </div>
+
+    <form id="form-tts">
+        <div class="grid-form">
+            
+            <div class="campo-exemplo status-leitura" style="grid-column: 1 / -1; margin-bottom: 30px;">
+                <label>Configurações de Voz</label>
+                <p>Ajuste o idioma, velocidade e volume da voz de leitura.</p>
+            </div>
+
+            <div class="campo">
+                <label for="tts-language">Voz</label>
+                <select id="tts-language" class="campo-input">
+                    <option value="default">Voz padrão do sistema</option>
+                    <option value="pt-BR">Português (Brasil) - Feminina</option>
+                    <option value="en-US">Inglês (EUA) - Masculina</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="tts-rate">Velocidade da Leitura</label>
+                <div class="range-container">
+                    <input type="range" id="tts-rate" min="0.5" max="2.0" step="0.1" value="1.0" class="range-slider">
+                    <span class="range-value" id="tts-rate-value">1.0</span> 
+                </div>
+            </div>
+
+            <div class="campo" style="grid-column: 1 / -1;">
+                <label for="tts-volume">Volume</label>
+                <div class="range-container">
+                    <input type="range" id="tts-volume" min="0.0" max="1.0" step="0.05" value="1.0" class="range-slider">
+                    </div>
+            </div>
+        
+
+        </div>
+        </form>
+</div>
     
     <script src="/js/options.js"></script>
     <script src="/js/sidebar.js"></script>
