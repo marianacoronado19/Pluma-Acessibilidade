@@ -10,13 +10,25 @@
     "service_worker": "background.js"
   },
 
+  "action":{
+    "default_popup": "pages/redirect.html",
+    "default_icon": {
+      "16": "images/logoPluma/icon-16.png",
+      "48": "images/logoPluma/icon-48.png",
+      "128": "images/logoPluma/icon-128.png"
+    },
+    "default_title": "Pluma - Assistente de Acessibilidade!"
+  },
+
   "permissions": [
     "activeTab",
     "scripting",
     "storage",
     "tts",
-    "tabs"
+    "tabs",
+    "commands"
   ],
+
   "host_permissions": [
     "<all_urls>",
     "http://localhost:3000/"
@@ -29,11 +41,11 @@
       },
       "description":"Ativar/Desativar Modo de Alto Contraste"
     },
-    "oppen-pluma-configs":{
+    "open-config":{
       "suggested_key":{
-        "default":"Alt+P"
+        "default":"Alt + A"
       },
-      "description":"Abrir Configurações da Pluma"
+      "description":"Abrir Configurações do Pluma"
     },
     "stop-tts":{
       "suggested_key":{

@@ -110,7 +110,15 @@ router.post('/cadastro', async (req, res) => {
         const saltRounds = 10;
         const senhaHash = await bcrypt.hash(senha, saltRounds);
 
-        const acessibilidadeStr = Array.isArray(acessibilidade) ? acessibilidade.join(',') : '';
+        // const acessibilidadeStr = Array.isArray(acessibilidade) ? acessibilidade.join(',') : '';
+
+        let acessibilidadeStr = '';
+
+        if (Array.isArray(acessibilidade)) {
+            acessibilidadeStr = acessibilidade.join(',');
+        } else if (typeof acessibilidade === 'string' && acessibilidade.length > 0) {
+            acessibilidadeStr = acessibilidade;
+        }
 
         const telefoneNumerico = telefone ? telefone.replace(/\D/g, '') : null;
 

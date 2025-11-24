@@ -47,10 +47,10 @@ function applyPreferencesToActiveTab(preferences) {
         if (tabs[0] && tabs[0].id) {
             // Usa chrome.tabs.sendMessage para enviar ao content.js da aba atual
             chrome.tabs.sendMessage(tabs[0].id, {
-                action: "APPLY_SETTINGS",
+                action: "APPLY_NEW_PREFERENCES",
                 preferences: preferences
             });
-            console.log("Preferências enviadas para o Content Script (Ação: APPLY_SETTINGS).");
+            console.log("Preferências enviadas para o Content Script (Ação: APPLY_PREFERENCES).");
         }
     });
 }
@@ -136,42 +136,73 @@ async function savePreferencesToServer(token, preferences) {
     }
 }
 
-// // Listener principal para comandos de teclado. (Definidos no manifest.json)
-// chrome.commands.onCommand.addListener(function(command) {
-//     console.log("Comando de teclado recebido:", command);
+/**
+* Alterna o valor de um toggle salvo no storage e aplica as novas preferências.
+* @param {string} key - A chave do toggle (ex: 'highContrastToggle').
+*/
+function togglePreferenceAndSave(key) {
+    chrome.storage.sync.get('pluma_preferences', (data) => {
+        const prefs = data.pluma_preferences || {};
+        // Alterna o valor: se for true, vira false; se não for true, vira true.
+        prefs[key] = !prefs[key]; 
+
+        // Salva no storage e aplica imediatamente na aba ativa.
+        savePreferencesToStorage(prefs);
+    });
+}
+
+/**
+ * Envia uma ação simples (sem objeto de preferências) para o content.js da aba ativa.
+ * Usado principalmente para comandos de TTS.
+ * @param {string} action - A ação a ser executada (ex: 'INICIAR', 'PARAR').
+ */
+function executeActionInActiveTab(action) {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        if (tabs[0] && tabs[0].id) {
+            chrome.tabs.sendMessage(tabs[0].id, { action: action });
+            console.log(`Comando global enviado para o Content Script: ${action}`);
+        }
+    });
+}
+
+
+
+// Listener principal para comandos de teclado. (Definidos no manifest.json)
+chrome.commands.onCommand.addListener(function(command) {
+    console.log("Comando de teclado recebido:", command);
         
-//     switch (command) {
-//         case "open-pluma-configs":
-//             // Abre a página de configurações em uma nova aba
-//             chrome.tabs.create({ url: chrome.runtime.getURL('pages/configs.html') }); 
-//             break;
-            
-//         case "toggle-high-contrast":
-//             // Alterna o Alto Contraste globalmente
-//             togglePreferenceAndSave("highContrastEnabled");
-//             break;
-            
-//         case "toggle-tts":
-//             // Envia para o content.js da aba ativa para iniciar/pausar a leitura (depende de seleção)
-//             executeActionInActiveTab("TOGGLE_TTS");
-//             break;
+    switch (command) {
+        case "open-config":
+        case "open-config":
+            // Alt + A (Abre a página de configurações)
+            // Usa getURL para pegar o caminho correto da sua options_page
+            const configPageUrl = chrome.runtime.getURL("pages/configs.html");
+            chrome.tabs.create({ url: configPageUrl });
+            console.log(`Configurações Pluma abertas: ${configPageUrl}`);
+            break;
 
-//         case "stop-tts":
-//             // Envia para o content.js da aba ativa para parar a leitura
-//             executeActionInActiveTab("STOP_TTS");
-//             break;
-
-//         case "stop-tts":
-//             // Envia para o content.js da aba ativa para começar a leitura
-//             executeActionInActiveTab("START_TTS");
-//             break;
-
-//         // Adicione outros comandos de navegação ou toggle aqui
+        case "toggle-high-contrast":
+            // Alt + C (Alterna o Alto Contraste)
+            // CHAVE CORRETA: Presumindo que sua chave é 'highContrastToggle'
+            togglePreferenceAndSave("highContrastToggle"); 
+            break;
             
-//         default:
-//             console.warn(`Comando não tratado: ${command}`);
-//     }
-// });
+        case "start-tts":
+            // Ctrl + Shift + L (Inicia/Pausa a leitura)
+            // AÇÃO CORRETA: Presumindo que seu content.js usa 'INICIAR'
+            executeActionInActiveTab("INICIAR"); 
+            break;
+
+        case "stop-tts":
+            // Ctrl + Shift + X (Para a leitura)
+            // AÇÃO CORRETA: Presumindo que seu content.js usa 'PARAR'
+            executeActionInActiveTab("PARAR"); 
+            break;
+            
+        default:
+            console.warn(`Comando não tratado: ${command}`);
+    }
+});
 
 
 // ----------------------------------------------------------------------
@@ -264,7 +295,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     console.log("Aba recarregada para forçar o content script a mostrar o ícone do Pluma.");
                 }
                 sendResponse({ status: "Tab reload command sent" });
-                
+
             } else {
                 sendResponse({ success: false, message: "Ação não reconhecida." });
             }

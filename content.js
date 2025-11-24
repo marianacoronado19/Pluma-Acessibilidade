@@ -1,3 +1,5 @@
+let isKeyboardNavActive = false;
+
 function injetarPreLoginCSS() { 
   if (document.getElementById('pluma-prelogin-style')) return;
 
@@ -173,8 +175,72 @@ function applyAccessibilitySettings(prefs) {
     } else {
         root.style.removeProperty('--font-size-factor');
         root.style.removeProperty('--pluma-font-family');
-    }   
+    } 
+    isKeyboardNavActive = prefs.keyboardNavToggle || false;  
 }
+
+/**
+ * Encontra e foca no próximo elemento do tipo especificado (heading ou link).
+ * @param {string} type - 'heading' ou 'link'.
+ */
+function navigateToNextElement(type) {
+    if (!isKeyboardNavActive) return;
+
+    const selectors = {
+        'heading': 'h1, h2, h3, h4, h5, h6',
+        'link': 'a[href]'
+    };
+    
+    const elements = Array.from(document.querySelectorAll(selectors[type]));
+    if (elements.length === 0) return;
+
+    const focusedElement = document.activeElement;
+    let nextIndex = 0;
+    
+    if (focusedElement && focusedElement.matches(selectors[type])) {
+        const currentIndex = elements.indexOf(focusedElement);
+        nextIndex = currentIndex + 1;
+        
+        if (nextIndex >= elements.length) {
+            nextIndex = 0;
+        }
+    }
+    
+    const nextElement = elements[nextIndex];
+    if (nextElement) {
+        if (!nextElement.hasAttribute('tabindex')) {
+            nextElement.setAttribute('tabindex', '0'); 
+        }
+        nextElement.focus();
+        
+        nextElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+function handleGlobalKeyboardNavigation(event) {
+    if (!isKeyboardNavActive) return;
+
+    const isCtrlShift = event.ctrlKey && event.shiftKey && !event.altKey;
+
+    let commandHandled = false;
+
+    if (isCtrlShift) {
+        if (event.key === '.') {
+            navigateToNextElement('heading');
+            commandHandled = true;
+        } else if (event.key === ',') {
+            navigateToNextElement('link');
+            commandHandled = true;
+        }
+    }
+
+    if (commandHandled) {
+        event.preventDefault(); 
+        event.stopPropagation();
+    }
+}
+
+
     
 //     if (prefs.distractionFreeToggle) {
 //         // Adiciona a classe que o seu acessibility.css usará para esconder elementos
@@ -254,26 +320,22 @@ let currentSpeech = null;
 let ttsSettings = {
     rate: 1.0, 
     volume: 1.0, 
-    pitch: 1.0, // Garantir pitch
+    pitch: 1.0, 
     voice: null 
 };
  
 function iniciarLeitura() {
-    // 1. Coleta o texto selecionado
     const selection = window.getSelection();
     let text = selection.toString().trim();
  
     if (!text) {
         console.log("Nenhum texto selecionado para leitura.");
-        // Opcional: Notificação para o usuário (ex: um pequeno popup)
         return;
     }
     if (speechSynthesis.speaking) {
         speechSynthesis.cancel();
     }
-    // 2. Cria a Utterance com o texto
     currentSpeech = new SpeechSynthesisUtterance(text);
-    // 3. Aplica as configurações
     currentSpeech.rate = ttsSettings.rate;
     currentSpeech.volume = ttsSettings.volume;
     currentSpeech.pitch = ttsSettings.pitch; 
@@ -281,7 +343,6 @@ function iniciarLeitura() {
         currentSpeech.voice = ttsSettings.voice;
     }
  
-    // 4. Inicia a leitura
     speechSynthesis.speak(currentSpeech);
     console.log("Leitura iniciada:", currentSpeech);
 }
@@ -301,37 +362,42 @@ function pararLeitura() {
     }
 }
  
-// ----------------------------------------------------------------------
-// Função para atualizar as configurações de TTS vindas do options.js
-// ----------------------------------------------------------------------
 function updateTtsSettings(prefs) {
     ttsSettings.rate = prefs.ttsRate || 1.0;
     ttsSettings.volume = prefs.ttsVolume || 1.0;
     ttsSettings.pitch = prefs.ttsPitch || 1.0;
-    // Lógica para encontrar a voz pelo nome
     const selectedVoiceName = prefs.ttsVoice;
     if (selectedVoiceName) {
         const voices = window.speechSynthesis.getVoices();
-        // A lista de vozes pode estar vazia no início. Tenta encontrar a voz.
         ttsSettings.voice = voices.find(v => v.name === selectedVoiceName) || null;
     }
  
     console.log("Configurações TTS atualizadas:", ttsSettings);
 }
-
-
-
-// content.js - SUBSTITUA O LISTENER EXISTENTE POR ESTE
  
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
       if (request.action === "APPLY_NEW_PREFERENCES") {
         applyAccessibilitySettings(request.preferences);
-        updateTtsSettings(request.preferences); // Chamada para atualizar as configurações TTS
+        updateTtsSettings(request.preferences); 
         sendResponse({status: "Settings applied to content"});
         return true;
       }
-      // Recebe comandos do options.js (INICIAR, PAUSAR, PARAR)
+      
+      if (request.action === 'START_PAUSE_TTS') {
+          if (speechSynthesis.paused) {
+              speechSynthesis.resume();
+              console.log("Leitura retomada pelo atalho.");
+          } else if (speechSynthesis.speaking) {
+              speechSynthesis.pause();
+              console.log("Leitura pausada pelo atalho.");
+          } else {
+              iniciarLeitura();
+          }
+      } else if (request.action === 'STOP_TTS') {
+          pararLeitura();
+      }
+      
       if (request.action === 'INICIAR') {
           iniciarLeitura();
       } else if (request.action === 'PAUSAR') {
@@ -339,25 +405,21 @@ chrome.runtime.onMessage.addListener(
       } else if (request.action === 'PARAR') {
           pararLeitura();
       }
- 
-      // O comando de TTS é mais simples, não precisa de sendResponse detalhado.
-      // O 'return true' garante que a resposta assíncrona funciona se for necessário
+
       return true;
     }
 );
 
  
-// Tenta carregar as configurações iniciais de TTS na inicialização
 chrome.storage.sync.get('pluma_preferences', (data) => {
     if (data.pluma_preferences) {
-        // ... (resto do seu código existente)
         updateTtsSettings(data.pluma_preferences); 
     }
 });
 
 injectGoogleFont();
 checkAndDisplayInitialUI();
-
+document.addEventListener('keydown', handleGlobalKeyboardNavigation, true);
 
 
 
@@ -365,10 +427,10 @@ checkAndDisplayInitialUI();
 // Ajustar o CSS para telas menores (responsividade); fizemo(?)
 
 // Salvar preferências do usuário (local storage ou base de dados);
-// Implementar funcionalidades de acessibilidade (ex: leitor de tela, ajuste de contraste, etc).
+// Implementar funcionalidade: modo sem distrações;
 // - Trabalhando em: cores +
-// Testes de usabilidade e acessibilidade;
+// telefone só aceita números + formatação (xx) xxxxx-xxxx
 
-// "Destruir conta"
+// "Destruir conta" -> página de configurações do usuário;
 
 // Grupo 4

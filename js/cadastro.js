@@ -25,11 +25,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // checkboxes.forEach(checkbox => {
+  //   checkbox.addEventListener('change', () => {
+  //     const selecionados = Array.from(checkboxes)
+  //       .filter(cb => cb.checked)
+  //       .map(cb => cb.parentElement.textContent.trim().split(' ').slice(1).join(' '));
+
+  //     campoTexto.value = selecionados.join(', ');
+
   checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', () => {
       const selecionados = Array.from(checkboxes)
         .filter(cb => cb.checked)
-        .map(cb => cb.parentElement.textContent.trim());
+        .map(cb => cb.value);
+        
+      campoTexto.value = selecionados.join(', ');
 
       if (selecionados.length === 0) {
         campoTexto.value = '';

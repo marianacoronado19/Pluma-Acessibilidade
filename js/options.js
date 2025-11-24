@@ -28,6 +28,7 @@ async function loadPreferences() {
         highContrastToggle: false, 
         fontSettingsToggle: false, 
         distractionFreeToggle: false,
+        keyboardNavToggle: false, // teclado
         fontSizeFactor: DEFAULT_FONT_SIZE_FACTOR,
         fontFamily: 'Atkinson Hyperlegible',
         // Adicionado: Padrões para TTS
@@ -98,7 +99,8 @@ function collectAllPreferences() {
     prefs.highContrastToggle = document.getElementById('toggle-alto-contraste')?.checked || false;
     prefs.fontSettingsToggle = document.getElementById('toggle-font-settings')?.checked || false;
     prefs.distractionFreeToggle = document.getElementById('toggle-modo-distracao')?.checked || false;
-    
+    prefs.keyboardNavToggle = document.getElementById('keyboardNavToggle')?.checked || false;
+
     const fontSizeSlider = document.getElementById('tamanho-fonte-slider');
     prefs.fontSizeFactor = (fontSizeSlider?.value / 100) || DEFAULT_FONT_SIZE_FACTOR; 
 
@@ -218,20 +220,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initialPrefs = await loadPreferences();
     
     const highContrastToggle = document.getElementById('toggle-alto-contraste');
-
     const distractionToggle = document.getElementById('toggle-modo-distracao');
+    const fontSettingsToggle = document.getElementById('toggle-font-settings');
+
     if (distractionToggle) {
         distractionToggle.checked = initialPrefs.distractionFreeToggle || false;
         distractionToggle.addEventListener('change', saveAndApply);
     }
-    
-    const fontSizeSlider = document.getElementById('tamanho-fonte-slider');
-    const fontSizeValue = document.querySelector('#tela-fonte .slider-valor');
 
-    const fontSettingsToggle = document.getElementById('toggle-font-settings');
     if (fontSettingsToggle) {
         fontSettingsToggle.checked = initialPrefs.fontSettingsToggle || false;
         fontSettingsToggle.addEventListener('change', saveAndApply); 
+    }
+
+    const keyboardNavToggle = document.getElementById('keyboardNavToggle');
+    if (keyboardNavToggle) {
+        keyboardNavToggle.checked = initialPrefs.keyboardNavToggle || false;
+        keyboardNavToggle.addEventListener('change', saveAndApply);
     }
 
     if (initialPrefs.fontFamily) {
@@ -242,6 +247,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
     }
+    
+    const fontSizeSlider = document.getElementById('tamanho-fonte-slider');
+    const fontSizeValue = document.querySelector('#tela-fonte .slider-valor');    
     
     if (fontSizeSlider) {
         fontSizeSlider.value = initialPrefs.fontSizeFactor * 100;
@@ -312,7 +320,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-   const rateSlider = document.getElementById('tts-rate');      
+    const rateSlider = document.getElementById('tts-rate');      
     const volumeSlider = document.getElementById('tts-volume');  
     const pitchSlider = document.getElementById('tts-pitch');    
 

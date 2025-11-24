@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pluma Redirect</title>
+</head>
+<body>
+    <script>
+        const configPageURL = chrome.runtime.getURL("pages/configs.html");
+        
+        window.open(configPageURL, '_blank'); 
+        
+        setTimeout(() => {
+             window.close(); 
+        }, 50);
+
+    </script>
+</body>
+</html>
