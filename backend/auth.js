@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
  
         if (senhaCorreta) {
             const token = jwt.sign(
-                { id: usuario.idusuarios, username: usuario.username },
+                { idusuarios: usuario.idusuarios, username: usuario.username },
                 JWT_SECRET,
                 { expiresIn: '1d' }
             );
@@ -136,4 +136,28 @@ router.post('/cadastro', async (req, res) => {
     }
 });
 
-module.exports = router;
+//--------------------------- MOVER PRA CIMA -----------------------------
+
+const checkAuth = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: 'Token de autenticação ausente.' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET); 
+        req.userId = decoded.idusuarios; 
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: 'Token inválido ou expirado.' });
+    }
+};
+
+module.exports = {
+    router,
+    checkAuth 
+};
+
+// module.exports = router;

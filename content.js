@@ -314,8 +314,6 @@ function checkAndDisplayInitialUI() {
     });
 }
 
-
- 
 let currentSpeech = null;
 let ttsSettings = {
     rate: 1.0, 
@@ -424,12 +422,14 @@ document.addEventListener('keydown', handleGlobalKeyboardNavigation, true);
 
 
 // TO-DO:
-// Ajustar o CSS para telas menores (responsividade); fizemo(?)
+// Ajustar o CSS para telas menores (responsividade); fizemos(?)
 
 // Salvar preferências do usuário (local storage ou base de dados);
 // Implementar funcionalidade: modo sem distrações;
 // - Trabalhando em: cores +
 // telefone só aceita números + formatação (xx) xxxxx-xxxx
+// SLIDERS
+// PREVISÃO FORMATO DA FONTE
 
 // "Destruir conta" -> página de configurações do usuário;
 

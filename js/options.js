@@ -40,10 +40,82 @@ async function loadPreferences() {
     return result.pluma_preferences || defaultPreferences;
 }
 
+//--------------------------MARI--------------------------------
+function toCamelCase(str) {
+    if (typeof str !== 'string' || !str.includes('-')) return str;
+    return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+}
 
+async function savePreferencesToDatabase(prefs) {
+    const dbPreferences = {
+        highContrastToggle: prefs.highContrastToggle,
+        fontSettingsToggle: prefs.fontSettingsToggle,
+        distractionFreeToggle: prefs.distractionFreeToggle,
+        keyboardNavToggle: prefs.keyboardNavToggle,
+        fontSizeFactor: prefs.fontSizeFactor,
+        fontFamily: prefs.fontFamily,
+        ttsRate: prefs.ttsRate,
+        ttsVolume: prefs.ttsVolume,
+        ttsPitch: prefs.ttsPitch || 1.0,
+        ttsVoice: prefs.ttsVoice || '', 
+        
+        themeStyles: {
+            textColor: prefs['text-color'],
+            linkColor: prefs['link-color'],
+            disabledColor: prefs['disabled-color'],
+            selectedBg: prefs['selected-bg'],
+            selectedText: prefs['selected-text'],
+            buttonText: prefs['button-text'],
+            buttonBg: prefs['button-bg'],
+            backgroundColor: prefs['background-color'],
+        }
+    };
+
+    const preferenciasJsonString = JSON.stringify(dbPreferences);
+    
+    try {
+        // **Assumindo que o JWT (token de autenticação) está salvo no chrome.storage.local**
+        const result = await chrome.storage.local.get('jwtToken');
+        const jwtToken = result.jwtToken;
+        
+        if (!jwtToken) {
+            console.warn("Usuário não autenticado no backend. Preferências salvas apenas localmente.");
+            return;
+        }
+
+        const response = await fetch('http://localhost:3000/api/preferencias', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Envia o token para o backend verificar o usuário
+                'Authorization': `Bearer ${jwtToken}` 
+            },
+            // Envia o JSON serializado dentro do corpo
+            body: JSON.stringify({ 
+                preferencias: preferenciasJsonString 
+            })
+        });
+
+        if (response.ok) {
+            console.log('Preferências salvas no BD com sucesso!');
+        } else {
+            // Tratar erros de servidor (e-mail/senha incorretos, etc.)
+            const errorData = await response.json();
+            console.error('Falha ao salvar preferências no BD:', errorData.message);
+        }
+    } catch (error) {
+        console.error('Erro de rede/servidor ao salvar preferências:', error);
+    }
+}
+//----------
 async function savePreferences(prefs) {
+    // 1. Salva no storage da extensão (mantendo a funcionalidade local)
     await chrome.storage.sync.set({ 'pluma_preferences': prefs });
     
+    // 2. NOVO: Salva no banco de dados
+    await savePreferencesToDatabase(prefs); 
+    
+    // 3. Envia mensagem para abas abertas
     chrome.tabs.query({}, (tabs) => {
         tabs.forEach(tab => {
              if (tab.id) {
@@ -55,6 +127,23 @@ async function savePreferences(prefs) {
         });
     });
 }
+//--------------------------------------------------------------
+
+
+// async function savePreferences(prefs) {
+//     await chrome.storage.sync.set({ 'pluma_preferences': prefs });
+    
+//     chrome.tabs.query({}, (tabs) => {
+//         tabs.forEach(tab => {
+//              if (tab.id) {
+//                chrome.tabs.sendMessage(tab.id, {
+//                    action: "APPLY_NEW_PREFERENCES",
+//                    preferences: prefs
+//                }).catch(error => {});
+//            }
+//         });
+//     });
+// }
 
 function applyTheme(prefs) {
     const root = document.documentElement;
@@ -89,9 +178,7 @@ function applyColorsToForm(themeColors) {
     }
 }
 
-// ----------------------------------------------------------------------
-// FUNÇÃO CORRIGIDA E ATUALIZADA
-// ----------------------------------------------------------------------
+// ??????????????????????????????????????????????????????????????????????
 function collectAllPreferences() {
     const prefs = {};
     
@@ -131,7 +218,6 @@ function collectAllPreferences() {
 }
 // ----------------------------------------------------------------------
 
-
 function applyHighContrastClass(isEnabled) {
     const root = document.documentElement;
     if (isEnabled) {
@@ -144,44 +230,32 @@ function applyHighContrastClass(isEnabled) {
 function updateFontSizeLabel(slider, valueElement) {
     valueElement.textContent = `${slider.value}%`;
 }
-
- 
-// options.js - SUBSTITUA a sua função enviarComandoTTS por esta
  
 function enviarComandoTTS(comando) {
-    // 1. Procura por qualquer aba na janela atual que não seja uma aba de extensão.
-    // Usamos 'url' para filtrar apenas páginas da web reais (http/https).
     chrome.tabs.query({ currentWindow: true, url: ["http://*/*", "https://*/*"] }, (tabs) => {
         if (tabs.length === 0) {
             console.error("[Options Page] Nenhuma aba da web encontrada. Abra uma página (ex: Google) para usar a leitura.");
             return;
         }
  
-        // Se houver várias abas da web, tentamos pegar a mais relevante. 
-        // Aqui, escolhemos a primeira URL válida que encontramos na janela.
         const targetTab = tabs[0]; 
         const targetTabId = targetTab.id;
         console.log(`[Options Page] Tentando enviar o comando para a aba de conteúdo ID: ${targetTabId}`);
  
-        // 2. Tenta enviar o comando TTS
         chrome.tabs.sendMessage(targetTabId, { action: comando }, (response) => {
-            // Verifica se houve erro de conexão (o content.js não está carregado)
             if (chrome.runtime.lastError) {
                 const errorMessage = chrome.runtime.lastError.message;
                 if (errorMessage.includes("Receiving end does not exist")) {
                     console.warn("Content script não encontrado. Tentando injetar o content.js e reenviar o comando...");
-                    // Tentativa de injeção manual (requer a permissão 'scripting' no manifest!)
                     chrome.scripting.executeScript({
                         target: { tabId: targetTabId },
                         files: ["content.js"] 
                     }, () => {
-                        // Tenta injetar o CSS também, para garantir o estilo do content.js
                         chrome.scripting.insertCSS({
                             target: { tabId: targetTabId },
                             files: ["/stylesheets/accessibility.css"]
                         }).catch(err => console.error("Erro injetando CSS de acessibilidade:", err));
  
-                        // 3. Após a injeção, tenta enviar o comando novamente com um pequeno atraso
                         setTimeout(() => {
                             chrome.tabs.sendMessage(targetTabId, { action: comando });
                             console.log(`[Options Page] Comando TTS reenviado após injeção.`);
@@ -197,18 +271,15 @@ function enviarComandoTTS(comando) {
     });
 }
 
-
 function updateTtsRangeLabel(sliderId, value) {
-    // Ex: Se o ID do slider é 'tts-rate', o ID do rótulo é 'tts-rate-value'
     const labelId = sliderId + '-value'; 
     const valueElement = document.getElementById(labelId);
     
     if (valueElement) {
-        // Formata o valor, garantindo que o volume (0.0 a 1.0) seja exibido corretamente
         if (sliderId.includes('volume')) {
-            valueElement.textContent = `${(value * 100).toFixed(0)}%`; // Ex: 100%
+            valueElement.textContent = `${(value * 100).toFixed(0)}%`;
         } else {
-            valueElement.textContent = value.toFixed(1); // Ex: 1.5
+            valueElement.textContent = value.toFixed(1);
         }
     }
 }

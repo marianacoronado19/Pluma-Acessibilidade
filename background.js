@@ -171,8 +171,23 @@ function executeActionInActiveTab(action) {
 chrome.commands.onCommand.addListener(function(command) {
     console.log("Comando de teclado recebido:", command);
         
+    // 1. OBTÉM AS PREFERÊNCIAS DO STORAGE
+    chrome.storage.sync.get('pluma_preferences', (data) => {
+        const prefs = data.pluma_preferences || {};
+        
+        // Define quais comandos DEVEM SER CONTROLADOS pelo keyboardNavToggle
+        const ttsCommands = ["start-tts", "stop-tts"];
+        
+        // SE o comando for de TTS E a Navegação por Teclado estiver DESATIVADA (false ou undefined),
+        // interrompe a execução.
+        if (keyboardNavCommands.includes(command) && !prefs.keyboardNavToggle) {
+             console.log(`Comando '${command}' ignorado: Navegação por Teclado desativada.`);
+             // Se o TTS tiver um toggle próprio e você quiser controlá-lo por ele:
+             // if (ttsCommands.includes(command) && !prefs.ttsToggle) return; 
+             return; 
+        }
+
     switch (command) {
-        case "open-config":
         case "open-config":
             // Alt + A (Abre a página de configurações)
             // Usa getURL para pegar o caminho correto da sua options_page
