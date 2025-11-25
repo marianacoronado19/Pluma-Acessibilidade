@@ -26,39 +26,53 @@ app.get('/', (req, res) => {
 // Rota para SALVAR as preferências (POST)
 // =========================================================================
 app.post('/api/preferencias', checkAuth, async (req, res) => {
-    // 1. Obtém o ID do usuário (do token) e o JSON das preferências (do body)
-    const idUsuario = req.userId; // Definido pelo middleware checkAuth
+    // 1. Obtém o ID do usuário (definido pelo middleware checkAuth) e o JSON das preferências (do body)
+    const idUsuario = req.userId; 
     const preferenciasJsonString = req.body.preferencias; // String JSON enviada do frontend
     
-    if (!idUsuario || !preferenciasJsonString) {
-        return res.status(400).send({ message: 'Dados incompletos.' });
+    if (!preferenciasJsonString) {
+        return res.status(400).send({ message: 'Preferências não fornecidas no corpo da requisição.' });
     }
 
-    // --- Passo 1: Inserir a String JSON na tabela 'preferencias' ---
-    const insertPrefQuery = `
-        INSERT INTO preferencias (preferencias_json)
-        VALUES (?)
-    `;
-    
+    let connection;
     try {
-        // Insere as preferências e obtém o ID gerado
-        const [resultPref] = await db.execute(insertPrefQuery, [preferenciasJsonString]);
-        const idPreferencia = resultPref.insertId;
+        // Inicia a transação
+        connection = await db.getConnection();
+        await connection.beginTransaction();
 
-        // --- Passo 2: Ligar o ID da Preferência ao ID do Usuário na tabela 'usuario_preferencia' ---
-        const insertLinkQuery = `
-            INSERT INTO usuario_preferencia (id_usuario, id_preferencia)
-            VALUES (?, ?)
-        `;
+        // 1. Insere o novo JSON de preferências na tabela 'preferencias'
+        const [prefResult] = await connection.execute(
+            `INSERT INTO preferencias (preferencias_json) VALUES (?)`,
+            [preferenciasJsonString]
+        );
+        const idPreferencia = prefResult.insertId;
         
-        // Cria a ligação entre o usuário e o novo registro de preferência
-        await db.execute(insertLinkQuery, [idUsuario, idPreferencia]);
+        // 2. Linka/Atualiza o ID do usuário ao ID da preferência
+        //    Se o id_usuario já existir, ele ATUALIZA o id_preferencia
+        const linkQuery = `
+            INSERT INTO usuario_preferencia (id_usuario, id_preferencia) 
+            VALUES (?, ?)
+            ON DUPLICATE KEY UPDATE id_preferencia = VALUES(id_preferencia);
+        `;
 
-        res.status(200).send({ message: 'Preferências salvas com sucesso!', idPreferencia });
+        await connection.execute(linkQuery, [idUsuario, idPreferencia]);
+
+        // Comita a transação
+        await connection.commit();
+        
+        // Resposta de SUCESSO
+        res.status(201).send({ message: '✅ Preferências salvas com sucesso no banco de dados!' });
 
     } catch (error) {
+        if (connection) {
+            await connection.rollback(); // Desfaz as alterações em caso de erro
+        }
         console.error('Erro ao salvar preferências:', error);
         res.status(500).send({ message: 'Erro interno do servidor ao salvar preferências.' });
+    } finally {
+        if (connection) {
+            connection.release();
+        }
     }
 });
 

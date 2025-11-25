@@ -1146,3 +1146,57 @@ input[type="checkbox"]:checked + .swicth::before {
     width: 60%;
     max-width: 400px; 
 }
+
+#salvar-preferencias-btn {
+    background: #fc9700;
+    border: 0;
+    border-radius: 10px;
+
+    height: 50px;
+    width: 60%;
+
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#salvar-preferencias-btn:hover {
+    background-color: #d27b00;
+}
+
+#play-btn, #stop-btn, #pausa-btn {
+    background: #fc9700;
+    border: 0;
+    border-radius: 10px;
+
+    height: 82px;
+    width: 82px;
+
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#play-btn:hover, #pausa-btn:hover, #stop-btn:hover {
+    background-color: #d27b00;
+}

@@ -29,7 +29,7 @@ CREATE TABLE `preferencias` (
   `preferencias_json` json NOT NULL,
   `data_atualizacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idpreferencias`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `preferencias` (
 
 LOCK TABLES `preferencias` WRITE;
 /*!40000 ALTER TABLE `preferencias` DISABLE KEYS */;
+INSERT INTO `preferencias` VALUES (1,'{\"ttsRate\": 1.0, \"themeName\": \"padrao\", \"ttsVolume\": 1.0, \"fontFamily\": \"Atkinson Hyperlegible\", \"themeStyles\": {\"buttonBg\": \"#008000\", \"linkColor\": \"#0000FF\", \"textColor\": \"#000000\", \"buttonText\": \"#FFFFFF\", \"selectedBg\": \"#008000\", \"selectedText\": \"#FFFFFF\", \"disabledColor\": \"#B0B0B0\", \"backgroundColor\": \"#FFFFFF\"}, \"fontSizeFactor\": 1.0, \"keyboardNavToggle\": false, \"fontSettingsToggle\": false, \"highContrastToggle\": false, \"distractionFreeToggle\": false}','2025-11-25 14:17:29');
 /*!40000 ALTER TABLE `preferencias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,7 +58,7 @@ CREATE TABLE `usuario_preferencia` (
   KEY `fk_preferencia_usuario` (`id_preferencia`),
   CONSTRAINT `fk_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`idusuarios`),
   CONSTRAINT `fk_preferencia_usuario` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencias` (`idpreferencias`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +67,7 @@ CREATE TABLE `usuario_preferencia` (
 
 LOCK TABLES `usuario_preferencia` WRITE;
 /*!40000 ALTER TABLE `usuario_preferencia` DISABLE KEYS */;
+INSERT INTO `usuario_preferencia` VALUES (1,1,1);
 /*!40000 ALTER TABLE `usuario_preferencia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +88,7 @@ CREATE TABLE `usuarios` (
   `genero` enum('Feminino','Masculino','Outro','nao-dizer') NOT NULL,
   `acessibilidade` set('Baixa Visibilidade','Dislexia','60+','Daltonismo','Surdez','Outro') NOT NULL,
   PRIMARY KEY (`idusuarios`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,8 +97,22 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'Usuário Teste','11987654321','2000-01-01','teste@gmail.com','$2b$10$7.i8i9p3HxmZKXJ8IT485uTp6uLB1c6TmtTVCJffgRVEGgjgotp/.','Feminino','Dislexia'),(2,'Teste Acessibilidades','11900008111','1212-12-12','acess@gmail.com','$2b$10$ZWWY62ovCzIoMm0hMFE.6ubYf0ziFnvLUy6xiMNvS5HLya9cySdDW','Outro','Baixa Visibilidade,Dislexia'),(3,'João Pedro Minucci Regueira','11920003194','2007-11-11','japabossminecraft@gmail.com','$2b$10$vygLYVia8ZadVuGJn53zM.SmqPvXpEHnOsvVg.CbfNGzcCN.KG6DS','Masculino','Baixa Visibilidade,Dislexia,Outro'),(4,'Fernanda','11929079325','1971-11-10','fernanda@gmail.com','$2b$10$cThwp0kY8UgeI3kzs7Z.3eQZYz1gryjaekEXYHerLuO284qc3Jhki','Feminino','Daltonismo,Surdez');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `view_preferencias_atuais`
+--
+
+DROP TABLE IF EXISTS `view_preferencias_atuais`;
+/*!50001 DROP VIEW IF EXISTS `view_preferencias_atuais`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `view_preferencias_atuais` AS SELECT 
+ 1 AS `id_usuario`,
+ 1 AS `preferencias_json`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Dumping events for database 'extensao-pluma'
@@ -105,6 +121,24 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'extensao-pluma'
 --
+
+--
+-- Final view structure for view `view_preferencias_atuais`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_preferencias_atuais`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_preferencias_atuais` AS select `u`.`idusuarios` AS `id_usuario`,`p`.`preferencias_json` AS `preferencias_json` from ((`usuarios` `u` join `usuario_preferencia` `up` on((`u`.`idusuarios` = `up`.`id_usuario`))) join `preferencias` `p` on((`up`.`id_preferencia` = `p`.`idpreferencias`))) where (`p`.`data_atualizacao` = (select max(`p2`.`data_atualizacao`) from (`usuario_preferencia` `up2` join `preferencias` `p2` on((`up2`.`id_preferencia` = `p2`.`idpreferencias`))) where (`up2`.`id_usuario` = `u`.`idusuarios`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -115,4 +149,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-24  8:38:07
+-- Dump completed on 2025-11-25 16:33:32

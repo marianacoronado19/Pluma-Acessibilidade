@@ -107,15 +107,11 @@ async function savePreferencesToDatabase(prefs) {
         console.error('Erro de rede/servidor ao salvar preferências:', error);
     }
 }
-//----------
+//--------------------------------------------------------------
+
 async function savePreferences(prefs) {
-    // 1. Salva no storage da extensão (mantendo a funcionalidade local)
     await chrome.storage.sync.set({ 'pluma_preferences': prefs });
     
-    // 2. NOVO: Salva no banco de dados
-    await savePreferencesToDatabase(prefs); 
-    
-    // 3. Envia mensagem para abas abertas
     chrome.tabs.query({}, (tabs) => {
         tabs.forEach(tab => {
              if (tab.id) {
@@ -127,23 +123,6 @@ async function savePreferences(prefs) {
         });
     });
 }
-//--------------------------------------------------------------
-
-
-// async function savePreferences(prefs) {
-//     await chrome.storage.sync.set({ 'pluma_preferences': prefs });
-    
-//     chrome.tabs.query({}, (tabs) => {
-//         tabs.forEach(tab => {
-//              if (tab.id) {
-//                chrome.tabs.sendMessage(tab.id, {
-//                    action: "APPLY_NEW_PREFERENCES",
-//                    preferences: prefs
-//                }).catch(error => {});
-//            }
-//         });
-//     });
-// }
 
 function applyTheme(prefs) {
     const root = document.documentElement;
