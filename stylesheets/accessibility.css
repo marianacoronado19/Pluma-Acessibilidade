@@ -12,11 +12,26 @@ html.pluma-high-contrast-active *::before,
 html.pluma-high-contrast-active *::after,
 html.pluma-high-contrast-active *::placeholder {
     color: var(--text-color) !important;
-    background-color: var(--background-color) !important;
     border-color: var(--text-color) !important; 
     filter: none !important;
 }
 
+html.pluma-high-contrast-active body,
+html.pluma-high-contrast-active div,
+html.pluma-high-contrast-active section,
+html.pluma-high-contrast-active header,
+html.pluma-high-contrast-active footer,
+html.pluma-high-contrast-active main,
+html.pluma-high-contrast-active article,
+html.pluma-high-contrast-active nav,
+html.pluma-high-contrast-active aside,
+html.pluma-high-contrast-active li,
+html.pluma-high-contrast-active td,
+html.pluma-high-contrast-active th {
+    background-color: var(--background-color) !important;
+}
+
+/* Estilos Específicos */
 html.pluma-high-contrast-active a {
     color: var(--link-color) !important;
 }
@@ -34,59 +49,39 @@ html.pluma-high-contrast-active ::selection {
 }
 
 html.pluma-high-contrast-active img,
-html.pluma-high-contrast-active video,
 html.pluma-high-contrast-active embed,
 html.pluma-high-contrast-active object,
-html.pluma-high-contrast-active iframe {
-    background-color: transparent !important; 
-    filter: none !important; 
-    border-color: initial !important; 
-}
-
-html.pluma-high-contrast-active #player-container, 
-html.pluma-high-contrast-active .html5-video-player, 
+html.pluma-high-contrast-active iframe,
+html.pluma-high-contrast-active iframe *,
+html.pluma-high-contrast-active ytd-player, 
 html.pluma-high-contrast-active .ytp-player,
+html.pluma-high-contrast-active .ytp-chrome-bottom,
+html.pluma-high-contrast-active .ytp-chrome-bottom *,
+html.pluma-high-contrast-active .ytp-svg-icon, 
+html.pluma-high-contrast-active svg, 
+html.pluma-high-contrast-active #player-container, 
 html.pluma-high-contrast-active #container.ytd-player,
 html.pluma-high-contrast-active #primary-inner,
-html.pluma-high-contrast-active .ytd-page-manager,
 html.pluma-high-contrast-active #info-contents,
 html.pluma-high-contrast-active #top-row,
 html.pluma-high-contrast-active #bellow,
 html.pluma-high-contrast-active ytd-video-primary-info-renderer,
 html.pluma-high-contrast-active ytd-video-secondary-info-renderer {
-    background-color: transparent !important;
-    filter: none !important;
+    background-color: transparent !important; 
+    filter: none !important; 
+    color: initial !important; 
+    border-color: initial !important; 
 }
 
-html.pluma-high-contrast-active #player-container *,
-html.pluma-high-contrast-active .html5-video-player *,
-html.pluma-high-contrast-active .ytp-player *,
-html.pluma-high-contrast-active #container.ytd-player *,
-html.pluma-high-contrast-active #info-contents *,
-html.pluma-high-contrast-active #top-row *, 
-html.pluma-high-contrast-active #bellow *,
-html.pluma-high-contrast-active iframe * {
+html.pluma-high-contrast-active video,
+html.pluma-high-contrast-active .html5-video-container {
+    z-index: 999999 !important; 
     background-color: transparent !important;
     filter: none !important;
+    display: block !important; 
+    position: relative !important;
 }
 
-html.pluma-high-contrast-active .ytp-chrome-bottom, 
-html.pluma-high-contrast-active .ytp-chrome-bottom * {
-    background-color: transparent !important;
-    filter: none !important;
-    color: initial !important;
-}
-
-html.pluma-high-contrast-active #actions,
-html.pluma-high-contrast-active #subscribe-button,
-html.pluma-high-contrast-active .ytd-button-renderer {
-    background-color: transparent !important;
-    filter: none !important;
-}
-
-html.pluma-high-contrast-active iframe * {
-    color: initial !important;
-}
 
 html.pluma-high-contrast-active .div-guia,
 html.pluma-high-contrast-active .div-guia * {
