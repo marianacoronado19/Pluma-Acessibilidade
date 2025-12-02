@@ -23,15 +23,15 @@ const THEMES = {
 
 const DEFAULT_FONT_SIZE_FACTOR = 1.0; 
 
+// Função assíncrona que carrega as preferências salvas em chrome.storage.sync ou retorna as preferências padrão.
 async function loadPreferences() {
     const defaultPreferences = { 
         highContrastToggle: false, 
         fontSettingsToggle: false, 
         distractionFreeToggle: false,
-        keyboardNavToggle: false, // teclado
+        keyboardNavToggle: false, 
         fontSizeFactor: DEFAULT_FONT_SIZE_FACTOR,
         fontFamily: 'Atkinson Hyperlegible',
-        // Adicionado: Padrões para TTS
         ttsRate: 1.0, 
         ttsVolume: 1.0,
         ...THEMES['padrao'] 
@@ -40,12 +40,13 @@ async function loadPreferences() {
     return result.pluma_preferences || defaultPreferences;
 }
 
-//--------------------------MARI--------------------------------
+// Converte strings no formato kebab-case (ex: link-color) para camelCase (ex: linkColor).
 function toCamelCase(str) {
     if (typeof str !== 'string' || !str.includes('-')) return str;
     return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 }
 
+// Envia as preferências de acessibilidade para o servidor backend (API) do PLUMA para salvá-las no perfil do usuário, se autenticado.
 async function savePreferencesToDatabase(prefs) {
     const dbPreferences = {
         highContrastToggle: prefs.highContrastToggle,
@@ -74,9 +75,8 @@ async function savePreferencesToDatabase(prefs) {
     const preferenciasJsonString = JSON.stringify(dbPreferences);
     
     try {
-        // **Assumindo que o JWT (token de autenticação) está salvo no chrome.storage.local**
-        const result = await chrome.storage.local.get('jwtToken');
-        const jwtToken = result.jwtToken;
+        const result = await chrome.storage.local.get('pluma_auth_token');
+        const jwtToken = result.pluma_auth_token;
         
         if (!jwtToken) {
             console.warn("Usuário não autenticado no backend. Preferências salvas apenas localmente.");
@@ -87,28 +87,63 @@ async function savePreferencesToDatabase(prefs) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // Envia o token para o backend verificar o usuário
                 'Authorization': `Bearer ${jwtToken}` 
             },
-            // Envia o JSON serializado dentro do corpo
             body: JSON.stringify({ 
                 preferencias: preferenciasJsonString 
             })
         });
 
+        console.log('Status da Resposta do Servidor:', response.status, response.statusText);
+
         if (response.ok) {
             console.log('Preferências salvas no BD com sucesso!');
+            return true;
         } else {
-            // Tratar erros de servidor (e-mail/senha incorretos, etc.)
             const errorData = await response.json();
             console.error('Falha ao salvar preferências no BD:', errorData.message);
+            return false;
         }
     } catch (error) {
         console.error('Erro de rede/servidor ao salvar preferências:', error);
+        return false;
     }
 }
-//--------------------------------------------------------------
 
+// Gerencia a ação de salvar: coleta as preferências, exibe o estado de "Salvando" e chama savePreferencesToDatabase().
+async function savePreferencesToProfile() {
+    console.log('BOTÃO DE SALVAR CLICADO: Iniciando coleta e envio.');
+
+    const saveButton = document.getElementById('salvar-preferencias-btn');
+    const preferences = collectAllPreferences();
+
+    saveButton.disabled = true;
+    saveButton.innerHTML = '<span class="material-symbols-outlined rotating">progress_activity</span> Salvando...';
+
+    try {
+        const savedToDatabase = await savePreferencesToDatabase(preferences);
+
+        if (savedToDatabase) {
+            alert('✅ Preferências salvas com sucesso no seu perfil!');
+        } else {
+            const result = await chrome.storage.local.get('jwtToken');
+            if (!result.jwtToken) {
+                alert('⚠️ Você precisa estar logado para salvar suas preferências no perfil.');
+            } else {
+                alert('❌ Erro ao salvar preferências na Base de Dados. Tente novamente.');
+            }
+        }
+
+    } catch (error) {
+        console.error('Erro geral ao salvar no perfil:', error);
+        alert('❌ Erro interno ao tentar salvar as preferências.');
+    } finally {
+        saveButton.disabled = false;
+        saveButton.innerHTML = '<span class="material-symbols-outlined">save</span> Salvar Preferências no Perfil';
+    }
+}
+
+// Salva o objeto de preferências em chrome.storage.sync e envia uma mensagem para todas as abas abertas aplicarem as novas configurações.
 async function savePreferences(prefs) {
     await chrome.storage.sync.set({ 'pluma_preferences': prefs });
     
@@ -124,6 +159,7 @@ async function savePreferences(prefs) {
     });
 }
 
+// Aplica as cores do tema (incluindo fundo e texto) e fatores de fonte como variáveis CSS no elemento raiz (<html>) da página de configurações.
 function applyTheme(prefs) {
     const root = document.documentElement;
 
@@ -142,6 +178,7 @@ function applyTheme(prefs) {
     }
 }
 
+// Atualiza os seletores de cores e o toggle de alto contraste na página de configurações com base nas cores do tema aplicado.
 function applyColorsToForm(themeColors) {
     document.querySelectorAll('.cores-selecao-container input[type="color"]').forEach(input => {
         const prop = input.getAttribute('data-prop');
@@ -157,35 +194,23 @@ function applyColorsToForm(themeColors) {
     }
 }
 
-// ??????????????????????????????????????????????????????????????????????
+// Coleta todos os valores de configuração (toggles, sliders, seleções de cores e fontes) atuais do formulário.
 function collectAllPreferences() {
     const prefs = {};
     
-    // Toggles e Fontes
     prefs.highContrastToggle = document.getElementById('toggle-alto-contraste')?.checked || false;
     prefs.fontSettingsToggle = document.getElementById('toggle-font-settings')?.checked || false;
     prefs.distractionFreeToggle = document.getElementById('toggle-modo-distracao')?.checked || false;
-    prefs.keyboardNavToggle = document.getElementById('keyboardNavToggle')?.checked || false;
 
     const fontSizeSlider = document.getElementById('tamanho-fonte-slider');
     prefs.fontSizeFactor = (fontSizeSlider?.value / 100) || DEFAULT_FONT_SIZE_FACTOR; 
 
     const activeFontButton = document.querySelector('.font-selecao-container .font-botao.active');
     prefs.fontFamily = activeFontButton?.getAttribute('data-font-family') || 'Atkinson Hyperlegible';
- 
-    const rateSlider = document.getElementById('tts-rate'); // ID da tela-selecao
-    prefs.ttsRate = parseFloat(rateSlider?.value) || 1.0;
- 
-    const volumeSlider = document.getElementById('tts-volume'); // ID da tela-selecao
-    prefs.ttsVolume = parseFloat(volumeSlider?.value) || 1.0;
 
-    const pitchSlider = document.getElementById('tts-pitch'); // ID da tela-selecao
-    prefs.ttsPitch = parseFloat(pitchSlider?.value) || 1.0; 
-
-    const voiceSelect = document.getElementById('leitura-voz-select'); // ID da tela-leitura-voz
+    const voiceSelect = document.getElementById('leitura-voz-select');
     prefs.ttsVoice = voiceSelect?.value || '';
 
-    // Cores
     document.querySelectorAll('.cores-selecao-container input[type="color"]').forEach(input => {
         const prop = input.getAttribute('data-prop');
         if (prop) {
@@ -195,8 +220,8 @@ function collectAllPreferences() {
     
     return prefs;
 }
-// ----------------------------------------------------------------------
 
+// Adiciona ou remove uma classe CSS específica (pluma-high-contrast-active-config) no elemento raiz para estilização de alto contraste.
 function applyHighContrastClass(isEnabled) {
     const root = document.documentElement;
     if (isEnabled) {
@@ -206,10 +231,12 @@ function applyHighContrastClass(isEnabled) {
     }
 }
 
+// Atualiza o texto exibido ao lado do slider de tamanho da fonte (ex: "120%") com o valor atual do slider.
 function updateFontSizeLabel(slider, valueElement) {
     valueElement.textContent = `${slider.value}%`;
 }
- 
+
+// Envia comandos de controle de TTS (INICIAR, PAUSAR, PARAR) para a aba da web ativa e tenta injetar o content script se necessário.
 function enviarComandoTTS(comando) {
     chrome.tabs.query({ currentWindow: true, url: ["http://*/*", "https://*/*"] }, (tabs) => {
         if (tabs.length === 0) {
@@ -250,6 +277,7 @@ function enviarComandoTTS(comando) {
     });
 }
 
+// Atualiza o texto exibido ao lado dos sliders de taxa, volume e tom de TTS com seus valores formatados.
 function updateTtsRangeLabel(sliderId, value) {
     const labelId = sliderId + '-value'; 
     const valueElement = document.getElementById(labelId);
@@ -263,6 +291,7 @@ function updateTtsRangeLabel(sliderId, value) {
     }
 }
 
+// Bloco de código principal que é executado ao carregar a página: carrega preferências iniciais, configura event listeners e aplica o tema inicial ao formulário.
 document.addEventListener('DOMContentLoaded', async () => {
     
     const saveAndApply = () => savePreferences(collectAllPreferences());
@@ -374,34 +403,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     const volumeSlider = document.getElementById('tts-volume');  
     const pitchSlider = document.getElementById('tts-pitch');    
 
-    // --- Sliders (Rate, Volume, Pitch) ---
     [
         { slider: rateSlider, pref: initialPrefs.ttsRate, id: 'tts-rate' },
         { slider: volumeSlider, pref: initialPrefs.ttsVolume, id: 'tts-volume' },
         { slider: pitchSlider, pref: initialPrefs.ttsPitch, id: 'tts-pitch' }
     ].forEach(({ slider, pref, id }) => {
         if (slider) {
-            // 1. Inicializa o valor do slider com a preferência salva
             slider.value = pref || 1.0; 
             
-            // 2. Atualiza o rótulo de texto (o número ao lado) na inicialização
             updateTtsRangeLabel(id, parseFloat(slider.value));
             
-            // 3. Adiciona o listener para salvar e aplicar
             slider.addEventListener('input', () => {
-                // Atualiza o rótulo de texto toda vez que o slider é arrastado
                 updateTtsRangeLabel(id, parseFloat(slider.value));
                 
-                // Salva e envia as preferências atualizadas
                 saveAndApply(); 
             });
         }
     });
-    // Listener para o botão 'Testar Leitura'
     document.getElementById('test-tts-button')?.addEventListener('click', () => {
         enviarComandoTTS('INICIAR');
     });
-    // --- Lógica para o seletor de Voz da tela-leitura-voz ---
     const voiceSelect = document.getElementById('leitura-voz-select');
     if (voiceSelect) {
         function populateVoiceList() {
@@ -426,12 +447,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         voiceSelect.addEventListener('change', saveAndApply);
     }
  
-    // --- Botões de Controle TTS (play-btn, pausa-btn, stop-btn) ---
     document.getElementById('play-btn')?.addEventListener('click', () => {
         enviarComandoTTS('INICIAR');
     });
  
-    // CORRIGIR ID SE NECESSÁRIO. Assumindo que você usou 'pausa-btn' no HTML.
     document.getElementById('pausa-btn')?.addEventListener('click', () => { 
         enviarComandoTTS('PAUSAR');
     });
@@ -439,4 +458,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('stop-btn')?.addEventListener('click', () => {
         enviarComandoTTS('PARAR');
     });
+
+    const saveToProfileButton = document.getElementById('salvar-preferencias-btn');
+    
+    if (saveToProfileButton) {
+        console.log('Listener do botão de salvar registrado com sucesso.');
+        saveToProfileButton.addEventListener('click', savePreferencesToProfile);
+    } else {
+        console.error('ERRO CRÍTICO: Não foi possível encontrar o botão com o ID: salvar-preferencias-btn');
+    }
 });

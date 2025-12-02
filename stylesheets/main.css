@@ -7,11 +7,6 @@
     
     width: 65%;
     height: 60%;
-
-    /* min-width: 280px;
-    min-height: 350px;
-    
-    max-width: 350px; */
     
     pointer-events: none;
     z-index: 999999;

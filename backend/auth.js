@@ -11,11 +11,13 @@ if (!JWT_SECRET) {
     process.exit(1);
 }
 
+// Lista de domínios de e-mail de provedores conhecidos, usada para validar e-mails de cadastro/login.
 const dominiosPermitidos = [
     'gmail.com', 'yahoo.com.br', 'yahoo.com', 'hotmail.com', 
     'outlook.com', 'live.com', 'icloud.com', 'bol.com.br', 'uol.com.br'
 ];
 
+// Função utilitária que verifica se o domínio do e-mail fornecido está incluído na lista de dominiosPermitidos.
 function isDominioEmailPermitido(email) {
     if (!email || email.indexOf('@') === -1) return false;
     const partes = email.split('@');
@@ -24,6 +26,7 @@ function isDominioEmailPermitido(email) {
     return dominiosPermitidos.includes(dominio);
 }
 
+// Rota de Login: Valida o e-mail, consulta o usuário no DB, compara a senha com o hash e, se correto, retorna um JWT (JSON Web Token).
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
  
@@ -49,9 +52,9 @@ router.post('/login', async (req, res) => {
  
         if (senhaCorreta) {
             const token = jwt.sign(
-                { idusuarios: usuario.idusuarios, username: usuario.username },
+                { idusuarios: usuario.idusuarios, username: usuario.username},
                 JWT_SECRET,
-                { expiresIn: '1d' }
+                { expiresIn: '24h' }
             );
 
             return res.status(200).json({
@@ -71,6 +74,7 @@ router.post('/login', async (req, res) => {
     }
 });
  
+// Rota de Cadastro: Valida os campos obrigatórios, verifica se o e-mail já existe, gera o hash da senha e insere o novo usuário no DB.
 router.post('/cadastro', async (req, res) => {
     const { 
         nome, 
@@ -110,8 +114,6 @@ router.post('/cadastro', async (req, res) => {
         const saltRounds = 10;
         const senhaHash = await bcrypt.hash(senha, saltRounds);
 
-        // const acessibilidadeStr = Array.isArray(acessibilidade) ? acessibilidade.join(',') : '';
-
         let acessibilidadeStr = '';
 
         if (Array.isArray(acessibilidade)) {
@@ -136,8 +138,7 @@ router.post('/cadastro', async (req, res) => {
     }
 });
 
-//--------------------------- MOVER PRA CIMA -----------------------------
-
+// Middleware para proteger rotas: verifica se um token JWT válido foi fornecido no cabeçalho de autorização e decodifica o ID do usuário em req.userId.
 const checkAuth = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -155,9 +156,5 @@ const checkAuth = (req, res, next) => {
     }
 };
 
-module.exports = {
-    router,
-    checkAuth 
-};
-
-// module.exports = router;
+// Exporta o router do Express (contendo as rotas /login e /cadastro) e a função checkAuth (o middleware).
+module.exports = { router, checkAuth };

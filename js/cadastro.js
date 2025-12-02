@@ -5,12 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
       'outlook.com', 'live.com', 'icloud.com', 'bol.com.br', 'uol.com.br'
   ];
 
+  // Verifica se o domínio do e-mail está na lista de provedores permitidos. Usada para validar domínios antes de submeter o cadastro.
   function isDominioEmailPermitido(email) {
-      if (!email || email.indexOf('@') === -1) return false;
-      const partes = email.split('@');
-      if (partes.length !== 2) return false; 
-      const dominio = partes[1].toLowerCase();
-      return dominiosPermitidos.includes(dominio);
+    if (!email || email.indexOf('@') === -1) return false;
+    const partes = email.split('@');
+    if (partes.length !== 2) return false; 
+    const dominio = partes[1].toLowerCase();
+    return dominiosPermitidos.includes(dominio);
   }
 
   const campoAcess = document.querySelector('.campo-acess');
@@ -24,14 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
       campoAcess.classList.toggle('aberto');
     });
   }
-
-  // checkboxes.forEach(checkbox => {
-  //   checkbox.addEventListener('change', () => {
-  //     const selecionados = Array.from(checkboxes)
-  //       .filter(cb => cb.checked)
-  //       .map(cb => cb.parentElement.textContent.trim().split(' ').slice(1).join(' '));
-
-  //     campoTexto.value = selecionados.join(', ');
 
   checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', () => {
@@ -66,14 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
   mensagemDiv.id = 'mensagem-status';
   formCadastro.appendChild(mensagemDiv); 
 
+  // Mostra uma mensagem de feedback no formulário de cadastro. Recebe texto e cor para indicar erro ou sucesso ao usuário.
   function exibirMensagem(texto, cor = 'red') {
-      mensagemDiv.textContent = texto;
-      mensagemDiv.style.color = cor;
-      if (texto) {
-          mensagemDiv.classList.add('visivel');
-      } else {
-          mensagemDiv.classList.remove('visivel');
-      }
+    mensagemDiv.textContent = texto;
+    mensagemDiv.style.color = cor;
+    if (texto) {
+      mensagemDiv.classList.add('visivel');
+    } else {
+      mensagemDiv.classList.remove('visivel');
+    }
   }
 
   if (formCadastro) {

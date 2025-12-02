@@ -1,3 +1,5 @@
+console.log('✅ Arquivo login.js carregado.');
+
 const btnLogin = document.querySelector('.botaologin'); 
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('senha');
@@ -16,6 +18,7 @@ togglePassword.addEventListener('click', function () {
     this.classList.toggle('fa-eye');
 });
  
+// Exibe uma mensagem de status na tela do formulário de login. Recebe o texto e a cor (opcional) para feedback visual ao usuário.
 function exibirMensagem(texto, cor = 'red') {
     mensagemDiv.textContent = texto;
     mensagemDiv.style.color = cor;
@@ -26,6 +29,7 @@ function exibirMensagem(texto, cor = 'red') {
     }
 }
 
+// Restaura o estado do formulário de login (limpa campos e habilita o botão).
 function inicializarFormulario() {
     if (btnLogin) {
         btnLogin.disabled = false;
@@ -41,6 +45,7 @@ const dominiosPermitidos = [
     'outlook.com', 'live.com', 'icloud.com', 'bol.com.br', 'uol.com.br'
 ];
 
+// Verifica se o domínio do e-mail pertence à lista de provedores permitidos. Retorna `true` para domínios aceitos e `false` caso contrário.
 function isDominioEmailPermitido(email) {
     if (!email || email.indexOf('@') === -1) return false;
     const partes = email.split('@');
@@ -49,6 +54,7 @@ function isDominioEmailPermitido(email) {
     return dominiosPermitidos.includes(dominio);
 }
 
+// Envia os dados do formulário ao backend para autenticar o usuário. Em caso de sucesso salva o token no storage e redireciona para configurações.
 async function fazerLogin() {
     exibirMensagem('');
  
@@ -81,15 +87,11 @@ async function fazerLogin() {
  
         if (response.ok) {
             if (data.token) {
-                // 1. Salva a sessão no Chrome Storage (sync)
                 chrome.storage.sync.set({
                     'pluma_auth_token': data.token,
                     'pluma_username': data.username,
                     'is_logged_in': true 
                 }, () => {
-                    
-                    // 2. NOVO: Marca que a configuração inicial foi concluída (local)
-                    // Esta flag é o que o content.js usa para alternar Bru -> Ícone Pluma.
                     chrome.storage.local.set({ 'pluma_initial_setup_complete': true }, () => {
                         exibirMensagem('Login realizado! Preferências serão salvas.', 'limegreen');
                         sucesso = true; 

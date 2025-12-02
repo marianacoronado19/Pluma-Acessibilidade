@@ -43,7 +43,6 @@ html.pluma-high-contrast-active iframe {
     border-color: initial !important; 
 }
 
-
 html.pluma-high-contrast-active #player-container, 
 html.pluma-high-contrast-active .html5-video-player, 
 html.pluma-high-contrast-active .ytp-player,
@@ -96,7 +95,6 @@ html.pluma-high-contrast-active .div-guia * {
     background-color: initial !important;
 }
 
-
 /* Estilo de fonte */
 :root {
     --font-size-factor: 1.0; 
@@ -115,136 +113,6 @@ button, input[type="submit"], input[type="button"] {
     white-space: nowrap !important;
 }
 
-/* Modo sem distrações */
-
-/* html.pluma-distraction-free-active body {
-    overflow-y: scroll !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background-color: #f7f7f7 !important; 
-    min-height: 100vh !important;
-
-    display: bloch !important;
-    float: none !important;
-    position: static !important;
-}
-
-
-html.pluma-distraction-free-active :is(
-    .ad, .ad-container, .adsbygoogle, 
-    [class*="promo"], [id*="promo"],
-
-    .btn-assinar,
-    .assinar,
-    .conteudo-promo,
-    .footer-ads
-
-    aside,
-    .sidebar, #sidebar, #mw-panel, 
-    #right-column, #left-column,
-    #site-navigation, 
-    .related-articles,
-    .share-buttons,
-
-    #comments, .comments-section, .social-share-bar,
-    .floating-widget, .popup,
-
-    footer, #footer
-
-)   {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    height: 0 !important;
-}
-
-
-html.pluma-distraction-free-active :where(
-    main, 
-    article, 
-    #article-body, 
-    .page-content, 
-    .conteudo-principal,
-    #content-main,
-    .post-content,
-    .artigo,
-    .corpo-materia,
-    #content,
-    #primary,
-    div[role="main"],
-    #main-content
-) {
-    max-width: 850px !important;
-    width: 95% !important;
-    margin: 50px auto !important;
-    padding: 30px !important;
-    background-color: #f7f7f7 !important;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1) !important;
-
-    font-family: 'Atkinson Hyperlegible', sans-serif !important;
-    font-size: 1.15rem !important;
-    line-height: 1.7 !important;
-    color: #333 !important;
-    border: none !important;
-
-    position: relative !important;
-    display: block !important;
-
-    float: none !important;
-    clear: both;
-
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-html.pluma-distraction-free-active :where(
-    p, 
-    h1, h2, h3, h4, h5, h6, 
-    ul, ol, li, 
-    a, 
-    img, 
-    figure, figcaption, 
-    blockquote, 
-    table, tr, td, th,
-    span
-) {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important; 
-    
-    font-size: inherit !important; 
-    line-height: inherit !important;
-    color: #333 !important;
-    
-
-    background-color: transparent !important; 
-    border: none !important;
-    margin: revert !important; 
-    padding: revert !important; 
-}
-
-html.pluma-distraction-free-active h1, 
-html.pluma-distraction-free-active h2 {
-    margin-top: 2rem !important;
-    margin-bottom: 1rem !important;
-    color: #1a1a44 !important; 
-}
-html.pluma-distraction-free-active p {
-    margin-bottom: 1.5rem !important;
-}
-html.pluma-distraction-free-active a {
-    color: #0066cc !important; 
-    text-decoration: underline !important;
-}
-
-html.pluma-distraction-free-active img {
-    height: auto !important;
-    max-width: 100% !important;
-    display: block !important;
-    margin: 20px auto !important;
-}
-
-/* 5. INTERFACE PLUMA (SEMPRE VISÍVEL) */
 #pluma-sidebar, 
 #pluma-open-btn,
 .div-guia-popup,
@@ -252,6 +120,6 @@ html.pluma-distraction-free-active img {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    z-index: 999999 !important; /* Z-index máximo */
+    z-index: 999999 !important;
     position: fixed !important;
 }

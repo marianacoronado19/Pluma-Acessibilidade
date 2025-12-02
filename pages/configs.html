@@ -45,7 +45,7 @@
             </a>
             <a href="#" class="sidebar-item" data-target="tela-distracoes">
                 <span class="material-symbols-outlined icon-arrow">chevron_right</span>
-                <span>Modo sem distrações</span>
+                <span>Modo sem anúncios</span>
             </a>
         </div>
     </div>
@@ -197,7 +197,7 @@
                 <div class="campo campo-exemplo">
                     <label>Pré-visualização</label>
                     <p class="exemplo-texto">
-                        O PLUMA é um projeto que visa facilitar a leitura e navegação na web para pessoas com dislexia. Este texto mostra o efeito das suas configurações.
+                        O PLUMA é um projeto que visa facilitar a leitura e navegação na web para pessoas com dislexia. As alterações realizadas podem ser observadas em outra
                     </p>
                 </div>
 
@@ -227,16 +227,11 @@
 
                 <div class="campo">
                     <label>Controles</label>
-                    <div class="tema-selecao-container">
+                    <div class="botoes-container">
                         
                         <button type="button" id="play-btn" class="controle-btn">
                             <span class="material-symbols-outlined">play_arrow</span>
                             <span class="texto-leitura">Iniciar</span>
-                        </button>
-
-                        <button type="button" id="pausa-btn" class="controle-btn">
-                            <span class="material-symbols-outlined">pause</span>
-                            <span class="texto-leitura">Pausar</span>
                         </button>
 
                         <button type="button" id="stop-btn" class="controle-btn">
@@ -256,25 +251,12 @@
                     </select>
                 </div>
                 
-                <div class="campo campo-slider">
-                    <label>Velocidade da Leitura (Ritmo)</label>
-                    <div class="slider-container">
-                        <span class="tamanho-exemplo-min">Lenta</span>
-                        <input type="range" id="leitura-velocidade-slider" min="0.5" value="1.0" step="0.1" />
-                        <span class="tamanho-exemplo-max">Rápida</span>
-                    </div>
-                    <p class="slider-valor" id="leitura-velocidade-valor">1.0x (Normal)</p>
-                </div>
 
-                <div class="campo campo-slider">
-                    <label>Volume</label>
-                    <div class="slider-container">
-                        <span class="material-symbols-outlined">volume_mute</span>
-                        <input type="range" id="leitura-volume-slider" min="0" max="1.0" value="1.0" step="0.1" />
-                        <span class="material-symbols-outlined">volume_up</span>
-                        
-                    </div>
-                    <p class="slider-valor" id="leitura-volume-valor">100%</p>
+                <div class="campo campo-exemplo">
+                    <label>Modo de uso</label>
+                    <p class="exemplo-texto">
+                        É preferível que para utilizar esta acessibilidade, apenas uma página esteja aberta e com o conteudo para leitura selecionado.
+                    </p>
                 </div>
 
             </div>
@@ -293,11 +275,6 @@
     
     <div class="tituloseta">
         <p class="titulo">Navegação por Teclado</p>
-        <div class="toggle-aplicar-container">
-            <span>Aplicar</span>
-            <input type="checkbox" id="keyboardNavToggle" name="toggle navegacao por teclado"></input> 
-            <label for="keyboardNavToggle" class="swicth"></label>
-        </div>
     </div>
 
     <form id="form-teclado">
@@ -340,8 +317,6 @@
                 </div>
             </div>
 
-
-
             <hr class="sidebar-divider" style="grid-column: 1 / -1; margin: 30px 0 20px 0;">
 
             <div class="campo-exemplo status-leitura" style="grid-column: 1 / -1; margin-bottom: 20px;">
@@ -380,14 +355,6 @@
                     <span class="command-key">Page Up / Down</span>
                 </div>
             </div>
-
-            <div class="bloco-salvamento">
-                 <button type="button" id="salvar-preferencias-btn" class="save-button">
-                    <span class="material-symbols-outlined">save</span>
-                    Salvar Preferências no Perfil
-                </button>
-            </div>
-            
         </div>
     </form>
     </div>
